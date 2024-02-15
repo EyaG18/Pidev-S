@@ -12,7 +12,10 @@ public class Catégorie {
         NomCatégorie = nomCatégorie;
     }
 
-    public int getId_Catégorie() {
+    public Catégorie(int idCategorie, String nomCatégorie) {
+    }
+
+    public int getId_CatégorieC() {
         return Id_Catégorie;
     }
 

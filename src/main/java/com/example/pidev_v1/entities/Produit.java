@@ -3,7 +3,7 @@ package com.example.pidev_v1.entities;
 public class Produit {
 
 private  int Id_Produit;
-private Catégorie categorie;
+private int Id_Catégorie;
 
 private String NomP;
 private float PrixP ;
@@ -12,8 +12,18 @@ private int QteSeuilP ;
 private String ImageP;
 
 
-    public Produit(Catégorie categorie, String nomP, float prixP, int qteP, int qteSeuilP, String imageP) {
-        this.categorie = categorie;
+    public Produit(int Id_Catégorie, String nomP, float prixP, int qteP, int qteSeuilP, String imageP) {
+        this.Id_Catégorie=Id_Catégorie;
+        NomP = nomP;
+        PrixP = prixP;
+        QteP = qteP;
+        QteSeuilP = qteSeuilP;
+        ImageP = imageP;
+    }
+
+    public Produit(int id_Produit, int id_Catégorie, String nomP, float prixP, int qteP, int qteSeuilP, String imageP) {
+        Id_Produit = id_Produit;
+        Id_Catégorie = id_Catégorie;
         NomP = nomP;
         PrixP = prixP;
         QteP = qteP;
@@ -29,12 +39,20 @@ private String ImageP;
         Id_Produit = id_Produit;
     }
 
-    public Catégorie getCategorie() {
+   /* public Catégorie getCategorie() {
         return categorie;
     }
 
     public void setCategorie(Catégorie categorie) {
         this.categorie = categorie;
+    }*/
+
+    public int getId_Catégorie() {
+        return Id_Catégorie;
+    }
+
+    public void setId_Catégorie(int id_Catégorie) {
+        Id_Catégorie = id_Catégorie;
     }
 
     public String getNomP() {
@@ -81,12 +99,15 @@ private String ImageP;
     public String toString() {
         return "Produit{" +
                 "Id_Produit=" + Id_Produit +
-                ", categorie=" + categorie +
+                ", categorie=" + Id_Catégorie +
                 ", NomP='" + NomP + '\'' +
                 ", PrixP=" + PrixP +
                 ", QteP=" + QteP +
                 ", QteSeuilP=" + QteSeuilP +
                 ", ImageP='" + ImageP + '\'' +
                 '}';
+    }
+
+    public void setNomCatégorie(String nomCategorie) {
     }
 }
