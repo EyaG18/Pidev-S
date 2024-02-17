@@ -5,6 +5,8 @@ module com.example.pidev_v1 {
     requires org.kordamp.bootstrapfx.core;
     requires java.sql;
 
+    opens com.example.pidev_v1.entities to javafx.base;
+
     opens com.example.pidev_v1 to javafx.fxml;
     exports com.example.pidev_v1;
 }

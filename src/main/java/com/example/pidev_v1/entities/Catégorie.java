@@ -2,21 +2,26 @@ package com.example.pidev_v1.entities;
 
 public class Catégorie {
 
-    private int Id_Catégorie;
-    private String NomCatégorie ;
+    public int Id_Catégorie;
+    public String NomCatégorie ;
 
     public Catégorie() {
     }
 
-    public Catégorie(String nomCatégorie) {
-        NomCatégorie = nomCatégorie;
+    public Catégorie(String NomCatégorie) {
+
+        this.NomCatégorie = NomCatégorie;
     }
 
-    public Catégorie(int idCategorie, String nomCatégorie) {
+    public Catégorie(int Id_Catégorie, String NomCatégorie) {
+
+        this.Id_Catégorie=Id_Catégorie;
+        this.NomCatégorie=NomCatégorie;
+
     }
 
     public int getId_CatégorieC() {
-        return Id_Catégorie;
+        return this.Id_Catégorie;
     }
 
     public void setId_Catégorie(int id_Catégorie) {
@@ -24,12 +29,16 @@ public class Catégorie {
     }
 
     public String getNomCatégorie() {
-        return NomCatégorie;
+        return this.NomCatégorie;
     }
 
     public void setNomCatégorie(String nomCatégorie) {
         NomCatégorie = nomCatégorie;
     }
+
+
+
+
 
     @Override
     public String toString() {

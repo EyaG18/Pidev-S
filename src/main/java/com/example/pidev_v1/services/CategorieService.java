@@ -2,6 +2,7 @@ package com.example.pidev_v1.services;
 
 import com.example.pidev_v1.entities.Catégorie;
 import com.example.pidev_v1.tools.MyDataBase;
+import javafx.collections.ObservableList;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -95,7 +96,7 @@ public class CategorieService implements ICategorie{
     }
 /******************************************************/
     @Override
-    public List<Catégorie> DisplayCategories() {
+    public ObservableList<Catégorie> DisplayCategories() {
        /* ArrayList<Catégorie> categories = new ArrayList<>();
         try {
             String sql = "SELECT * FROM catégorie";
@@ -163,20 +164,25 @@ public class CategorieService implements ICategorie{
             }
             categories.add(c);
         }
-        return categories;
+        return (ObservableList<Catégorie>) categories;
     }
 
+    @Override
+    public void UpdateCategoryByName(String oldName, String newName) {
+        String sql = "UPDATE catégorie SET NomCatégorie = ? WHERE NomCatégorie = ?";
 
+        try {
+            PreparedStatement preparedStatement = cnx.prepareStatement(sql);
+            preparedStatement.setString(1, newName);
+            preparedStatement.setString(2, oldName);
+            preparedStatement.executeUpdate();
 
-
-
-
-
-
-
-
-
-
+            System.out.println("Modification de la catégorie effectuée avec succès !");
+        } catch (SQLException e) {
+            // Gestion de l'exception
+            e.printStackTrace();
+        }
+    }
 
 
 }

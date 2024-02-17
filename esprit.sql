@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : lun. 12 fév. 2024 à 20:53
--- Version du serveur : 10.4.28-MariaDB
--- Version de PHP : 8.1.17
+-- Généré le : sam. 17 fév. 2024 à 00:18
+-- Version du serveur : 10.4.25-MariaDB
+-- Version de PHP : 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,14 +24,27 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `avis`
+--
+
+CREATE TABLE `avis` (
+  `id_avis` int(11) NOT NULL,
+  `id_client` int(11) NOT NULL,
+  `id_produit` int(11) NOT NULL,
+  `commentaire` text NOT NULL,
+  `note` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `catégorie`
 --
 
 CREATE TABLE `catégorie` (
   `Id_Catégorie` int(20) NOT NULL,
-  `NomCatégorie` varchar(20) NOT NULL,
-  `DescC` varchar(60) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `NomCatégorie` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -41,13 +54,12 @@ CREATE TABLE `catégorie` (
 
 CREATE TABLE `commande` (
   `id_commande` int(11) NOT NULL,
+  `Id_Panier` int(11) NOT NULL,
   `id_user` int(255) NOT NULL,
-  `produit` varchar(255) NOT NULL,
-  `Quantite` int(11) NOT NULL,
   `status_com` enum('en attente','traiter','annuler','') NOT NULL,
   `Date_com` date NOT NULL,
   `livrable` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -62,7 +74,7 @@ CREATE TABLE `livraison` (
   `Status_livraison` enum('en attente','traiter','annuler','') NOT NULL,
   `date_livraison` date NOT NULL,
   `prix_livraison` float NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -72,12 +84,35 @@ CREATE TABLE `livraison` (
 
 CREATE TABLE `offre` (
   `id_offre` int(11) NOT NULL,
-  `NomCatégorie` varchar(255) NOT NULL,
+  `Id_Catégorie` int(11) NOT NULL,
   `date_debut` date NOT NULL,
   `date_fin` date NOT NULL,
   `reduction` varchar(255) NOT NULL,
   `titre_offre` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `panier`
+--
+
+CREATE TABLE `panier` (
+  `Id_Panier` int(11) NOT NULL,
+  `id_user` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `panier_produit`
+--
+
+CREATE TABLE `panier_produit` (
+  `Id_Panier` int(11) NOT NULL,
+  `Id_Produit` int(11) NOT NULL,
+  `quantite_panier` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -89,12 +124,11 @@ CREATE TABLE `produit` (
   `Id_Produit` int(11) NOT NULL,
   `Id_Catégorie` int(20) NOT NULL,
   `NomP` varchar(20) NOT NULL,
-  `DescP` varchar(255) NOT NULL,
   `PrixP` float NOT NULL,
   `QteP` int(11) NOT NULL,
   `QteSeuilP` int(11) NOT NULL,
   `ImageP` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -107,10 +141,9 @@ CREATE TABLE `publicite` (
   `id_offre` int(11) NOT NULL,
   `titre_pub` varchar(255) NOT NULL,
   `cout_pub` varchar(255) NOT NULL,
-  `canal_diffusion` enum('television','reseau_sociaux','panneaux_affichage','') NOT NULL,
   `media` varchar(255) NOT NULL,
   `date_pub` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -121,25 +154,33 @@ CREATE TABLE `publicite` (
 CREATE TABLE `reclamation` (
   `id_reclamation` int(11) NOT NULL,
   `id_client` int(11) NOT NULL,
-  `id_produit` int(11) NOT NULL,
   `description` varchar(255) NOT NULL,
   `date_reclamation` date NOT NULL,
-  `statu_reclamation` enum('remboursable','non remboursable','traité','en attente') NOT NULL DEFAULT 'en attente'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `statu_reclamation` enum('traité','en attente','non traité') NOT NULL DEFAULT 'en attente',
+  `type_reclamation` enum('probléme produit','probléme livraison','service client insatisfaisant','autres') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `retour`
+-- Structure de la table `reclamation_reponse`
 --
 
-CREATE TABLE `retour` (
-  `id_retour` int(11) NOT NULL,
-  `ticket_de_caisse` varchar(255) NOT NULL,
-  `Id_Produit` int(11) NOT NULL,
-  `raison` varchar(255) NOT NULL,
-  `remboursable` enum('en attente','remboursable','non remboursable','') NOT NULL DEFAULT 'en attente'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `reclamation_reponse` (
+  `id_reponse` int(11) NOT NULL,
+  `id_reclamation` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `reponse`
+--
+
+CREATE TABLE `reponse` (
+  `id_reponse` int(11) NOT NULL,
+  `reponse` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -152,13 +193,30 @@ CREATE TABLE `user` (
   `nomuser` varchar(255) DEFAULT NULL,
   `prenomuser` varchar(255) DEFAULT NULL,
   `AdrUser` varchar(255) NOT NULL,
+  `EmailUsr` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `Numtel` int(11) NOT NULL,
-  `Role` enum('admin','user') DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `Role` enum('administrateur','Client','Livreur','Employee') DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `user`
+--
+
+INSERT INTO `user` (`id_user`, `nomuser`, `prenomuser`, `AdrUser`, `EmailUsr`, `password`, `Numtel`, `Role`) VALUES
+(4, 'aziz', 'grissa', '', 'azizgrissa@gmail.com', 'azfa', 0, 'Client');
 
 --
 -- Index pour les tables déchargées
 --
+
+--
+-- Index pour la table `avis`
+--
+ALTER TABLE `avis`
+  ADD PRIMARY KEY (`id_avis`),
+  ADD KEY `fk1_avis` (`id_client`),
+  ADD KEY `fk2_avis` (`id_produit`);
 
 --
 -- Index pour la table `catégorie`
@@ -171,7 +229,8 @@ ALTER TABLE `catégorie`
 --
 ALTER TABLE `commande`
   ADD PRIMARY KEY (`id_commande`),
-  ADD KEY `fk_id` (`id_user`);
+  ADD KEY `fk_id` (`id_user`),
+  ADD KEY `fk_id_panier` (`Id_Panier`);
 
 --
 -- Index pour la table `livraison`
@@ -185,7 +244,22 @@ ALTER TABLE `livraison`
 -- Index pour la table `offre`
 --
 ALTER TABLE `offre`
-  ADD PRIMARY KEY (`id_offre`);
+  ADD PRIMARY KEY (`id_offre`),
+  ADD KEY `fk_id_categorie` (`Id_Catégorie`);
+
+--
+-- Index pour la table `panier`
+--
+ALTER TABLE `panier`
+  ADD PRIMARY KEY (`Id_Panier`),
+  ADD KEY `fk_panier_user` (`id_user`);
+
+--
+-- Index pour la table `panier_produit`
+--
+ALTER TABLE `panier_produit`
+  ADD PRIMARY KEY (`Id_Panier`,`Id_Produit`),
+  ADD KEY `fk_produitPanier` (`Id_Produit`);
 
 --
 -- Index pour la table `produit`
@@ -206,14 +280,20 @@ ALTER TABLE `publicite`
 --
 ALTER TABLE `reclamation`
   ADD PRIMARY KEY (`id_reclamation`),
-  ADD KEY `fk1_reclamation` (`id_produit`);
+  ADD KEY `fk_reclamation` (`id_client`);
 
 --
--- Index pour la table `retour`
+-- Index pour la table `reclamation_reponse`
 --
-ALTER TABLE `retour`
-  ADD PRIMARY KEY (`id_retour`),
-  ADD KEY `fk_retour` (`Id_Produit`);
+ALTER TABLE `reclamation_reponse`
+  ADD PRIMARY KEY (`id_reponse`),
+  ADD KEY `fk1` (`id_reclamation`);
+
+--
+-- Index pour la table `reponse`
+--
+ALTER TABLE `reponse`
+  ADD PRIMARY KEY (`id_reponse`);
 
 --
 -- Index pour la table `user`
@@ -224,6 +304,12 @@ ALTER TABLE `user`
 --
 -- AUTO_INCREMENT pour les tables déchargées
 --
+
+--
+-- AUTO_INCREMENT pour la table `avis`
+--
+ALTER TABLE `avis`
+  MODIFY `id_avis` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `catégorie`
@@ -244,6 +330,12 @@ ALTER TABLE `livraison`
   MODIFY `id_livraison` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT pour la table `panier`
+--
+ALTER TABLE `panier`
+  MODIFY `Id_Panier` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT pour la table `produit`
 --
 ALTER TABLE `produit`
@@ -262,26 +354,34 @@ ALTER TABLE `reclamation`
   MODIFY `id_reclamation` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT pour la table `retour`
+-- AUTO_INCREMENT pour la table `reponse`
 --
-ALTER TABLE `retour`
-  MODIFY `id_retour` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `reponse`
+  MODIFY `id_reponse` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_user` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Contraintes pour les tables déchargées
 --
 
 --
+-- Contraintes pour la table `avis`
+--
+ALTER TABLE `avis`
+  ADD CONSTRAINT `fk1_avis` FOREIGN KEY (`id_client`) REFERENCES `user` (`id_user`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk2_avis` FOREIGN KEY (`id_produit`) REFERENCES `produit` (`Id_Produit`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
 -- Contraintes pour la table `commande`
 --
 ALTER TABLE `commande`
-  ADD CONSTRAINT `fk_id` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`);
+  ADD CONSTRAINT `fk_id` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`),
+  ADD CONSTRAINT `fk_id_panier` FOREIGN KEY (`Id_Panier`) REFERENCES `panier` (`Id_Panier`);
 
 --
 -- Contraintes pour la table `livraison`
@@ -289,6 +389,25 @@ ALTER TABLE `commande`
 ALTER TABLE `livraison`
   ADD CONSTRAINT `fk_id_commande` FOREIGN KEY (`id_commande`) REFERENCES `commande` (`id_commande`),
   ADD CONSTRAINT `fk_id_user` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`);
+
+--
+-- Contraintes pour la table `offre`
+--
+ALTER TABLE `offre`
+  ADD CONSTRAINT `fk_id_categorie` FOREIGN KEY (`Id_Catégorie`) REFERENCES `catégorie` (`Id_Catégorie`);
+
+--
+-- Contraintes pour la table `panier`
+--
+ALTER TABLE `panier`
+  ADD CONSTRAINT `fk_panier_user` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`);
+
+--
+-- Contraintes pour la table `panier_produit`
+--
+ALTER TABLE `panier_produit`
+  ADD CONSTRAINT `fk_Panier_IDD` FOREIGN KEY (`Id_Panier`) REFERENCES `panier` (`Id_Panier`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_produitPanier` FOREIGN KEY (`Id_Produit`) REFERENCES `produit` (`Id_Produit`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Contraintes pour la table `produit`
@@ -306,13 +425,14 @@ ALTER TABLE `publicite`
 -- Contraintes pour la table `reclamation`
 --
 ALTER TABLE `reclamation`
-  ADD CONSTRAINT `fk1_reclamation` FOREIGN KEY (`id_produit`) REFERENCES `produit` (`Id_Produit`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_reclamation` FOREIGN KEY (`id_client`) REFERENCES `user` (`id_user`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Contraintes pour la table `retour`
+-- Contraintes pour la table `reclamation_reponse`
 --
-ALTER TABLE `retour`
-  ADD CONSTRAINT `fk_retour` FOREIGN KEY (`Id_Produit`) REFERENCES `produit` (`Id_Produit`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `reclamation_reponse`
+  ADD CONSTRAINT `fk1` FOREIGN KEY (`id_reclamation`) REFERENCES `reclamation` (`id_reclamation`),
+  ADD CONSTRAINT `fk2` FOREIGN KEY (`id_reponse`) REFERENCES `reponse` (`id_reponse`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
