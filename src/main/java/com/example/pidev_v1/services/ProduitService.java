@@ -1,6 +1,5 @@
 package com.example.pidev_v1.services;
 
-import com.example.pidev_v1.entities.Catégorie;
 import com.example.pidev_v1.entities.Produit;
 import com.example.pidev_v1.tools.MyDataBase;
 
@@ -51,6 +50,17 @@ public class ProduitService implements IProduit {
 
     }
     /**************************************************************/
+
+
+
+
+
+
+
+
+
+
+    /*****************************************************************/
     @Override
     public void UpdateProduct(int idP, int Idcat, String nomPP, float prixp, int qtep, int qteSp, String imagePP) {
         String sql = "UPDATE produit SET Id_Catégorie = ?, NomP = ?, PrixP = ?, QteP = ?, QteSeuilP = ?, ImageP = ? WHERE Id_Produit = ?";
@@ -111,7 +121,7 @@ public class ProduitService implements IProduit {
         return produits;
 
         }
-    /**************************************************************/
+
     private String GetCategoryNameById(int idCategorie) {
         String nomCategorie = "";
         try {
@@ -131,5 +141,49 @@ public class ProduitService implements IProduit {
         return nomCategorie;
     }
 
+
+
+ /*********************************************************************/
+    @Override
+    public String DeleteProductByName(String nameProduct) {
+        // Connexion à la base de données
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/esprit", "root", "")) {
+            // Requête SQL pour supprimer la catégorie par son nom
+            String sql = "DELETE FROM Produit WHERE NomP = ?";
+            // Création de la requête préparée
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                // Assignation du nom de la catégorie à supprimer
+                statement.setString(1, nameProduct);
+                // Exécution de la requête
+                int rowsDeleted = statement.executeUpdate();
+                // Vérification si une ligne a été supprimée
+                if (rowsDeleted > 0) {
+                    System.out.println("La Produit a été supprimée avec succès.");
+                } else {
+                    System.out.println("Aucun Produit avec ce nom n'a été trouvée.");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la suppression du produit: " + e.getMessage());
+        }
+        return nameProduct;
+    }
+
+    @Override
+    public void UpdateProductByName(String oldProudctName, String newProductName) {
+        String sql = "UPDATE produit SET NomP = ? WHERE NomP = ?";
+
+        try {
+            PreparedStatement preparedStatement = cnx.prepareStatement(sql);
+            preparedStatement.setString(1, newProductName);
+            preparedStatement.setString(2, oldProudctName);
+            preparedStatement.executeUpdate();
+
+            System.out.println("Modification du produit effectuée avec succès !");
+        } catch (SQLException e) {
+            // Gestion de l'exception
+            e.printStackTrace();
+        }
+    }
 
 }

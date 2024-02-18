@@ -5,12 +5,16 @@ import com.example.pidev_v1.services.CategorieService;
 import com.example.pidev_v1.tools.MyDataBase;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -44,8 +48,23 @@ public class DetailsCategorie implements Initializable {
 
     @FXML
     private TableView<Catégorie> TableViewCategory;
+
+    @FXML
+    private TextField KeywordsTextLabel;
+
     CategorieService cs = new CategorieService();
     private String newCategoryName;
+    int indexCat = -1;
+
+    @FXML
+    void GetSelectedCategory(MouseEvent event) {
+          indexCat = TableViewCategory.getSelectionModel().getSelectedItem().getId_CatégorieC();
+
+          if (indexCat <= -1)
+          { return; }
+          CategoryFieldText.setText(ColumnNameCategory.getCellData(indexCat).toString());
+    }
+
 
     @FXML
     void BtnAddCat(ActionEvent event) {
@@ -67,8 +86,8 @@ public class DetailsCategorie implements Initializable {
             alert.setTitle("Succès !");
             alert.setContentText("Catégorie ajoutée avec succès !");
             alert.showAndWait();
-           DisplayCategoriesScene();
-
+           //DisplayCategoriesScene();
+            showCategories();
             // Effacer le champ de texte après l'ajout
             CategoryFieldText.clear();
         } catch (Exception e) {
@@ -82,57 +101,87 @@ public class DetailsCategorie implements Initializable {
 /******************Btn supprimer Category***********************************/
     @FXML
     void BtnDeleteCat(ActionEvent event) {
+        try {
+            // Obtenez le nom de la catégorie sélectionnée
+            String selectedCategoryName = TableViewCategory.getSelectionModel().getSelectedItem().getNomCatégorie();
 
+            // Appelez la fonction DeleteCategoryByName pour supprimer la catégorie sélectionnée
+            cs.DeleteCategoryByName(selectedCategoryName);
+
+
+            // Actualisez le TableView pour refléter les modifications après la suppression
+            RefreshCategory(event);
+        } catch (NullPointerException e) {
+            // Aucune catégorie sélectionnée
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Erreur !");
+            alert.setContentText("Aucune catégorie sélectionnée ! Veuillez sélectionner une catégorie à supprimer.");
+            alert.showAndWait();
+
+        } catch (Exception e) {
+            // Toutes les autres exceptions
+            showAlert("Erreur", "Erreur inattendue", "Une erreur inattendue s'est produite : " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
+    private void showAlert(String erreur, String aucuneCatégorieSélectionnée, String s) {Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(erreur);
+        alert.setHeaderText(aucuneCatégorieSélectionnée);
+        alert.setContentText(s);
+        alert.showAndWait();
+    }
 
 
     /*********************Btn referesh **********************************/
     @FXML
     void RefreshCategory(ActionEvent event) {
-
+        showCategories();
     }
-/**************Bouton update actegorie Eya *************************/
+    /******Finalement Update Fonctionnel !!!!!!!!**********/
     @FXML
-    void BtnUpdateCat(ActionEvent event) {
-        TableViewCategory.setOnMouseClicked(event1 -> {
-            try {
-                // Vérifiez si un clic de souris a été effectué avec le bouton gauche
-                if (event1.getButton().equals(MouseButton.PRIMARY) && event1.getClickCount() == 1) {
-                    // Obtenez la ligne sélectionnée dans la TableView
-                    String oldCategoryName = String.valueOf(TableViewCategory.getSelectionModel().getSelectedItem());
-                    String newCategoryName = CategoryFieldText.getText();
-                    if (newCategoryName.isEmpty()) {
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setTitle("Erreur lors de la modification !");
-                        alert.setContentText("Le nom de la catégorie ne peut pas être vide.");
+    public void BtnUpdateCat(ActionEvent event) {
+        TableViewCategory.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent event) {
+                try {
+                    if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 1) {
+                        // Obtenez la ligne sélectionnée dans la TableView
+                        Catégorie selectedCategory = TableViewCategory.getSelectionModel().getSelectedItem();
+                        if (selectedCategory == null) {
+                            return; // Aucune catégorie sélectionnée, sortie de la fonction
+                        }
+                        String oldCategoryName = selectedCategory.getNomCatégorie(); // Assurez-vous d'avoir la méthode getNom() dans votre classe de catégorie
+                        String newCategoryName = CategoryFieldText.getText();
+                        if (newCategoryName.isEmpty()) {
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setTitle("Erreur lors de la modification !");
+                            alert.setContentText("Le nom de la catégorie ne peut pas être vide.");
+                            alert.showAndWait();
+                            return;
+                        }
+                        // Mettre à jour la catégorie en utilisant le service
+                        cs.UpdateCategoryByName(oldCategoryName, newCategoryName);
+                        // Affichage d'un message de succès
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Succès !");
+                        alert.setContentText("Catégorie modifiée avec succès !");
                         alert.showAndWait();
-                        return;
+
+                        //DisplayCategoriesScene();
+                        showCategories();
+                        // Effacer le champ de texte après la modification
+                        CategoryFieldText.clear();
                     }
-                    // Modifier la catégorie en utilisant l'ancien nom
-                    cs.UpdateCategoryByName(oldCategoryName, newCategoryName);
-                    // Affichage d'un message de succès
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Succès !");
-                    alert.setContentText("Catégorie modifiée avec succès !");
+                } catch (Exception e) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Erreur !");
+                    alert.setContentText("Une erreur s'est produite : " + e.getMessage());
                     alert.showAndWait();
-                    DisplayCategoriesScene();
-                    // Effacer le champ de texte après la modification
-                    CategoryFieldText.clear();
                 }
-            } catch (Exception e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Erreur !");
-                alert.setContentText("Une erreur s'est produite : " + e.getMessage());
-                alert.showAndWait();
             }
         });
-
     }
-
-
-
-
+    /*********************************************************************/
 
     ObservableList<Catégorie> ListCategoryObservable= FXCollections.observableArrayList();
 
@@ -141,43 +190,35 @@ public class DetailsCategorie implements Initializable {
     }
 
 
-    @FXML
-    private void handleButtonAction(ActionEvent event) {
-
-        if(event.getSource() == BtnAjouterCategory){
-            insertRecordCategory();
-        }else if (event.getSource() == BtnModifierCategory){
-            updateRecordCategory();
-        }else if(event.getSource() == BtnSupprimCategory){
-            deleteButtonCategory();
-        }
-
-
-    }
-
-
+    /*********************************************************************/
     @Override
     public void initialize(URL url , ResourceBundle rb)
     {
-        //DisplayCategoriesScene();
-        showCategories();
-    }
 
-    private void deleteButtonCategory() {
-    }
-
-    private void updateRecordCategory() {
-        
-    }
-
-    private void insertRecordCategory() {
-        String categoryName = CategoryFieldText.getText();
-        String queryCat = "INSERT INTO catégorie (NomCatégorie) VALUES ('" + categoryName + "')";
-        executeQueryCat(queryCat);
         DisplayCategoriesScene();
+
+        ColumnNameCategory.setCellValueFactory(new PropertyValueFactory<>("NomCatégorie"));
+        TableViewCategory.setItems(ListCategoryObservable);
+        // Utilisez la même liste observable pour la liste filtrée
+        FilteredList<Catégorie> catégorieFilteredList = new FilteredList<>(ListCategoryObservable, b -> true);
+        KeywordsTextLabel.textProperty().addListener((observableValue, oldValue, newValue) -> {
+            catégorieFilteredList.setPredicate(Catégorie -> {
+                // if no search value then display all data with no changes
+                if (newValue == null || newValue.isBlank()) {
+                    return true;
+                }
+                String searchKeyWordsCategory = newValue.toLowerCase();
+                return Catégorie.getNomCatégorie().toLowerCase().contains(searchKeyWordsCategory);
+            });
+        });
+
+        // Utilisez la même liste filtrée pour la liste triée
+        SortedList<Catégorie> SortedCategoryList = new SortedList<>(catégorieFilteredList);
+        SortedCategoryList.comparatorProperty().bind(TableViewCategory.comparatorProperty());
+        TableViewCategory.setItems(SortedCategoryList);
+
     }
-
-
+    /*********************************************************************/
     private void executeQueryCat(String queryCat) {
 
         MyDataBase ct = new MyDataBase();
@@ -190,7 +231,7 @@ public class DetailsCategorie implements Initializable {
             ex.printStackTrace();
         }
     }
-
+    /*********************************************************************/
     public void DisplayCategoriesScene() {
         MyDataBase ct = new MyDataBase();
         Connection cnx = ct.getCnx();
@@ -198,6 +239,7 @@ public class DetailsCategorie implements Initializable {
         try {
             Statement statement = cnx.createStatement();
             ResultSet QueryOutput = statement.executeQuery(queryCategory);
+            ListCategoryObservable.clear();
             while (QueryOutput.next()) {
                 int queryCategoryId = QueryOutput.getInt("Id_Catégorie");
                 String queryCategoryName = QueryOutput.getString("NomCatégorie");
@@ -206,48 +248,18 @@ public class DetailsCategorie implements Initializable {
                 System.out.println("NomCatégorie: " + queryCategoryName);
                 ListCategoryObservable.add(new Catégorie(queryCategoryId, queryCategoryName));
             }
-
             // Configuration de la colonne pour afficher l'ID de la catégorie
-            TableColumn<Catégorie, Integer> ColumnIdCategory = new TableColumn<>("ID");
-            ColumnIdCategory.setCellValueFactory(new PropertyValueFactory<>("id_Catégorie")); // Assurez-vous que le getter est nommé getId_Catégorie dans votre classe Catégorie
-            TableViewCategory.getColumns().add(ColumnIdCategory); // Ajoutez la colonne à votre TableView
-
+           TableColumn<Catégorie, Integer> ColumnIdCategory = new TableColumn<>("ID");
+          //  ColumnIdCategory.setCellValueFactory(new PropertyValueFactory<>("id_Catégorie"));
             // Configuration de la colonne pour afficher le nom de la catégorie
             ColumnNameCategory.setCellValueFactory(new PropertyValueFactory<Catégorie, String>("NomCatégorie"));
-
             // Définir les éléments dans le TableView
             TableViewCategory.setItems(ListCategoryObservable);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-
-
-
-    public TextField getCategoryFieldText() {
-        return CategoryFieldText;
-    }
-
-    public void setCategoryFieldText(TextField categoryFieldText) {
-        CategoryFieldText = categoryFieldText;
-    }
-
-    public TableColumn<Catégorie, String> getColumnNameCategory() {
-        return ColumnNameCategory;
-    }
-
-    public void setColumnNameCategory(TableColumn<Catégorie, String> columnNameCategory) {
-        ColumnNameCategory = columnNameCategory;
-    }
-
-    public TableView<Catégorie> getTableViewCategory() {
-        return TableViewCategory;
-    }
-
-    public void setTableViewCategory(TableView<Catégorie> tableViewCategory) {
-        TableViewCategory = tableViewCategory;
-    }
-
+/*********************************************************************/
     public void showCategories() {
         ObservableList<Catégorie> listCategories = getCategoryList();
 
@@ -257,7 +269,7 @@ public class DetailsCategorie implements Initializable {
 
         TableViewCategory.setItems(listCategories);
     }
-
+    /*********************************************************************/
     public ObservableList<Catégorie> getCategoryList() {
 
         ObservableList<Catégorie> ListCategory = FXCollections.observableArrayList();
@@ -273,15 +285,45 @@ public class DetailsCategorie implements Initializable {
             Catégorie cat;
             while (rs.next()) {
                 cat = new Catégorie(rs.getInt("Id_Catégorie"), rs.getString("NomCatégorie"));
-                // Assurez-vous de remplacer "id", "title", "author", "year", "pages" par les noms de vos colonnes appropriés
                 ListCategory.add(cat);
             }
-
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         return ListCategory;
     }
+/*********************************************************************/
+void DisplayCategoriesSorted()
+{
+
+    ObservableList<Catégorie> listCategories = getCategoryList();
+    ColumnNameCategory.setCellValueFactory(new PropertyValueFactory<>("NomCatégorie"));
+    TableViewCategory.setItems(listCategories);
+
+    FilteredList<Catégorie> catégorieFilteredList = new FilteredList<>(listCategories,b->true);
+    KeywordsTextLabel.textProperty().addListener((observableValue, oldValue, newValue) ->
+            {
+                catégorieFilteredList.setPredicate(Catégorie -> {
+                    // if no search value then display all data with no changes
+                    if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
+                        return true;
+                    }
+                    String searchKeyWordsCategory = newValue.toLowerCase();
+                    if (Catégorie.getNomCatégorie().toLowerCase().indexOf(searchKeyWordsCategory) > -1) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                });
+            });
+    SortedList<Catégorie> SortedCategoryList = new SortedList<>(catégorieFilteredList);
+    // Bind sorted result with table view
+    SortedCategoryList.comparatorProperty().bind(TableViewCategory.comparatorProperty());
+    TableViewCategory.setItems(SortedCategoryList);
+}
+
+
+
 
 
 

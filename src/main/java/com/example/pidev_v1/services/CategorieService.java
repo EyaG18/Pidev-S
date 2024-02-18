@@ -97,39 +97,6 @@ public class CategorieService implements ICategorie{
 /******************************************************/
     @Override
     public ObservableList<Catégorie> DisplayCategories() {
-       /* ArrayList<Catégorie> categories = new ArrayList<>();
-        try {
-            String sql = "SELECT * FROM catégorie";
-            PreparedStatement preparedStatement = cnx.prepareStatement(sql);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while(resultSet.next()) {
-                Catégorie catégorie = new Catégorie(resultSet.getInt("Id_Catégorie"), resultSet.getString("NomCatégorie"));
-                categories.add(catégorie);
-            }
-
-            resultSet.close();
-            preparedStatement.close();
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
-        return categories;*/
-        /*ArrayList<Catégorie> categories = new ArrayList<>();
-        try {
-            String sql = "SELECT * FROM catégorie";
-            PreparedStatement preparedStatement = cnx.prepareStatement(sql);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while(resultSet.next()) {
-                Catégorie cate = new Catégorie(resultSet.getInt("Id_Catégorie"), resultSet.getString("NomCatégorie"));
-                categories.add(cate);
-            }
-            resultSet.close();
-            preparedStatement.close();
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
-        return categories;*/
 
         String req = "select * from catégorie";
         List<Catégorie> categories = new ArrayList<>();
@@ -166,7 +133,7 @@ public class CategorieService implements ICategorie{
         }
         return (ObservableList<Catégorie>) categories;
     }
-
+    /*********************************************************************/
     @Override
     public void UpdateCategoryByName(String oldName, String newName) {
         String sql = "UPDATE catégorie SET NomCatégorie = ? WHERE NomCatégorie = ?";
@@ -182,6 +149,34 @@ public class CategorieService implements ICategorie{
             // Gestion de l'exception
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void DeleteCategoryByName(String namec) {
+        // Connexion à la base de données
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/esprit", "root", "")) {
+            // Requête SQL pour supprimer la catégorie par son nom
+            String sql = "DELETE FROM Catégorie WHERE NomCatégorie = ?";
+            // Création de la requête préparée
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                // Assignation du nom de la catégorie à supprimer
+                statement.setString(1, namec);
+                // Exécution de la requête
+                int rowsDeleted = statement.executeUpdate();
+                // Vérification si une ligne a été supprimée
+                if (rowsDeleted > 0) {
+                    System.out.println("La catégorie a été supprimée avec succès.");
+                } else {
+                    System.out.println("Aucune catégorie avec ce nom n'a été trouvée.");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la suppression de la catégorie: " + e.getMessage());
+        }
+
+
+
+
     }
 
 

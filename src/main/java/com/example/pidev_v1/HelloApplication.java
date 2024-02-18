@@ -19,16 +19,22 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("DetailsCategorie.fxml"));
         Scene scene = new Scene(fxmlLoader.<Parent>load(), 940, 588);
-        stage.setTitle("Hello Ayoutaa !");
+        stage.setTitle("Arya :Store Management Tool");
         stage.setScene(scene);
         stage.show();
     }
-
     public static void main(String[] args) {
 
         MyDataBase Db = new MyDataBase();
         Db.getCnx();
-
+        Catégorie c= new Catégorie("Vernis");
+        CategorieService cs = new CategorieService();
+       // cs.addCategory(c);
+        //cs.UpdateCategoryByName("Vernis","Vernis à ongles");
+        //cs.DeleteCategoryByName("Blazer de Jour");
+        ProduitService ps = new ProduitService();
+        //ps.UpdateProductByName("Lunette Dior","Lunettes Gucci");
+       // ps.DeleteProductByName("Robe Noire");
         launch();
     }
 }
