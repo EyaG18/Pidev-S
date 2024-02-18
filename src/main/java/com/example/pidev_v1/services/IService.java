@@ -1,4 +1,4 @@
-package services;
+package com.example.pidev_v1.services;
 
 import java.sql.SQLException;
 import java.util.List;

@@ -1,6 +1,7 @@
-package services;
+package com.example.pidev_v1.services;
 
-import entities.Commande;
+import com.example.pidev_v1.entities.Commande;
+import com.example.pidev_v1.entities.Panier;
 import utlis.DataSource;
 
 
@@ -55,13 +56,12 @@ public class CommandeService implements IService<Commande> {
              ResultSet rs =ste.executeQuery(requete);
              while (rs.next()){
                  list.add(new Commande(
-                         rs.getInt(2),
-                         rs.getInt(3),
-                         rs.getString(4),
-                         rs.getInt(5) ,
-                         Commande.status_com.valueOf(rs.getString(6)), // Convert string to enum
-                         rs.getDate(7),
-                         rs.getBoolean(8)));
+                         (Panier) rs.getObject(1),
+                         rs.getString(3),
+                         rs.getInt(4) ,
+                         Commande.status_com.valueOf(rs.getString(5)), // Convert string to enum
+                         rs.getDate(6),
+                         rs.getBoolean(7)));
              }
 
         } catch (SQLException e) {
@@ -116,8 +116,7 @@ public class CommandeService implements IService<Commande> {
             ResultSet rs = pre.executeQuery();
             if (rs.next()) {
                 commande = new Commande(
-                        rs.getInt("id_user"),
-                        rs.getInt("Id_Panier"),
+                        (Panier) rs.getObject(1),
                         rs.getString("produit"),
                         rs.getFloat("Quantite"),
                         Commande.status_com.valueOf(rs.getString("status_com")),

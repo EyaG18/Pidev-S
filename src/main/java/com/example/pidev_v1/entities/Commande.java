@@ -1,9 +1,11 @@
-package entities;
+package com.example.pidev_v1.entities;
 
 import java.util.Date;
 
 public class Commande {
-    private int id_commande,id_user,Id_Panier ;
+    private int id_commande;
+   // private User user;
+    private Panier panier;
     private String produit;
     private float Quantite	;
     private status_com status;
@@ -21,9 +23,9 @@ public class Commande {
 
 
 
-    public Commande( int id_user, int id_Panier, String produit, float quantite, status_com status, Date date_com, boolean livrable) {
-        this.id_user = id_user;
-        Id_Panier = id_Panier;
+    public Commande(  Panier panier, String produit, float quantite, status_com status, Date date_com, boolean livrable) {
+
+        this.panier =panier;
         this.produit = produit;
         Quantite = quantite;
         this.status = status;
@@ -35,9 +37,7 @@ public class Commande {
         return id_commande;
     }
 
-    public int getId_user() {
-        return id_user;
-    }
+
 
     public String getProduit() {
         return produit;
@@ -63,9 +63,6 @@ public class Commande {
         this.id_commande = id_commande;
     }
 
-    public void setId_user(int id_user) {
-        this.id_user = id_user;
-    }
 
     public void setProduit(String produit) {
         this.produit = produit;
@@ -87,7 +84,4 @@ public class Commande {
         this.livrable = livrable;
     }
 
-    public int getId_Panier() {
-        return Id_Panier;
-    }
 }

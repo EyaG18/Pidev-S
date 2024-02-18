@@ -1,8 +1,9 @@
-package services;
+package com.example.pidev_v1.services;
 
 
-import entities.Commande;
-import entities.Livraison;
+import com.example.pidev_v1.entities.Commande;
+import com.example.pidev_v1.entities.Livraison;
+import com.example.pidev_v1.services.IService;
 import utlis.DataSource;
 
 import java.sql.*;
@@ -13,17 +14,18 @@ public class LivraisonService implements IService<Livraison> {
     Connection cnx;
     private Statement ste;
     private PreparedStatement pre;
+    private Commande c=new Commande();
 
-    private LivraisonService(){{cnx= DataSource.getInstance().getCnx();}}
+    public LivraisonService(){{cnx= DataSource.getInstance().getCnx();}}
 
     @Override
     public int Add(Livraison livraison) {
         String requete="insert into Livraison (	Status_livraison,date_livraison,prix_livraison)";
         try {
             pre=cnx.prepareStatement(requete);
-            pre.setString(4,livraison.getStatusLivraison().toString());
-            pre.setDate(5,new java.sql.Date(livraison.getDate_livraison().getTime()));
-            pre.setFloat(6,livraison.getPrix_livraison());
+            pre.setString(1,livraison.getStatusLivraison().toString());
+            pre.setDate(2,new java.sql.Date(livraison.getDate_livraison().getTime()));
+            pre.setFloat(3,livraison.getPrix_livraison());
             pre.executeUpdate();
             System.out.println("Livraison ajoutee !!");
     } catch (SQLException e) {
@@ -40,12 +42,9 @@ public class LivraisonService implements IService<Livraison> {
                 ResultSet rs =ste.executeQuery(requete);
                 while (rs.next()){
                     list.add(new Livraison(
-                            rs.getInt(1),
-                            rs.getInt(2),
-                            rs.getInt(3),
-                            Livraison.Status_livraison.valueOf(rs.getString(4)),
-                            rs.getDate(5),
-                            rs.getFloat(6)));
+                            Livraison.Status_livraison.valueOf(rs.getString(1)),
+                            rs.getDate(2),
+                            rs.getFloat(3)));
 
     }
             } catch (SQLException e) {

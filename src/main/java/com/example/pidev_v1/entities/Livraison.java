@@ -1,9 +1,13 @@
-package entities;
+package com.example.pidev_v1.entities;
+import com.example.pidev_v1.entities.Commande;
+
 import java.util.Date;
 
 
 public class Livraison {
-    private int id_livraison,	id_commande	,id_user;
+    private int id_livraison;
+    //private User user;
+    private Commande commande;
     private Status_livraison statusLivraison;
     private Date date_livraison= new Date();
 
@@ -14,10 +18,8 @@ public class Livraison {
 
     public Livraison() {}
 
-    public Livraison(int id_livraison, int id_commande, int id_user, Status_livraison statusLivraison, Date date_livraison, float prix_livraison) {
-        this.id_livraison = id_livraison;
-        this.id_commande = id_commande;
-        this.id_user = id_user;
+    public Livraison( Commande commande,Status_livraison statusLivraison, Date date_livraison, float prix_livraison) {
+        this.commande = commande;
         this.statusLivraison = statusLivraison;
         this.date_livraison = date_livraison;
         this.prix_livraison = prix_livraison;
@@ -37,21 +39,10 @@ public class Livraison {
         this.id_livraison = id_livraison;
     }
 
-    public int getId_commande() {
-        return id_commande;
+    public Commande getCommande() {
+        return commande;
     }
 
-    public void setId_commande(int id_commande) {
-        this.id_commande = id_commande;
-    }
-
-    public int getId_user() {
-        return id_user;
-    }
-
-    public void setId_user(int id_user) {
-        this.id_user = id_user;
-    }
 
     public Status_livraison getStatusLivraison() {
         return statusLivraison;
