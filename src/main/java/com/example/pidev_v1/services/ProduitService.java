@@ -102,7 +102,7 @@ public class ProduitService implements IProduit {
 
                 Produit p = new Produit(
                         resultSet.getInt("Id_Produit"),
-                        idCategorie,
+                        resultSet.getInt("Id_Catégorie"),
                         resultSet.getString("NomP"),
                         resultSet.getFloat("PrixP"),
                         resultSet.getInt("QteP"),
@@ -111,7 +111,7 @@ public class ProduitService implements IProduit {
                 );
 
                 produits.add(p);
-                System.out.println("Catégorie: " + nomCategorie + ", Produit: " + p);
+               // System.out.println("Catégorie: " + nomCategorie + ", Produit: " + p);
             }
             resultSet.close();
             preparedStatement.close();
@@ -119,7 +119,6 @@ public class ProduitService implements IProduit {
             e.printStackTrace();
         }
         return produits;
-
         }
 
     private String GetCategoryNameById(int idCategorie) {

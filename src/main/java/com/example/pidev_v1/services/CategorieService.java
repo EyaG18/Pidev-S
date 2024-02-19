@@ -179,6 +179,27 @@ public class CategorieService implements ICategorie{
 
     }
 
+    @Override
+    public int getCategoryIdFromName2(String selectedCategoryNameProduct) {
+        int categoryId = -1; // Valeur par défaut si la catégorie n'est pas trouvée
+
+        String query = "SELECT Id_Catégorie FROM catégorie WHERE NomCatégorie = ?";
+
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/esprit?useUnicode=true&characterEncoding=utf-8", "root", "");
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setString(1, selectedCategoryNameProduct);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    categoryId = rs.getInt("Id_Catégorie");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Gérer l'exception de manière appropriée dans votre application
+        }
+        return categoryId;
+    }
+
 
 }
 

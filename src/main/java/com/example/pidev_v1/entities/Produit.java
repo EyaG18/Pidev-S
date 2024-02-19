@@ -5,6 +5,7 @@ public class Produit {
 private  int Id_Produit;
 private int Id_Catégorie;
 
+//private Catégorie catégorieP;
 private String NomP;
 private float PrixP ;
 private int QteP ;
@@ -14,6 +15,7 @@ private String ImageP;
 
     public Produit(int Id_Catégorie, String nomP, float prixP, int qteP, int qteSeuilP, String imageP) {
         this.Id_Catégorie=Id_Catégorie;
+        //this.Id_Catégorie= catégorieP.getId_CatégorieC();
         NomP = nomP;
         PrixP = prixP;
         QteP = qteP;
@@ -24,6 +26,7 @@ private String ImageP;
     public Produit(int id_Produit, int id_Catégorie, String nomP, float prixP, int qteP, int qteSeuilP, String imageP) {
         Id_Produit = id_Produit;
         Id_Catégorie = id_Catégorie;
+       // this.Id_Catégorie= catégorieP.getId_CatégorieC();
         NomP = nomP;
         PrixP = prixP;
         QteP = qteP;
@@ -48,11 +51,14 @@ private String ImageP;
     }*/
 
     public int getId_Catégorie() {
+        //return catégorieP.getId_CatégorieC();
         return Id_Catégorie;
     }
 
     public void setId_Catégorie(int id_Catégorie) {
-        Id_Catégorie = id_Catégorie;
+        //catégorieP.getId_CatégorieC()=id_Catégorie;
+
+         Id_Catégorie = id_Catégorie;
     }
 
     public String getNomP() {

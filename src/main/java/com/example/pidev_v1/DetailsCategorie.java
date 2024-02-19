@@ -56,6 +56,7 @@ public class DetailsCategorie implements Initializable {
     private String newCategoryName;
     int indexCat = -1;
 
+
     @FXML
     void GetSelectedCategory(MouseEvent event) {
           indexCat = TableViewCategory.getSelectionModel().getSelectedItem().getId_CatégorieC();

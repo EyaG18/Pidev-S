@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="590.0" prefWidth="1064.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pidev_v1.AjouterProduit">
+   <children>
+      <ImageView fitHeight="549.0" fitWidth="389.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../MediaEya/Logo.png" />
+         </image>
+      </ImageView>
+      <Text fill="#5baade" fontSmoothingType="LCD" layoutX="511.0" layoutY="115.0" strokeType="INSIDE" strokeWidth="0.0" text="Nouveau Produit" textAlignment="CENTER" wrappingWidth="409.13671875">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Text>
+      <BorderPane layoutX="233.0" layoutY="293.0" prefHeight="5.0" prefWidth="550.0" rotate="-90.0" style="-fx-background-color: #EEBBDF;" />
+      <BorderPane layoutX="508.0" layoutY="567.0" prefHeight="4.0" prefWidth="389.0" style="-fx-background-color: #EEBBDF;" />
+      <Text layoutX="525.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Catégorie :" wrappingWidth="88.77603912353516">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Text>
+      <ComboBox fx:id="ComboCategorieProduit" layoutX="691.0" layoutY="174.0" prefWidth="150.0" promptText="Choisir" />
+      <Text layoutX="525.0" layoutY="258.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nom du Produit:" wrappingWidth="113.98307228088379">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Text>
+      <TextField fx:id="NameProduitLabel" layoutX="690.0" layoutY="227.0" />
+      <Text layoutX="525.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Prix du Produit :" wrappingWidth="113.9830722808839">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Text>
+      <TextField fx:id="ProductPriceField" layoutX="692.0" layoutY="294.0" />
+      <Text layoutX="525.0" layoutY="377.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantité en Stock:" wrappingWidth="113.9830722808839">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Text>
+      <Text layoutX="525.0" layoutY="428.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantité Seuil de rupture :">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Text>
+      <Text layoutX="525.0" layoutY="481.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Image du Produit :" wrappingWidth="150.0">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Text>
+      <TextField fx:id="QteStockProduitLabel" layoutX="692.0" layoutY="359.0" />
+      <TextField fx:id="QteSeuilProductLabel" layoutX="694.0" layoutY="410.0" />
+      <Button layoutX="537.0" layoutY="522.0" mnemonicParsing="false" onMouseClicked="#SelectImageProduct" prefHeight="30.0" prefWidth="162.0" text="Séléctionner une Image" />
+      <BorderPane layoutX="622.0" layoutY="293.0" prefHeight="5.0" prefWidth="550.0" rotate="90.0" style="-fx-background-color: #EEBBDF;" />
+      <Button layoutX="710.0" layoutY="522.0" mnemonicParsing="false" onMouseClicked="#addProduct" prefHeight="30.0" prefWidth="170.0" text="Ajouter" />
+      <TextField fx:id="productImageField" layoutX="696.0" layoutY="463.0" />
+   </children>
+</AnchorPane>

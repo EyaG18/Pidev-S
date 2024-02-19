@@ -11,13 +11,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import com.example.pidev_v1.DetailsCategorie;
+import com.example.pidev_v1.AjouterProduit;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("DetailsCategorie.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("AjouterProduit.fxml"));
         Scene scene = new Scene(fxmlLoader.<Parent>load(), 940, 588);
         stage.setTitle("Arya :Store Management Tool");
         stage.setScene(scene);
@@ -27,14 +29,23 @@ public class HelloApplication extends Application {
 
         MyDataBase Db = new MyDataBase();
         Db.getCnx();
-        Catégorie c= new Catégorie("Vernis");
-        CategorieService cs = new CategorieService();
-       // cs.addCategory(c);
-        //cs.UpdateCategoryByName("Vernis","Vernis à ongles");
-        //cs.DeleteCategoryByName("Blazer de Jour");
+        //CategorieService cs = new CategorieService();
+        //int id = cs.getCategoryIdFromName2("Eya");
+        //System.out.println("le identifiant unqiue pour la catégorie Leather Jacket est :"+ id);
         ProduitService ps = new ProduitService();
-        //ps.UpdateProductByName("Lunette Dior","Lunettes Gucci");
-       // ps.DeleteProductByName("Robe Noire");
+
+        List<Produit> produits =  ps.DisplayProduct();
+        for (Produit produit : produits) {
+            System.out.println("ID du Produit: " + produit.getId_Produit());
+            System.out.println("Nom du Produit: " + produit.getNomP());
+            System.out.println("Prix du Produit: " + produit.getPrixP());
+            System.out.println("Quantité en stock: " + produit.getQteP());
+            System.out.println("Quantité Seuil: " + produit.getQteSeuilP());
+            System.out.println("Image du Produit: " + produit.getImageP());
+            System.out.println("-----------------------------------");
+        }
+
+
         launch();
     }
 }
