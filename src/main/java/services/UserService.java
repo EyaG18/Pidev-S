@@ -99,4 +99,16 @@ public class UserService implements CRUD<User> {
         }
         return users;
     }
+
+    public boolean checkLoginUser(String email,String password){
+        List<User> users = afficher();
+
+        for (User user : users) {
+            if (user.getEmailUsr().equals(email) && user.getPassword().equals(password)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

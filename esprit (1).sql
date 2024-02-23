@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : sam. 17 fév. 2024 à 00:18
+-- Généré le : ven. 23 fév. 2024 à 22:17
 -- Version du serveur : 10.4.25-MariaDB
 -- Version de PHP : 8.1.10
 
@@ -204,7 +204,10 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id_user`, `nomuser`, `prenomuser`, `AdrUser`, `EmailUsr`, `password`, `Numtel`, `Role`) VALUES
-(4, 'aziz', 'grissa', '', 'azizgrissa@gmail.com', 'azfa', 0, 'Client');
+(4, 'aziz', 'grissa', '', 'azizgrissa@gmail.com', 'azfa', 0, 'Client'),
+(5, 'Aziz', 'Grissa', '', 'mohamedaziz.grissa@esprit.tn', '123456', 0, 'Client'),
+(6, 'sdgdsg', '', 'sdgsgs', 'sdgs', 'dsgs', 65, 'Client'),
+(7, 'sdgdsg', 'qsfqfq', 'sdgsgs', 'sdgs', 'dsgs', 65, 'Client');
 
 --
 -- Index pour les tables déchargées
@@ -363,7 +366,7 @@ ALTER TABLE `reponse`
 -- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_user` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Contraintes pour les tables déchargées
