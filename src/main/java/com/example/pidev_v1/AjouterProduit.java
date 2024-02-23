@@ -8,13 +8,20 @@ import com.example.pidev_v1.tools.MyDataBase;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.fxml.Initializable;
+import javafx.stage.Stage;
+import com.example.pidev_v1.AfficherProduitBack;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -41,6 +48,14 @@ public class AjouterProduit implements Initializable {
 
     @FXML
     private TextField productImageField;
+
+
+    @FXML
+    private Button btnConsulterProd;
+
+
+    AfficherProduitBack af = new AfficherProduitBack();
+
 
 
     ObservableList<Catégorie> ListCategoryObservable = FXCollections.observableArrayList();
@@ -78,7 +93,6 @@ public class AjouterProduit implements Initializable {
                 alert.showAndWait();
                 return;
             }
-
             // Récupérer l'ID de la catégorie à partir de son nom
            // int selectedCategoryId = getCategoryIdFromName(selectedCategoryNameProduct);
             int selectedCategoryId = cs.getCategoryIdFromName2(selectedCategoryNameProduct);
@@ -90,16 +104,18 @@ public class AjouterProduit implements Initializable {
                 alert.showAndWait();
                 return;
             }
-
             // Ajouter le produit à la base de données avec l'ID de la catégorie correct
             ps.addProduct(new Produit(selectedCategoryId, productName, priceProduct, qteStockProduct, qteSeuil, productImage));
-
             // Afficher un message de succès
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Succès !");
             alert.setContentText("Produit ajouté avec succès !");
             alert.showAndWait();
-
+            //loadDetailsProduitsView();
+            af.ActualiserListeProduits(event);
+           af.AfficherProd();
+            //
+            //loadDetailsCategorieView();
             // Effacer les champs après l'ajout
             ComboCategorieProduit.getSelectionModel().clearSelection();
             NameProduitLabel.clear();
@@ -115,7 +131,35 @@ public class AjouterProduit implements Initializable {
             alert.showAndWait();
         }
     }
+/***********************************************/
+public void loadDetailsCategorieView() throws IOException {
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("DetailsCategorie.fxml"));
+    Parent root = loader.load();
+    Stage stage = new Stage();
+    stage.setTitle("Détails Catégorie");
+    stage.setScene(new Scene(root));
+    stage.show();
+}
+/**************************************/
+public void loadDetailsProduitsView() throws IOException
+{
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("AfficherProduitCoteClient.fxml"));
+    Parent root = loader.load();
+    Stage stage = new Stage();
+    stage.setTitle("Liste Des Prouits");
+    stage.setScene(new Scene(root));
+    stage.show();
+}
+/******************************************************/
+    @FXML
+    void ConsulterPageProd(MouseEvent event) {
+        try {
+            loadDetailsProduitsView();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
+    }
     /*****************************************************************/
 
     @FXML

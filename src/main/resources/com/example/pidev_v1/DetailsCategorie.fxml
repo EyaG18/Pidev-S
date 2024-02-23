@@ -20,7 +20,7 @@
       </VBox>
       <TableView fx:id="TableViewCategory" layoutX="470.0" layoutY="180.0" onMouseClicked="#GetSelectedCategory" prefHeight="382.0" prefWidth="459.0">
         <columns>
-            <TableColumn fx:id="ColumnNameCategory" prefWidth="458.40001220703124" text="Nom de la Catégorie" />
+            <TableColumn fx:id="ColumnNameCategory" prefWidth="457.5999755859375" text="Nom de la Catégorie" />
         </columns>
       </TableView>
       <Button fx:id="BtnAjouterCategory" layoutX="258.0" layoutY="294.0" mnemonicParsing="false" onAction="#BtnAddCat" prefHeight="26.0" prefWidth="156.0" text="Ajouter " />
@@ -63,6 +63,5 @@
             <Image url="@../../../MediaEya/icons8-refresh-64.png" />
          </image>
       </ImageView>
-      <Button layoutX="193.0" layoutY="437.0" mnemonicParsing="false" text="Button" />
    </children>
 </AnchorPane>

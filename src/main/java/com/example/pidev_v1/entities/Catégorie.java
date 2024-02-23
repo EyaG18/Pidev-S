@@ -29,7 +29,7 @@ public class Catégorie {
     }
 
     public String getNomCatégorie() {
-        return this.NomCatégorie;
+        return NomCatégorie;
     }
 
     public void setNomCatégorie(String nomCatégorie) {

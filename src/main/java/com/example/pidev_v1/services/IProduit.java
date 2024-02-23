@@ -16,5 +16,7 @@ public interface IProduit  {
 
  void UpdateProductByName(String oldProudctName , String newProductName);
 
+    public List<Produit> getByCategory(String category);
+
 
 }

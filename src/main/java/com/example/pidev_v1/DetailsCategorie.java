@@ -109,7 +109,6 @@ public class DetailsCategorie implements Initializable {
             // Appelez la fonction DeleteCategoryByName pour supprimer la catégorie sélectionnée
             cs.DeleteCategoryByName(selectedCategoryName);
 
-
             // Actualisez le TableView pour refléter les modifications après la suppression
             RefreshCategory(event);
         } catch (NullPointerException e) {
@@ -168,6 +167,7 @@ public class DetailsCategorie implements Initializable {
                         alert.setContentText("Catégorie modifiée avec succès !");
                         alert.showAndWait();
 
+
                         //DisplayCategoriesScene();
                         showCategories();
                         // Effacer le champ de texte après la modification
@@ -220,18 +220,7 @@ public class DetailsCategorie implements Initializable {
 
     }
     /*********************************************************************/
-    private void executeQueryCat(String queryCat) {
 
-        MyDataBase ct = new MyDataBase();
-        Connection cnx= ct.getCnx();
-        Statement st;
-        try{
-            st = cnx.createStatement();
-            st.executeUpdate(queryCat);
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
-    }
     /*********************************************************************/
     public void DisplayCategoriesScene() {
         MyDataBase ct = new MyDataBase();
@@ -279,7 +268,6 @@ public class DetailsCategorie implements Initializable {
         String query = "SELECT * FROM catégorie"; // Assurez-vous de remplacer "books" par le nom de votre table approprié
         Statement st;
         ResultSet rs;
-
         try {
             st = cnx.createStatement();
             rs = st.executeQuery(query);

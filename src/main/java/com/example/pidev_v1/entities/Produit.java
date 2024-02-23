@@ -4,14 +4,34 @@ public class Produit {
 
 private  int Id_Produit;
 private int Id_Catégorie;
-
-//private Catégorie catégorieP;
 private String NomP;
 private float PrixP ;
 private int QteP ;
 private int QteSeuilP ;
 private String ImageP;
 
+private String NomCatégorie;
+
+    public Produit( String nomP, float prixP, int qteP, int qteSeuilP, String imageP,String nomCategorie) {
+
+        NomP = nomP;
+        PrixP = prixP;
+        QteP = qteP;
+        QteSeuilP = qteSeuilP;
+        ImageP = imageP;
+        NomCatégorie = nomCategorie;
+
+    }
+
+
+
+
+    public Produit() {
+    }
+
+    public String getNomCatégorie() {
+        return NomCatégorie;
+    }
 
     public Produit(int Id_Catégorie, String nomP, float prixP, int qteP, int qteSeuilP, String imageP) {
         this.Id_Catégorie=Id_Catégorie;
@@ -33,6 +53,8 @@ private String ImageP;
         QteSeuilP = qteSeuilP;
         ImageP = imageP;
     }
+
+
 
     public int getId_Produit() {
         return Id_Produit;

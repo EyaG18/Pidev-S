@@ -65,7 +65,7 @@ public class CategorieService implements ICategorie{
     @Override
     public Catégorie GetCategoryById(int idC) {
         String query = "SELECT NomCategorie FROM Catégorie WHERE Id_Categorie = ?";
-        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/esprit", "root", "");
+        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/pidev2", "root", "");
              PreparedStatement pst = con.prepareStatement(query)) {
             pst.setInt(1, idC);
             try (ResultSet rs = pst.executeQuery()) {
@@ -154,7 +154,7 @@ public class CategorieService implements ICategorie{
     @Override
     public void DeleteCategoryByName(String namec) {
         // Connexion à la base de données
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/esprit", "root", "")) {
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/pidev2", "root", "")) {
             // Requête SQL pour supprimer la catégorie par son nom
             String sql = "DELETE FROM Catégorie WHERE NomCatégorie = ?";
             // Création de la requête préparée
@@ -185,7 +185,7 @@ public class CategorieService implements ICategorie{
 
         String query = "SELECT Id_Catégorie FROM catégorie WHERE NomCatégorie = ?";
 
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/esprit?useUnicode=true&characterEncoding=utf-8", "root", "");
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/pidev2?useUnicode=true&characterEncoding=utf-8", "root", "");
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             pstmt.setString(1, selectedCategoryNameProduct);
@@ -200,8 +200,74 @@ public class CategorieService implements ICategorie{
         return categoryId;
     }
 
+    @Override
+    public String getCategoryNameById(int categoryId) {
+        String catName ="";
+        String query = "SELECT NomCatégorie FROM catégorie WHERE Id_Catégorie = ?";
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/pidev2?useUnicode=true&characterEncoding=utf-8", "root", "");
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
 
-}
+            pstmt.setString(1, catName);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    catName = rs.getString("NomCatégorie");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Gérer l'exception de manière appropriée dans votre application
+        }
+        return catName;
+    }
+//////////////////////////////////////////////////////////////////
+    @Override
+    public Catégorie getCategoryById(int categoryId) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        Catégorie categorie = null;
+
+        try {
+            // Connexion à la base de données
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/pidev2", "root", "");
+
+            // Requête SQL pour récupérer la catégorie par son ID
+            String query = "SELECT * FROM catégorie WHERE Id_Catégorie = ?";
+            stmt = conn.prepareStatement(query);
+            stmt.setInt(1, categoryId);
+
+            // Exécution de la requête
+            rs = stmt.executeQuery();
+
+            // Traitement du résultat
+            if (rs.next()) {
+                // Création de l'objet Categorie à partir des données récupérées
+                categorie = new Catégorie();
+                categorie.setId_Catégorie(rs.getInt("Id_Categorie"));
+                categorie.setNomCatégorie(rs.getString("NomCategorie"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Fermeture des ressources
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return categorie;
+    }
+
+
+
+
+    }
+
+
+
 
 
 

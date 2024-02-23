@@ -20,4 +20,8 @@ public interface ICategorie {
     public void  DeleteCategoryByName(String namec);
 
     public int getCategoryIdFromName2(String selectedCategoryNameProduct);
+
+    public String getCategoryNameById(int categoryId);
+
+    public Catégorie getCategoryById(int categoryId);
 }

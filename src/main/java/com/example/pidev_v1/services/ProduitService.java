@@ -1,11 +1,13 @@
 package com.example.pidev_v1.services;
 
+import com.example.pidev_v1.entities.Catégorie;
 import com.example.pidev_v1.entities.Produit;
 import com.example.pidev_v1.tools.MyDataBase;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProduitService implements IProduit {
 
@@ -14,9 +16,13 @@ public class ProduitService implements IProduit {
     private PreparedStatement ste;
     MyDataBase connect = new MyDataBase();
 
+    List<Produit> Lp = new ArrayList<>();
+
     public ProduitService() {
         cnx = connect.getCnx();
     }
+
+    CategorieService cs = new CategorieService();
     /**************************************************************/
     @Override
     public void addProduct(Produit produit) {
@@ -146,7 +152,7 @@ public class ProduitService implements IProduit {
     @Override
     public String DeleteProductByName(String nameProduct) {
         // Connexion à la base de données
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/esprit", "root", "")) {
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/pidev2", "root", "")) {
             // Requête SQL pour supprimer la catégorie par son nom
             String sql = "DELETE FROM Produit WHERE NomP = ?";
             // Création de la requête préparée
@@ -168,6 +174,7 @@ public class ProduitService implements IProduit {
         return nameProduct;
     }
 
+
     @Override
     public void UpdateProductByName(String oldProudctName, String newProductName) {
         String sql = "UPDATE produit SET NomP = ? WHERE NomP = ?";
@@ -184,5 +191,27 @@ public class ProduitService implements IProduit {
             e.printStackTrace();
         }
     }
+/*************************************************/
+    @Override
+    public List<Produit> getByCategory(String category) {
+        List<Produit> filteredProducts = new ArrayList<>();
+        try {
+            // Récupérer tous les produits
+            List<Produit> allProducts = DisplayProduct();
+
+            // Filtrer les produits par catégorie
+            for (Produit produit : allProducts) {
+                Catégorie categorie = cs.getCategoryById(produit.getId_Catégorie());
+               String chosenCat= cs.getCategoryNameById(categorie.getId_CatégorieC());
+                if (categorie != null && chosenCat.equals(category)) {
+                    filteredProducts.add(produit);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return filteredProducts;
+    }
+
 
 }
