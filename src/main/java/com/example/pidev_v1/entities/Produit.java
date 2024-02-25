@@ -4,16 +4,53 @@ public class Produit {
 
 private  int Id_Produit;
 private int Id_Catégorie;
-
 private String NomP;
 private float PrixP ;
 private int QteP ;
 private int QteSeuilP ;
 private String ImageP;
 
+private String NomCatégorie;
+
+    public Produit( String nomP, float prixP, int qteP, int qteSeuilP, String imageP,String nomCategorie) {
+
+        NomP = nomP;
+        PrixP = prixP;
+        QteP = qteP;
+        QteSeuilP = qteSeuilP;
+        ImageP = imageP;
+        NomCatégorie = nomCategorie;
+
+    }
+
+    public Produit(int id_Produit, String nomP, float prixP, String imageP) {
+        Id_Produit = id_Produit;
+        NomP = nomP;
+        PrixP = prixP;
+        ImageP = imageP;
+    }
+
+    public Produit(String nomP, float prixP, String imageP) {
+        NomP = nomP;
+        PrixP = prixP;
+        ImageP = imageP;
+    }
+
+    public Produit(String nomP, String imageP) {
+        NomP = nomP;
+        ImageP = imageP;
+    }
+
+    public Produit() {
+    }
+
+    public String getNomCatégorie() {
+        return NomCatégorie;
+    }
 
     public Produit(int Id_Catégorie, String nomP, float prixP, int qteP, int qteSeuilP, String imageP) {
         this.Id_Catégorie=Id_Catégorie;
+        //this.Id_Catégorie= catégorieP.getId_CatégorieC();
         NomP = nomP;
         PrixP = prixP;
         QteP = qteP;
@@ -24,12 +61,15 @@ private String ImageP;
     public Produit(int id_Produit, int id_Catégorie, String nomP, float prixP, int qteP, int qteSeuilP, String imageP) {
         Id_Produit = id_Produit;
         Id_Catégorie = id_Catégorie;
+       // this.Id_Catégorie= catégorieP.getId_CatégorieC();
         NomP = nomP;
         PrixP = prixP;
         QteP = qteP;
         QteSeuilP = qteSeuilP;
         ImageP = imageP;
     }
+
+
 
     public int getId_Produit() {
         return Id_Produit;
@@ -48,11 +88,18 @@ private String ImageP;
     }*/
 
     public int getId_Catégorie() {
+        //return catégorieP.getId_CatégorieC();
         return Id_Catégorie;
     }
 
     public void setId_Catégorie(int id_Catégorie) {
-        Id_Catégorie = id_Catégorie;
+        //catégorieP.getId_CatégorieC()=id_Catégorie;
+
+         Id_Catégorie = id_Catégorie;
+    }
+
+    public Produit(String nomP) {
+        NomP = nomP;
     }
 
     public String getNomP() {

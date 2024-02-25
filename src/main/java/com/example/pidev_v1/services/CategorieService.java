@@ -1,6 +1,7 @@
 package com.example.pidev_v1.services;
 
 import com.example.pidev_v1.entities.Catégorie;
+import com.example.pidev_v1.entities.Produit;
 import com.example.pidev_v1.tools.MyDataBase;
 import javafx.collections.ObservableList;
 
@@ -65,7 +66,7 @@ public class CategorieService implements ICategorie{
     @Override
     public Catégorie GetCategoryById(int idC) {
         String query = "SELECT NomCategorie FROM Catégorie WHERE Id_Categorie = ?";
-        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/esprit", "root", "");
+        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/pidev2", "root", "");
              PreparedStatement pst = con.prepareStatement(query)) {
             pst.setInt(1, idC);
             try (ResultSet rs = pst.executeQuery()) {
@@ -97,39 +98,6 @@ public class CategorieService implements ICategorie{
 /******************************************************/
     @Override
     public ObservableList<Catégorie> DisplayCategories() {
-       /* ArrayList<Catégorie> categories = new ArrayList<>();
-        try {
-            String sql = "SELECT * FROM catégorie";
-            PreparedStatement preparedStatement = cnx.prepareStatement(sql);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while(resultSet.next()) {
-                Catégorie catégorie = new Catégorie(resultSet.getInt("Id_Catégorie"), resultSet.getString("NomCatégorie"));
-                categories.add(catégorie);
-            }
-
-            resultSet.close();
-            preparedStatement.close();
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
-        return categories;*/
-        /*ArrayList<Catégorie> categories = new ArrayList<>();
-        try {
-            String sql = "SELECT * FROM catégorie";
-            PreparedStatement preparedStatement = cnx.prepareStatement(sql);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while(resultSet.next()) {
-                Catégorie cate = new Catégorie(resultSet.getInt("Id_Catégorie"), resultSet.getString("NomCatégorie"));
-                categories.add(cate);
-            }
-            resultSet.close();
-            preparedStatement.close();
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
-        return categories;*/
 
         String req = "select * from catégorie";
         List<Catégorie> categories = new ArrayList<>();
@@ -166,7 +134,7 @@ public class CategorieService implements ICategorie{
         }
         return (ObservableList<Catégorie>) categories;
     }
-
+    /*********************************************************************/
     @Override
     public void UpdateCategoryByName(String oldName, String newName) {
         String sql = "UPDATE catégorie SET NomCatégorie = ? WHERE NomCatégorie = ?";
@@ -184,8 +152,145 @@ public class CategorieService implements ICategorie{
         }
     }
 
+    @Override
+    public void DeleteCategoryByName(String namec) {
+        // Connexion à la base de données
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/pidev2", "root", "")) {
+            // Requête SQL pour supprimer la catégorie par son nom
+            String sql = "DELETE FROM Catégorie WHERE NomCatégorie = ?";
+            // Création de la requête préparée
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                // Assignation du nom de la catégorie à supprimer
+                statement.setString(1, namec);
+                // Exécution de la requête
+                int rowsDeleted = statement.executeUpdate();
+                // Vérification si une ligne a été supprimée
+                if (rowsDeleted > 0) {
+                    System.out.println("La catégorie a été supprimée avec succès.");
+                } else {
+                    System.out.println("Aucune catégorie avec ce nom n'a été trouvée.");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la suppression de la catégorie: " + e.getMessage());
+        }
+
+
+
+
+    }
+
+    @Override
+    public int getCategoryIdFromName2(String selectedCategoryNameProduct) {
+        int categoryId = -1; // Valeur par défaut si la catégorie n'est pas trouvée
+
+        String query = "SELECT Id_Catégorie FROM catégorie WHERE NomCatégorie = ?";
+
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/pidev2?useUnicode=true&characterEncoding=utf-8", "root", "");
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setString(1, selectedCategoryNameProduct);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    categoryId = rs.getInt("Id_Catégorie");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Gérer l'exception de manière appropriée dans votre application
+        }
+        return categoryId;
+    }
+
+    @Override
+    public String getCategoryNameById(int categoryId) {
+        String catName ="";
+        String query = "SELECT NomCatégorie FROM catégorie WHERE Id_Catégorie = ?";
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/pidev2?useUnicode=true&characterEncoding=utf-8", "root", "");
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setString(1, catName);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    catName = rs.getString("NomCatégorie");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Gérer l'exception de manière appropriée dans votre application
+        }
+        return catName;
+    }
+//////////////////////////////////////////////////////////////////
+    @Override
+    public Catégorie getCategoryById(int categoryId) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        Catégorie categorie = null;
+
+        try {
+            // Connexion à la base de données
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/pidev2", "root", "");
+
+            // Requête SQL pour récupérer la catégorie par son ID
+            String query = "SELECT * FROM catégorie WHERE Id_Catégorie = ?";
+            stmt = conn.prepareStatement(query);
+            stmt.setInt(1, categoryId);
+
+            // Exécution de la requête
+            rs = stmt.executeQuery();
+
+            // Traitement du résultat
+            if (rs.next()) {
+                // Création de l'objet Categorie à partir des données récupérées
+                categorie = new Catégorie();
+                categorie.setId_Catégorie(rs.getInt("Id_Categorie"));
+                categorie.setNomCatégorie(rs.getString("NomCategorie"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Fermeture des ressources
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return categorie;
+    }
+
+
+
+
+    @Override
+    public Catégorie getCategoryBName(String chosenNameC) {
+        Catégorie catégorie = null;
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/pidev2", "root", "")) {
+            String query = "SELECT * FROM catégorie WHERE NomCatégorie = ?";
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setString(1, chosenNameC);
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    if (resultSet.next()) {
+                        catégorie = new Catégorie();
+                        catégorie.setId_Catégorie(resultSet.getInt("Id_Catégorie"));
+                        catégorie.setNomCatégorie(resultSet.getString("NomCatégorie"));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return catégorie;
+    }
+
 
 }
+
+
+
 
 
 
