@@ -4,6 +4,7 @@ import com.example.pidev_v1.entities.Produit;
 import com.example.pidev_v1.services.MyListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -12,11 +13,13 @@ import javafx.scene.layout.AnchorPane;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ResourceBundle;
 
-public class CardProduct {
+public class CardProduct implements Initializable {
 
     @FXML
     private AnchorPane card_form;
@@ -45,6 +48,8 @@ public class CardProduct {
     private String prod_image;
     private float price;
 
+    private int ProdID;
+
     private Connection connect;
     private PreparedStatement prepare;
     private ResultSet result;
@@ -59,6 +64,7 @@ public class CardProduct {
     private MyListener myListener;
 
     public void setDat(Produit produit ,MyListener myListener) throws FileNotFoundException {
+        prodID=produit.getId_Produit();
         this.produit = produit;
         this.myListener=myListener;
         InputStream imageStream = new FileInputStream(produit.getImageP());
@@ -77,4 +83,8 @@ public class CardProduct {
 
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        setQuantity();
+    }
 }

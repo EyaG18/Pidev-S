@@ -93,7 +93,7 @@ public class AjouterProduit implements Initializable {
             productImageField.setText(((File) selectedFile).getAbsolutePath());
         }
     }
-
+/*
     @FXML
     void addProduct(MouseEvent event) {
         try {
@@ -141,8 +141,94 @@ public class AjouterProduit implements Initializable {
             System.out.println(exception.getMessage());
             alert.showAndWait();
         }
+    }*/
+
+    @FXML
+    void addProduct(MouseEvent event) {
+        try {
+            String selectedCategoryNameProduct = ComboCategorieProduit.getValue();
+            String productName = NameProduitLabel.getText();
+            Float priceProduct = Float.parseFloat(ProductPriceField.getText());
+            Integer qteStockProduct = Integer.parseInt(QteStockProduitLabel.getText());
+            Integer qteSeuil = Integer.parseInt(QteSeuilProductLabel.getText());
+            String productImage = productImageField.getText();
+
+            if (selectedCategoryNameProduct == null || productName.isEmpty() || priceProduct == null || qteStockProduct == null || qteSeuil == null || productImage.isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erreur lors de l'ajout !");
+                alert.setContentText("Veuillez remplir tous les champs.");
+                alert.showAndWait();
+                return;
+            }
+
+            // Vérifier si un produit avec le même nom existe déjà
+            if (ps.isProductNameExists(productName)) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erreur lors de l'ajout !");
+                alert.setContentText("Un produit avec le même nom existe déjà.");
+                alert.showAndWait();
+                return;
+            }
+
+            // Vérifier si un produit avec la même photo existe déjà
+            if (ps.isProductImageExists(productImage)) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erreur lors de l'ajout !");
+                alert.setContentText("Un produit avec la même photo existe déjà.");
+                alert.showAndWait();
+                return;
+            }
+
+            int selectedCategoryId = cs.getCategoryIdFromName2(selectedCategoryNameProduct);
+            if (selectedCategoryId == -1) {
+                // Si la catégorie n'existe pas, afficher un message d'erreur
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erreur lors de l'ajout !");
+                alert.setContentText("La catégorie sélectionnée n'existe pas.");
+                alert.showAndWait();
+                return;
+            }
+            ps.addProduct(new Produit(selectedCategoryId, productName, priceProduct, qteStockProduct, qteSeuil, productImage));
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Succès !");
+            alert.setContentText("Produit ajouté avec succès !");
+            alert.showAndWait();
+            //loadDetailsProduitsView();
+            af.ActualiserListeProduits(event);
+            af.AfficherProd();
+            ComboCategorieProduit.getSelectionModel().clearSelection();
+            NameProduitLabel.clear();
+            ProductPriceField.clear();
+            QteStockProduitLabel.clear();
+            QteSeuilProductLabel.clear();
+            productImageField.clear();
+        } catch (Exception exception) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur !");
+            alert.setContentText(exception.getMessage());
+            System.out.println(exception.getMessage());
+            alert.showAndWait();
+        }
     }
-/***********************************************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /***********************************************/
 public void loadDetailsCategorieView() throws IOException {
     FXMLLoader loader = new FXMLLoader(getClass().getResource("DetailsCategorie.fxml"));
     Parent root = loader.load();

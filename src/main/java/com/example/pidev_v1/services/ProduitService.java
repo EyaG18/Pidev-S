@@ -290,6 +290,33 @@ public class ProduitService implements IProduit {
         return ListProduct;
     }
 
+
+
+    List<Produit> produits = getProductList();
+
+    @Override
+    public boolean isProductNameExists(String productName) {
+        for (Produit produit : produits) {
+            if (produit.getNomP().equals(productName)) {
+                System.out.println("Produit nom existe");
+                return true;
+               // Le produit avec le même nom existe déjà
+            }
+        }
+        System.out.println("Produit nom existe pas");
+        return false; // Aucun produit avec le même nom n'a été trouvé
+    }
+
+    @Override
+    public boolean isProductImageExists(String productImage) {
+        for (Produit produit : produits) {
+            if (produit.getImageP().equals(productImage)) {
+                return true; // Le produit avec la même photo existe déjà
+            }
+        }
+        return false; // Au
+    }
+
 /********************************/
 
 

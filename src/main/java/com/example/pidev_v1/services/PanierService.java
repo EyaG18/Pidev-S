@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
 
@@ -18,7 +19,7 @@ public class PanierService implements IPanier{
     Statement statement= null;
     private PreparedStatement ste;
     MyDataBase connect = new MyDataBase();
-    private Map<Produit, Integer> mapProduitsDansPanier;
+    private Map<Produit, Integer> mapProduitsDansPanier = new HashMap<>();
     private double totalPanier;
 
     UserService Us = new UserService();
@@ -62,12 +63,21 @@ public class PanierService implements IPanier{
     @Override
     public void creerPanier(User p, double tot) {
 
-        List<User> lu = Us.afficher();
-        p= Us.RecuperUserById(3,lu);
-        System.out.println(p);
+    }
+
+    @Override
+    public void CreatePanierSsTotal(User p, Map<Produit, Integer> mapProduitsDansPanier) {
 
 
+    }
 
+    @Override
+    public void CreatePanierAvecTotal(User p, Map<Produit, Integer> mapProduitsDansPanier) {
+
+    }
+
+    @Override
+    public void CreateAllPanier(User p, Map<Produit, Integer> mapProduitsDansPanier) {
 
     }
 
@@ -77,6 +87,37 @@ public class PanierService implements IPanier{
 
 
     }
+
+    @Override
+    public void CreatePanierForuserOnly(User p) {
+        String sql = "INSERT INTO panier (id_user) VALUES ('" + p.getId_user() + "')";
+
+        try
+        {
+            PreparedStatement ste = cnx.prepareStatement(sql);
+            // ste= cnx.createStatement();
+            ste.executeUpdate(sql);
+            System.out.println("Panier crée pour le user : " + p.getNomuser() + "" + p.getPrenomuser());
+        } catch (SQLException e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void creerPanierbyIdUser(int idc) {
+        String sql = "INSERT INTO panier (id_user) VALUES (?)";
+
+        try {
+            PreparedStatement ste = cnx.prepareStatement(sql);
+            ste.setInt(1, idc); // Utilisation d'un paramètre pour définir la valeur de id_user
+            ste.executeUpdate();
+            System.out.println("Panier créé pour l'utilisateur avec l'ID : " + idc);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 
 }

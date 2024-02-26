@@ -30,6 +30,7 @@ public class UserService implements CRUD<User >{
             pstmt.setString(4, p.getEmailUsr());
             pstmt.setString(5, p.getPassword());
             pstmt.setInt(6, p.getNumtel());
+            pstmt.setString(7, p.getRole());
             pstmt.executeUpdate();
             System.out.println("Utilisateur ajouté avec succès");
         } catch (SQLException ex) {
@@ -61,14 +62,14 @@ public class UserService implements CRUD<User >{
         String req = "UPDATE `user` SET `nomuser`=?, `prenomuser`=?, `AdrUser`=?, `EmailUsr`=?, `password`=?, `Numtel`=?, `Role`=? WHERE `id_user`=?";
         try {
             PreparedStatement pstmt = cnx.prepareStatement(req);
-            pstmt.setString(1, p.getNomuser());
+                    pstmt.setString(1, p.getNomuser());
             pstmt.setString(2, p.getPrenomuser());
             pstmt.setString(3, p.getAdrUser());
             pstmt.setString(4, p.getEmailUsr());
             pstmt.setString(5, p.getEmailUsr());
-            pstmt.setInt(6,p.getNumtel());
+            pstmt.setInt(6, p.getNumtel());
+            pstmt.setString(7, p.getRole());
             pstmt.setInt(8, p.getId_user());
-            pstmt.setString(8, String.valueOf(p.getRole()));
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows > 0) {
                 System.out.println("Utilisateur mis à jour avec succès");
@@ -95,17 +96,8 @@ public class UserService implements CRUD<User >{
                 String emailUsr = rs.getString("EmailUsr");
                 String password = rs.getString("password");
                 int numtel = rs.getInt("Numtel");
-                String roleStr = rs.getString("Role"); // Récupérer le rôle sous forme de chaîne depuis la base de données
-                RoleUser role = null;
-                try {
-                    role = RoleUser.valueOf(roleStr); // Convertir la chaîne en une instance de l'énumération RoleUser
-                } catch (IllegalArgumentException e) {
-                    // Gérer le cas où la chaîne ne correspond à aucun des noms d'énumération définis
-                    System.err.println("La chaîne de rôle récupérée de la base de données n'est pas valide: " + roleStr);
-                    e.printStackTrace(); // Afficher la trace de la pile pour le débogage
-                }
-                users.add(new User(nomuser, prenomuser, adrUser, emailUsr, password, numtel, role)); // Créer un nouvel utilisateur avec le rôle converti
-
+                String role = rs.getString("Role");
+                users.add(new User(id_user, nomuser, prenomuser, adrUser, emailUsr,password, numtel, role));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -122,6 +114,18 @@ public class UserService implements CRUD<User >{
         }
         return null; // Re
     }
+    public boolean checkLoginUser(String email,String password){
+        List<User> users = afficher();
+
+        for (User user : users) {
+            if (user.getEmailUsr().equals(email) && user.getPassword().equals(password)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 
 
 }

@@ -13,6 +13,22 @@ public class Panier {
       mapProduitsDansPanier = new HashMap<>();
       calculateTotalPanier();
    }
+
+   public Panier(User utilisateurPan) {
+      this.utilisateurPan = utilisateurPan;
+   }
+
+   public Panier(User utilisateurPan, Map<Produit, Integer> mapProduitsDansPanier) {
+      this.utilisateurPan = utilisateurPan;
+      this.mapProduitsDansPanier = mapProduitsDansPanier;
+   }
+
+   public Panier(int id_Panier, User utilisateurPan, Map<Produit, Integer> mapProduitsDansPanier) {
+      Id_Panier = id_Panier;
+      this.utilisateurPan = utilisateurPan;
+      this.mapProduitsDansPanier = mapProduitsDansPanier;
+   }
+
    public double getTotalPanier() {
       return totalPanier;
    }
