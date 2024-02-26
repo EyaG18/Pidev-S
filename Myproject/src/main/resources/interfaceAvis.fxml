@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="654.0" prefWidth="1157.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.InterfceAvisController">
+   <children>
+      <AnchorPane layoutX="17.0" layoutY="50.0" prefHeight="354.0" prefWidth="1111.0" style="-fx-background-color: #fff;" styleClass="shadow" stylesheets="@test2.css" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="17.0">
+         <children>
+            <TableView fx:id="table_avis" layoutX="14.0" layoutY="57.0" prefHeight="282.0" prefWidth="811.0" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0">
+              <columns>
+                <TableColumn fx:id="nomUC1" prefWidth="151.20000553131104" text="Nom utilisateur" />
+                <TableColumn fx:id="nomPC2" prefWidth="165.60003662109375" text="Nom Produit" />
+                  <TableColumn fx:id="commentaireC3" prefWidth="400.00001525878906" text="Commentaire" />
+                  <TableColumn fx:id="noteC4" prefWidth="95.20001220703125" text="Note /5" />
+              </columns>
+            </TableView>
+            <Label layoutX="29.0" layoutY="24.0" prefHeight="22.0" prefWidth="202.0" text="Consulter Avis-Utilisateurs" textFill="#969696">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <JFXButton fx:id="modifieraviB" buttonType="RAISED" layoutX="905.0" layoutY="102.2" prefHeight="49.0" prefWidth="158.0" style="-fx-background-color: #ffbf59;" text="              Modifier" AnchorPane.topAnchor="102.2" />
+            <JFXButton fx:id="supprimeraviB" buttonType="RAISED" layoutX="905.0" layoutY="174.0" onAction="#supprimeravi" prefHeight="49.0" prefWidth="158.0" style="-fx-background-color: #ff5979;" text="                 Supprimer" />
+            <JFXButton fx:id="actualiseraviB" buttonType="RAISED" layoutX="905.0" layoutY="244.0" onAction="#actualiserAvis" prefHeight="49.0" prefWidth="158.0" style="-fx-background-color: #76c2f5;" text="                   Actualiser" />
+            <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="935.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@image/editer.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="935.0" layoutY="183.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@image/poubelle-de-recyclage.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="935.0" layoutY="253.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@image/symbole-de-recyclage.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="anchorAvis" layoutX="17.0" layoutY="424.0" prefHeight="200.0" prefWidth="1123.0" style="-fx-background-color: #fff;" styleClass="shadow" stylesheets="@test2.css" AnchorPane.bottomAnchor="8.0" AnchorPane.topAnchor="416.0">
+         <children>
+            <Label layoutX="33.0" layoutY="14.0" prefHeight="22.0" prefWidth="296.0" text="N'hésitez pas d'ajouter votre Avis" textFill="#969696">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <TextArea fx:id="commentaireTF" layoutX="422.0" layoutY="55.0" prefHeight="170.0" prefWidth="316.0" AnchorPane.topAnchor="55.0" />
+            <Label layoutX="295.0" layoutY="42.0" prefHeight="50.0" prefWidth="116.0" text="commentaire" textFill="#000000ca">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="757.0" layoutY="46.0" prefHeight="50.0" prefWidth="116.0" text="note /5" textFill="#000000ca">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="etoile1" fitHeight="40.0" fitWidth="46.0" layoutX="860.4000000000001" layoutY="55.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="222.79999999999995">
+               <image>
+                  <Image url="@image/etoile.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="etoile2" fitHeight="40.0" fitWidth="46.0" layoutX="915.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@image/etoile.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="etoile3" fitHeight="40.0" fitWidth="46.0" layoutX="968.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@image/etoile.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="etoile4" fitHeight="40.0" fitWidth="46.0" layoutX="1018.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@image/etoile.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="etoile5" fitHeight="40.0" fitWidth="46.0" layoutX="1070.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@image/etoile.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="etoileC1" fitHeight="40.0" fitWidth="46.0" layoutX="862.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@image/etoile%20(1).png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="etoileC2" fitHeight="40.0" fitWidth="46.0" layoutX="915.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@image/etoile%20(1).png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="etoileC3" fitHeight="40.0" fitWidth="46.0" layoutX="968.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@image/etoile%20(1).png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="etoileC4" fitHeight="40.0" fitWidth="46.0" layoutX="1018.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@image/etoile%20(1).png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="etoileC5" fitHeight="40.0" fitWidth="46.0" layoutX="1070.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@image/etoile%20(1).png" />
+               </image>
+            </ImageView>
+            <JFXButton fx:id="ajoutaviB" buttonType="RAISED" layoutX="889.0" layoutY="154.0" onAction="#ajouteravis" prefHeight="49.0" prefWidth="158.0" style="-fx-background-color: #ffbfec;" text="          Ajouter" />
+            <ImageView fitHeight="31.0" fitWidth="54.0" layoutX="923.0" layoutY="163.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@image/bouton-ajouter.png" />
+               </image>
+            </ImageView>
+            <JFXButton fx:id="B1" layoutX="862.0" layoutY="57.0" onAction="#noteA" prefHeight="40.0" prefWidth="40.0" />
+            <JFXButton fx:id="B2" layoutX="915.0" layoutY="57.0" onAction="#noteB" prefHeight="40.0" prefWidth="40.0" />
+            <JFXButton fx:id="B3" layoutX="968.0" layoutY="57.0" onAction="#noteC" prefHeight="40.0" prefWidth="40.0" />
+            <JFXButton fx:id="B4" layoutX="1017.0" layoutY="58.0" onAction="#noteD" prefHeight="40.0" prefWidth="40.0" />
+            <JFXButton fx:id="B5" layoutX="1070.0" layoutY="58.0" onAction="#noteE" prefHeight="40.0" prefWidth="40.0" />
+            <Label layoutX="14.0" layoutY="42.0" prefHeight="50.0" prefWidth="116.0" text="Nom Produit" textFill="#000000ca">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <TextField fx:id="nomPTF" layoutX="116.0" layoutY="56.0" AnchorPane.topAnchor="55.0" />
+         </children>
+      </AnchorPane>
+      <Label fx:id="recupererID" layoutX="689.0" layoutY="21.0" prefHeight="18.0" prefWidth="60.0" text="3" visible="false" />
+   </children>
+</AnchorPane>
