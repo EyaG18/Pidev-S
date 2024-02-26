@@ -17,4 +17,13 @@ public interface ICategorie {
     //public String GetCategoryNameById(int idC);
 
     public void UpdateCategoryByName(String oldName, String newName);
+    public void  DeleteCategoryByName(String namec);
+
+    public int getCategoryIdFromName2(String selectedCategoryNameProduct);
+
+    public String getCategoryNameById(int categoryId);
+
+    public Catégorie getCategoryById(int categoryId);
+
+    public Catégorie getCategoryBName(String chosenNameC);
 }
