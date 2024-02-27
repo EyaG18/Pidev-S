@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -109,6 +110,10 @@ public class FournisseurService implements IService<Fournisseur> {
         }
     }
 
+    @Override
+    public void updateOffreByTitreOffre(String oldTitreOffre, String newTitreOffre, LocalDate newDateDebut, LocalDate newDateFin, String newReduction, int newIdProduit) {
+
+    }
 
 
 }

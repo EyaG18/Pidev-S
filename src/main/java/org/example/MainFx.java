@@ -18,7 +18,7 @@ public class MainFx extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
                 // Load and display the supplier form
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterOffre.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterFournisseur.fxml"));
                 Parent root = loader.load();
                 Scene scene = new Scene(root);
 

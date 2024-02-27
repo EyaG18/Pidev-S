@@ -13,7 +13,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import java.net.URL;
 import java.util.ResourceBundle;
-
+import javafx.scene.control.TextField;
 public class AfficherFournisseurController implements Initializable {
 
     @FXML
@@ -31,10 +31,20 @@ public class AfficherFournisseurController implements Initializable {
     @FXML
     private TableView<Fournisseur> table;
 
+    @FXML
+    private TextField adrTF;
+    private Fournisseur selectedFournisseur; // To store the selected Fournisseur
     private final FournisseurService FS = new FournisseurService();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        table.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                selectedFournisseur = newSelection;
+                adrTF.setText(selectedFournisseur.getAdresse_fournisseur());
+            }
+        });
+
         refreshTable();
     }
 
@@ -99,5 +109,14 @@ public class AfficherFournisseurController implements Initializable {
         alert.setHeaderText(headerText);
         alert.setContentText(contentText);
         alert.showAndWait();
+    }
+    @FXML
+    void modifier(ActionEvent event) {
+        if (selectedFournisseur != null) {
+            String newAdresse = adrTF.getText(); // Get the modified adresse from the TextField
+            selectedFournisseur.setAdresse_fournisseur(newAdresse); // Update the adresse of the selected Fournisseur
+            table.refresh(); // Refresh the TableView to reflect the changes
+        }
+
     }
 }

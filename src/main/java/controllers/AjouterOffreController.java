@@ -4,21 +4,30 @@ import entities.Offre;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+
+import java.sql.*;
 import java.util.Optional;
 
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.ButtonType;
+import javafx.stage.Stage;
+import java.io.IOException;
 import javafx.scene.control.Alert.AlertType;
+
+import javafx.scene.Parent;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import service.OffreService;
 import utils.DataSource;
 import javafx.collections.ObservableList;
+import javafx.scene.layout.AnchorPane;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.time.LocalDate;
-import java.util.List;
+
 import javafx.collections.FXCollections;
 
 
@@ -62,10 +71,16 @@ public class AjouterOffreController {
     @FXML
     private TableView<Offre> tableoffre;
     @FXML
-    public void initialize() {
+    private Button modifierButton;
 
-        AfficherOffre();
-    }
+    @FXML
+    private Button nextbutt;
+    @FXML
+    private AnchorPane window;
+
+
+
+
 
     @FXML
     void ajouter(ActionEvent event) {
@@ -77,7 +92,25 @@ public class AjouterOffreController {
             showAlert(AlertType.ERROR, "Error", "Invalid Date", "Please select valid start and end dates.");
             return;
         }
+        String reduction = reductionTF.getText();
+        if (!reduction.matches("\\d{1,2}%")) {
+            showAlert(AlertType.ERROR, "Error", "Invalid Reduction", "The reduction must be in the format 'XX%' where XX is a number with maximum 2 digits.");
+            return;
+        }
 
+        int idProduit;
+        try {
+            idProduit = Integer.parseInt(id_produitTF.getText());
+        } catch (NumberFormatException e) {
+            showAlert(AlertType.ERROR, "Erreur", "ID Produit Incorrect", "L'ID produit doit être un entier.");
+            return;
+        }
+
+        // Check if the ID is valid
+        if (!isIdProduitValid(idProduit)) {
+            showAlert(AlertType.ERROR, "Error", "Invalid ID Produit", "ID Produit does not exist.");
+            return;
+        }
         // Create a new Offre object with user input
         Offre newOffre = new Offre(
                 Integer.parseInt(id_produitTF.getText()), // Assuming Id_Produit is an integer
@@ -96,7 +129,21 @@ public class AjouterOffreController {
         // Refresh the table view to display the updated data
         AfficherOffre();
     }
+    private Connection conn;
 
+    public boolean isIdProduitValid(int idProduit) {
+        String query = "SELECT * FROM produit WHERE Id_Produit = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setInt(1, idProduit);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                return rs.next(); // Returns true if the Id_Produit exists, false otherwise
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle the exception appropriately
+            return false;
+        }
+
+    }
 
 
     public ObservableList<Offre> getOffreList() {
@@ -159,39 +206,58 @@ public class AjouterOffreController {
     }
 
     @FXML
-    void modifier(ActionEvent event) {
-        // Get the selected offer from the table
-        Offre selectedOffre = tableoffre.getSelectionModel().getSelectedItem();
+    public void modifier(ActionEvent event) {
+        try {
+            // Get the selected offer from the table
+            Offre selectedOffre = tableoffre.getSelectionModel().getSelectedItem();
+            if (selectedOffre == null) {
+                showAlert(Alert.AlertType.ERROR, "Error", "No Offer Selected", "Please select an offer to modify.");
+                return;
+            }
 
-        // Check if an offer is selected
-        if (selectedOffre == null) {
-            showAlert(AlertType.ERROR, "Error", "No Offer Selected", "Please select an offer to modify.");
-            return;
+            // Get the new attribute values
+            String newTitreOffre = titre_offreTF.getText();
+            LocalDate newDateDebut = date_debutTF.getValue(); // Assuming you have a DatePicker named date_debutPicker
+            LocalDate newDateFin = date_finTF.getValue(); // Assuming you have a DatePicker named date_finPicker
+            String newReduction = reductionTF.getText(); // Assuming you have a TextField named reductionTF
+            int newIdProduit = Integer.parseInt(id_produitTF.getText()); // Assuming you have a TextField named id_produitTF for the new Id_Produit value
+
+            // Get the old attribute values
+            String oldTitreOffre = selectedOffre.getTitre_Offre();
+
+            // Update the offre with the new attribute values
+            OS.updateOffreByTitreOffre(oldTitreOffre, newTitreOffre, newDateDebut, newDateFin, newReduction, newIdProduit);
+
+            // Show success message
+            showAlert(Alert.AlertType.INFORMATION, "Succès !", "Offre modifiée avec succès !", "");
+
+            // Refresh the table view
+            AfficherOffre();
+
+            // Clear the text field
+            titre_offreTF.clear();
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, "Erreur !", "Une erreur s'est produite : " + e.getMessage(), "");
         }
+    }
 
-        // Get the existing ID of the selected offer
-        int existingId = selectedOffre.getIdOffre();
 
-        // Update the selected offer with new information
-        selectedOffre.setId_Produit(Integer.parseInt(id_produitTF.getText())); // Assuming Id_ProduitTF contains the new Id_Produit value
-        selectedOffre.setDate_debut(date_debutTF.getValue());
-        selectedOffre.setDate_fin(date_finTF.getValue());
-        selectedOffre.setReduction(reductionTF.getText());
-        selectedOffre.setTitre_Offre(titre_offreTF.getText());
+    @FXML
+    public void initialize() {
 
-        // Set the existing ID back to the selected offer
-        selectedOffre.setIdOffre(existingId);
 
-        // Call the update method in OffreService
-        OS.update(selectedOffre);
-
-        // Clear input fields and refresh the table
-        clearInputFields();
+        idproduitaff.setCellValueFactory(new PropertyValueFactory<>("id_Produit"));
+        datedebutaff.setCellValueFactory(new PropertyValueFactory<>("date_debut"));
+        datefinaff.setCellValueFactory(new PropertyValueFactory<>("date_fin"));
+        reductionaff.setCellValueFactory(new PropertyValueFactory<>("reduction"));
+        titreaff.setCellValueFactory(new PropertyValueFactory<>("titre_Offre"));
         AfficherOffre();
 
-        // Optionally, display a success message
-        showAlert(AlertType.INFORMATION, "Success", "Offer Modified", "The offer has been successfully modified.");
+
     }
+
+
+
 
 
     @FXML
@@ -229,4 +295,25 @@ public class AjouterOffreController {
 
         }
     }
+    @FXML
+    void front(ActionEvent event) {
+        try {
+            // Load the FXML file for the "AfficherOffre" window
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherOffre.fxml"));
+            Parent root = loader.load();
+
+            // Create a new scene
+            Scene scene = new Scene(root);
+
+            // Get the stage (window) from the event source
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            // Set the new scene on the stage
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace(); // Handle loading error
+        }
+    }
+
 }

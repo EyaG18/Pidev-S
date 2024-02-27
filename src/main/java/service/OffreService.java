@@ -2,7 +2,7 @@ package service;
 
 import entities.Offre;
 import utils.DataSource;
-
+import java.sql.Connection;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,8 +10,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.PreparedStatement;
-import java.util.Date;
 import java.time.LocalDate;
+
 public class OffreService implements IService<Offre>{
 
     private Connection conn;
@@ -69,7 +69,7 @@ public class OffreService implements IService<Offre>{
 
     @Override
     public void update(Offre offre) {
-        String requete = "UPDATE offre SET id_Produit = ?, date_debut = ?, date_fin = ?, reduction = ?, titre_offre = ? WHERE idOffre = ?";
+        String requete = "UPDATE offre SET id_Produit = ?, date_debut = ?, date_fin = ?, reduction = ? WHERE titre_offre = ?";
         try {
             PreparedStatement ps = conn.prepareStatement(requete);
             ps.setInt(1, offre.getId_Produit());
@@ -80,14 +80,15 @@ public class OffreService implements IService<Offre>{
 
             int rowsUpdated = ps.executeUpdate();
             if (rowsUpdated > 0) {
-                System.out.println("Offre updated successfully.");
+                System.out.println("Offres with titre_offre " + offre.getTitre_Offre() + " updated successfully.");
             } else {
-                System.out.println("Failed to update Offre. Offre with id " + offre.getIdOffre() + " not found.");
+                System.out.println("Failed to update Offres. No Offre found with titre_offre " + offre.getTitre_Offre());
             }
         } catch (SQLException e) {
             throw new RuntimeException("Error updating Offre: " + e.getMessage(), e);
         }
     }
+
 
 
     @Override
@@ -128,5 +129,48 @@ public class OffreService implements IService<Offre>{
 
 
 
+    @Override
+    public void updateOffreByTitreOffre(String oldTitreOffre, String newTitreOffre, LocalDate newDateDebut, LocalDate newDateFin, String newReduction, int newIdProduit) {
+        String sql = "UPDATE offre SET titre_offre = ?, date_debut = ?, date_fin = ?, reduction = ?, id_Produit = ? WHERE titre_offre = ?";
+
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, newTitreOffre);
+            preparedStatement.setDate(2, java.sql.Date.valueOf(newDateDebut));
+            preparedStatement.setDate(3, java.sql.Date.valueOf(newDateFin));
+            preparedStatement.setString(4, newReduction);
+            preparedStatement.setInt(5, newIdProduit);
+            preparedStatement.setString(6, oldTitreOffre);
+            int rowsUpdated = preparedStatement.executeUpdate();
+
+            if (rowsUpdated > 0) {
+                System.out.println("Offre updated successfully!");
+            } else {
+                System.out.println("Failed to update Offre. Offre with titre_offre " + oldTitreOffre + " not found.");
+            }
+        } catch (SQLException e) {
+            // Handle the exception appropriately in your application
+            e.printStackTrace();
+        }
     }
 
+
+
+    public String getProduitImageById(int Id_Produit) {
+        String imagePath = null;
+        String query = "SELECT ImageP FROM produit WHERE Id_Produit = ?";
+
+        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setInt(1, Id_Produit);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                imagePath = rs.getString("ImageP");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle the exception appropriately in your application
+        }
+
+        return imagePath;
+    }
+}

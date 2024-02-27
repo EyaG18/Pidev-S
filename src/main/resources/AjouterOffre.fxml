@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="563.0" prefWidth="747.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AjouterOffreController">
+<AnchorPane fx:id="window" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: lightblue;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AjouterOffreController">
    <children>
       <DatePicker fx:id="date_debutTF" layoutX="220.0" layoutY="62.0" />
       <DatePicker fx:id="date_finTF" layoutX="220.0" layoutY="135.0" />
@@ -30,7 +30,8 @@
         </columns>
       </TableView>
       <Button layoutX="262.0" layoutY="524.0" mnemonicParsing="false" onAction="#supprimer" text="Supprimer" />
-      <Button layoutX="374.0" layoutY="524.0" mnemonicParsing="false" onAction="#modifier" text="Modifier" />
+      <Button fx:id="modifierButton" layoutX="374.0" layoutY="524.0" mnemonicParsing="false" onAction="#modifier" text="Modifier" />
       <TextField fx:id="id_produitTF" layoutX="509.0" layoutY="62.0" />
+      <Button fx:id="nextbutt" layoutX="681.0" layoutY="524.0" mnemonicParsing="false" onAction="#front" text="front" />
    </children>
 </AnchorPane>

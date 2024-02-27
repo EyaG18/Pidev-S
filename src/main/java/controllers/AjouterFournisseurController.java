@@ -13,7 +13,17 @@ import service.FournisseurService;
 
 
 
+import javafx.fxml.FXMLLoader;
 
+
+import javafx.scene.Node;
+import javafx.scene.Scene;
+
+import javafx.stage.Stage;
+import java.io.IOException;
+
+
+import javafx.scene.Parent;
 
 public class AjouterFournisseurController {
 
@@ -42,10 +52,33 @@ public class AjouterFournisseurController {
     @FXML
     void ajouterF(ActionEvent event) {
         // Get data from text fields
-        int idProduit = Integer.parseInt(idproduitTF.getText());
+
+        int idProduit;
+        try {
+            idProduit = Integer.parseInt(idproduitTF.getText());
+        } catch (NumberFormatException e) {
+            showAlert(AlertType.ERROR, "Erreur", "ID Produit Incorrect", "L'ID produit doit être un entier.");
+            return;
+        }
+
         String nom = nomTF.getText();
         String num = numTF.getText();
         String adresse = adresseTF.getText();
+
+        // Validate the length and format of the supplier number
+        if (num.length() != 8) {
+            showAlert(AlertType.ERROR, "Erreur", "Numéro Fournisseur Incorrect", "Le numéro du fournisseur doit avoir une longueur de 7 chiffres.");
+            return;
+        }
+        // Check if the number contains only digits
+        if (!num.matches("\\d+")) {
+            showAlert(AlertType.ERROR, "Erreur", "Numéro Fournisseur Incorrect", "Le numéro du fournisseur doit contenir uniquement des chiffres.");
+            return;
+        }
+        if (nom.matches(".*\\d+.*")) {
+            showAlert(AlertType.ERROR, "Erreur", "Nom Fournisseur Incorrect", "Le nom du fournisseur ne doit pas contenir de chiffres.");
+            return;
+        }
 
         // Create a new Fournisseur object
         Fournisseur fournisseur = new Fournisseur(idProduit, nom, num, adresse);
@@ -54,9 +87,14 @@ public class AjouterFournisseurController {
         FS.add(fournisseur);
 
         showSuccessMessage();
-
     }
 
+    public void showAlert(Alert.AlertType type, String title, String header, String content) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();}
     private void showSuccessMessage() {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Information");
@@ -67,18 +105,23 @@ public class AjouterFournisseurController {
 
     @FXML
     void afficher(ActionEvent event) {
-        int idProduit = Integer.parseInt(idproduitTF.getText());
-        String nom = nomTF.getText();
-        String num = numTF.getText();
-        String adresse = adresseTF.getText();
+        try {
+            // Load the FXML file for the "Afficher Fournisseur" window
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherFournisseur.fxml"));
+            Parent root = loader.load();
 
-        // Create a new Fournisseur object
-        Fournisseur fournisseur = new Fournisseur(idProduit, nom, num, adresse);
+            // Create a new scene
+            Scene scene = new Scene(root);
 
-        // Call the method in AfficherFournisseurController to update the table
-        AfficherFournisseurController afficherController = new AfficherFournisseurController();
-        afficherController.updateTableWithFournisseur(fournisseur);
-    }
+            // Get the stage (window) from the event source
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            // Set the new scene on the stage
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace(); // Handle loading error
+        }}
 
 
 
