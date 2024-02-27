@@ -2,14 +2,17 @@ package controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
+
+import entities.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import services.UserService;
 
@@ -30,56 +33,76 @@ public class Login {
     @FXML
     void CreateAccount(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/authentification.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-
-            Stage stage = (Stage) TFPassword.getScene().getWindow(); // Getting the current stage
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/authentification.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = (Stage) TFEmail.getScene().getWindow();
+            stage.setTitle("Authentification");
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
-            System.out.println(e);
+            throw new RuntimeException(e);
         }
     }
 
     @FXML
     void logIn(ActionEvent event) {
-        UserService us = new UserService();
-        String email = TFEmail.getText();
-        String password = TFPassword.getText();
+        String email = TFEmail.getText().trim();
+        String password = TFPassword.getText().trim();
 
         if (email.isEmpty() || password.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setContentText("Please fill in both email and password fields");
-            alert.show();
+            showAlert("Error", "Please fill in all fields.");
             return;
         }
 
-        if (us.checkLoginUser(email,password)) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Success");
-            alert.setContentText("Login successful");
-            alert.show();
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Dashboard.fxml"));
-                Parent root = loader.load();
-                Scene scene = new Scene(root);
+        UserService userService = new UserService();
+        User user = userService.getUserByEmail(email);
 
-                Stage stage = (Stage) TFEmail.getScene().getWindow(); // Getting the current stage
+        if (user == null || !user.getPassword().equals(password)) {
+            showAlert("Error", "Invalid email or password.");
+            return;
+        }
+        FXMLLoader fxmlLoader;
+
+        if(Objects.equals(user.getRole(), "administrateur"))
+        {
+            try {
+                fxmlLoader = new FXMLLoader(getClass().getResource("/dashboardAdmin.fxml"));
+                AnchorPane root = fxmlLoader.load();
+                Scene scene = new Scene(root);
+                Stage stage = (Stage) TFEmail.getScene().getWindow();
+                stage.setTitle("Dashboard");
                 stage.setScene(scene);
+                dashboardAdmin controller = fxmlLoader.getController();
+                controller.setUser(user);
                 stage.show();
             } catch (IOException e) {
-                System.out.println(e);
+                throw new RuntimeException(e);
             }
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setContentText("Invalid email or password");
-            alert.show();
         }
-    }
+        else {
+            try {
+                fxmlLoader = new FXMLLoader(getClass().getResource("/dashboardUser.fxml"));
+                AnchorPane root = fxmlLoader.load();
+                Scene scene = new Scene(root);
+                Stage stage = (Stage) TFEmail.getScene().getWindow();
+                stage.setTitle("Dashboard");
+                stage.setScene(scene);
+                dashboardUser controller = fxmlLoader.getController();
+                controller.setUser(user);
+                stage.show();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
 
+    }
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
     @FXML
     void initialize() {
         assert TFEmail != null : "fx:id=\"TFEmail\" was not injected: check your FXML file 'Login.fxml'.";

@@ -3,15 +3,14 @@ package controller;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
 import entities.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import services.UserService;
@@ -24,9 +23,6 @@ public class Authentification {
 
     @FXML
     private URL location;
-
-    @FXML
-    private ComboBox<String> ComboBoxRole;
 
     @FXML
     private TextField TFAddress;
@@ -42,18 +38,18 @@ public class Authentification {
 
     @FXML
     private TextField TFPassword;
+
     @FXML
     void Authentificate(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Login.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-
-            Stage stage = (Stage) ComboBoxRole.getScene().getWindow(); // Getting the current stage
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/login.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = (Stage) TFAddress.getScene().getWindow();
+            stage.setTitle("Login");
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
-            System.out.println(e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -64,13 +60,33 @@ public class Authentification {
         String fullName = TFFullName.getText();
         String password = TFPassword.getText();
         String address = TFAddress.getText();
-        int numTel = Integer.parseInt(TFNum.getText());
-        String role = ComboBoxRole.getValue();
+        int numtel = Integer.parseInt(TFNum.getText());
 
-        if (email.isEmpty() || fullName.isEmpty() || password.isEmpty()) {
+        if (email.isEmpty() || fullName.isEmpty() || password.isEmpty() || address.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setContentText("Please fill in all fields");
+            alert.show();
+            return;
+        }
+
+        if(numtel<10000000 || numtel>99999999)
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Number field should contain 8 numbers");
+            alert.show();
+            return;
+        }
+
+        String regex = "^(.+)@(.+)$";
+
+        Pattern pattern = Pattern.compile(regex);
+        if(!pattern.matcher(email).matches())
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Email field isn't in the correct format");
             alert.show();
             return;
         }
@@ -91,7 +107,7 @@ public class Authentification {
 
         UserService ps = new UserService();
 
-        User user = new User(0, firstName,lastName, address, email, password, numTel, role);
+        User user = new User(0, firstName,lastName, address, email, password, numtel, "Client");
         ps.add(user);
 
 
@@ -103,7 +119,6 @@ public class Authentification {
 
     @FXML
     void initialize() {
-        assert ComboBoxRole != null : "fx:id=\"ComboBoxRole\" was not injected: check your FXML file 'authentification.fxml'.";
         assert TFAddress != null : "fx:id=\"TFAddress\" was not injected: check your FXML file 'authentification.fxml'.";
         assert TFEmail != null : "fx:id=\"TFEmail\" was not injected: check your FXML file 'authentification.fxml'.";
         assert TFFullName != null : "fx:id=\"TFFullName\" was not injected: check your FXML file 'authentification.fxml'.";

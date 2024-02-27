@@ -34,7 +34,6 @@ public class UserService implements CRUD<User> {
             System.out.println(ex.getMessage());
         }
     }
-
     @Override
     public void update(User entity) {
         String req = "UPDATE `user` SET `nomuser`=?, `prenomuser`=?, `AdrUser`=?, `EmailUsr`=?, `password`=?, `Numtel`=?, `Role`=? WHERE `id_user`=?";
@@ -44,7 +43,7 @@ public class UserService implements CRUD<User> {
             pstmt.setString(2, entity.getPrenomuser());
             pstmt.setString(3, entity.getAdrUser());
             pstmt.setString(4, entity.getEmailUsr());
-            pstmt.setString(5, entity.getEmailUsr());
+            pstmt.setString(5, entity.getPassword());
             pstmt.setInt(6, entity.getNumtel());
             pstmt.setString(7, entity.getRole());
             pstmt.setInt(8, entity.getId_user());
@@ -100,15 +99,24 @@ public class UserService implements CRUD<User> {
         return users;
     }
 
-    public boolean checkLoginUser(String email,String password){
-        List<User> users = afficher();
-
-        for (User user : users) {
-            if (user.getEmailUsr().equals(email) && user.getPassword().equals(password)) {
-                return true;
+    public User getUserByEmail(String email) {
+        String query = "SELECT * FROM `user` WHERE `EmailUsr` = ?";
+        try (PreparedStatement pstmt = conx.prepareStatement(query)) {
+            pstmt.setString(1, email);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                int id_user = rs.getInt("id_user");
+                String nomuser = rs.getString("nomuser");
+                String prenomuser = rs.getString("prenomuser");
+                String adrUser = rs.getString("AdrUser");
+                String password = rs.getString("password");
+                int numtel = rs.getInt("Numtel");
+                String role = rs.getString("Role");
+                return new User(id_user, nomuser, prenomuser, adrUser, email, password, numtel, role);
             }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
         }
-
-        return false;
+        return null;
     }
 }
