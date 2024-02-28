@@ -77,6 +77,18 @@
       <workItem from="1708812231445" duration="15637000" />
       <workItem from="1708870098783" duration="15406000" />
       <workItem from="1708905313132" duration="5931000" />
+      <workItem from="1708914215707" duration="325000" />
+      <workItem from="1708952795643" duration="7538000" />
+      <workItem from="1708969933033" duration="147000" />
+      <workItem from="1708970382810" duration="51000" />
+      <workItem from="1708970576972" duration="1060000" />
+      <workItem from="1708971662933" duration="138000" />
+      <workItem from="1708971898751" duration="141000" />
+      <workItem from="1708972051546" duration="28000" />
+      <workItem from="1708972117189" duration="24000" />
+      <workItem from="1708972429679" duration="645000" />
+      <workItem from="1708974539789" duration="9395000" />
+      <workItem from="1708988800006" duration="10424000" />
     </task>
     <servers />
   </component>
@@ -90,6 +102,15 @@
           <url>file://$PROJECT_DIR$/src/main/java/org/example/MainFX.java</url>
           <line>18</line>
           <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$USER_HOME$/Downloads/wetransfer_pidev_v11_2024-02-26_1708/pidev_v11/src/main/java/com/example/pidev_v1/FeedProduitsCoteClientsController.java</url>
+          <line>243</line>
+          <properties class="com.example.pidev_v1.FeedProduitsCoteClientsController" method="AfficherProduitsClients">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

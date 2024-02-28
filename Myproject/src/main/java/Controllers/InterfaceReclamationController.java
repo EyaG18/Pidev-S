@@ -114,22 +114,13 @@ refreshtable_reponse();
             e.printStackTrace();
         }
     }
-    public void repondre() {
-
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Reponse.fxml"));
-            Parent root = loader.load();
-             ReponseController rc=loader.getController();
-             rc.setRecupererID_TF(table_reclamation.getSelectionModel().getSelectedItem().getDescription());
-             rc.setRecupererstatuTF(table_reclamation.getSelectionModel().getSelectedItem().getStatu_reclamation());
-             rc.setRecuperetypeTF(table_reclamation.getSelectionModel().getSelectedItem().getType_reclamation());
-             Stage stage = new Stage();
-            stage.setTitle("Ajout Réponse");
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            throw new RuntimeException("Erreur lors du chargement de la vue de réponse", e);
-        }
+    public void repondre() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Reponse.fxml"));
+        Parent root= loader.load();
+        Stage tertiaryStage = new Stage();
+        tertiaryStage.setTitle("Front");
+        tertiaryStage.setScene(new Scene(root));
+        tertiaryStage.show();
 
     }
 

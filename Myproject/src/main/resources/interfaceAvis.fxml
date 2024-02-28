@@ -28,29 +28,35 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <JFXButton fx:id="modifieraviB" buttonType="RAISED" layoutX="905.0" layoutY="102.2" prefHeight="49.0" prefWidth="158.0" style="-fx-background-color: #ffbf59;" text="              Modifier" AnchorPane.topAnchor="102.2" />
-            <JFXButton fx:id="supprimeraviB" buttonType="RAISED" layoutX="905.0" layoutY="174.0" onAction="#supprimeravi" prefHeight="49.0" prefWidth="158.0" style="-fx-background-color: #ff5979;" text="                 Supprimer" />
-            <JFXButton fx:id="actualiseraviB" buttonType="RAISED" layoutX="905.0" layoutY="244.0" onAction="#actualiserAvis" prefHeight="49.0" prefWidth="158.0" style="-fx-background-color: #76c2f5;" text="                   Actualiser" />
-            <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="935.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true">
+            <JFXButton fx:id="modifieraviB" buttonType="RAISED" layoutX="901.0" layoutY="144.0" onAction="#modifierAnchor" prefHeight="49.0" prefWidth="158.0" style="-fx-background-color: #ffbf59;" text="              Modifier" AnchorPane.topAnchor="144.0" />
+            <JFXButton fx:id="supprimeraviB" buttonType="RAISED" layoutX="901.0" layoutY="220.0" onAction="#supprimeravi" prefHeight="49.0" prefWidth="158.0" style="-fx-background-color: #ff5979;" text="                 Supprimer" />
+            <JFXButton fx:id="actualiseraviB" buttonType="RAISED" layoutX="901.0" layoutY="290.0" onAction="#actualiserAvis" prefHeight="49.0" prefWidth="158.0" style="-fx-background-color: #76c2f5;" text="                   Actualiser" />
+            <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="931.0" layoutY="156.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@image/editer.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="935.0" layoutY="183.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="931.0" layoutY="229.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@image/poubelle-de-recyclage.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="935.0" layoutY="253.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="931.0" layoutY="299.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@image/symbole-de-recyclage.png" />
                </image>
             </ImageView>
+            <JFXButton fx:id="ajoutB" buttonType="RAISED" layoutX="900.0" layoutY="73.0" onAction="#ajoutanchor" prefHeight="49.0" prefWidth="158.0" style="-fx-background-color: #ffbfec;" text="          Ajouter" />
+            <ImageView fitHeight="31.0" fitWidth="54.0" layoutX="934.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@image/bouton-ajouter.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="anchorAvis" layoutX="17.0" layoutY="424.0" prefHeight="200.0" prefWidth="1123.0" style="-fx-background-color: #fff;" styleClass="shadow" stylesheets="@test2.css" AnchorPane.bottomAnchor="8.0" AnchorPane.topAnchor="416.0">
+      <AnchorPane fx:id="anchorAvis" layoutX="17.0" layoutY="424.0" prefHeight="200.0" prefWidth="1123.0" style="-fx-background-color: #fff;" styleClass="shadow" stylesheets="@test2.css" visible="false" AnchorPane.bottomAnchor="8.0" AnchorPane.topAnchor="416.0">
          <children>
-            <Label layoutX="33.0" layoutY="14.0" prefHeight="22.0" prefWidth="296.0" text="N'hésitez pas d'ajouter votre Avis" textFill="#969696">
+            <Label fx:id="ajoutL" layoutX="33.0" layoutY="14.0" prefHeight="22.0" prefWidth="296.0" text="N'hésitez pas d'ajouter votre Avis" textFill="#969696" visible="false">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
@@ -91,35 +97,35 @@
                   <Image url="@image/etoile.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="etoileC1" fitHeight="40.0" fitWidth="46.0" layoutX="862.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <ImageView fx:id="etoileC1" fitHeight="40.0" fitWidth="46.0" layoutX="861.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
-                  <Image url="@image/etoile%20(1).png" />
+                  <Image url="@image/etoileC.png" />
                </image>
             </ImageView>
             <ImageView fx:id="etoileC2" fitHeight="40.0" fitWidth="46.0" layoutX="915.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
-                  <Image url="@image/etoile%20(1).png" />
+                  <Image url="@image/etoileC.png" />
                </image>
             </ImageView>
             <ImageView fx:id="etoileC3" fitHeight="40.0" fitWidth="46.0" layoutX="968.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
-                  <Image url="@image/etoile%20(1).png" />
+                  <Image url="@image/etoileC.png" />
                </image>
             </ImageView>
             <ImageView fx:id="etoileC4" fitHeight="40.0" fitWidth="46.0" layoutX="1018.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
-                  <Image url="@image/etoile%20(1).png" />
+                  <Image url="@image/etoileC.png" />
                </image>
             </ImageView>
             <ImageView fx:id="etoileC5" fitHeight="40.0" fitWidth="46.0" layoutX="1070.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
-                  <Image url="@image/etoile%20(1).png" />
+                  <Image url="@image/etoileC.png" />
                </image>
             </ImageView>
-            <JFXButton fx:id="ajoutaviB" buttonType="RAISED" layoutX="889.0" layoutY="154.0" onAction="#ajouteravis" prefHeight="49.0" prefWidth="158.0" style="-fx-background-color: #ffbfec;" text="          Ajouter" />
-            <ImageView fitHeight="31.0" fitWidth="54.0" layoutX="923.0" layoutY="163.0" pickOnBounds="true" preserveRatio="true">
+            <JFXButton fx:id="ajoutaviB" buttonType="RAISED" layoutX="889.0" layoutY="154.0" onAction="#ajouteravis" prefHeight="49.0" prefWidth="158.0" style="-fx-background-color: #F7F09B;" text="          Confirmer" visible="false" />
+            <ImageView fx:id="ajoutImage" fitHeight="31.0" fitWidth="54.0" layoutX="923.0" layoutY="163.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
-                  <Image url="@image/bouton-ajouter.png" />
+                  <Image url="@image/repondre.png" />
                </image>
             </ImageView>
             <JFXButton fx:id="B1" layoutX="862.0" layoutY="57.0" onAction="#noteA" prefHeight="40.0" prefWidth="40.0" />
@@ -133,6 +139,17 @@
                </font>
             </Label>
             <TextField fx:id="nomPTF" layoutX="116.0" layoutY="56.0" AnchorPane.topAnchor="55.0" />
+            <Label fx:id="modifierL" layoutX="33.0" layoutY="14.0" prefHeight="22.0" prefWidth="296.0" text="Modifier votre avis" textFill="#969696" visible="false">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <JFXButton fx:id="confirmerB2" buttonType="RAISED" layoutX="889.0" layoutY="154.0" onAction="#modifieravis" prefHeight="49.0" prefWidth="158.0" style="-fx-background-color: #F7F09B;" text="          Confirmer" visible="false" />
+            <ImageView fx:id="modifierI" fitHeight="31.0" fitWidth="54.0" layoutX="923.0" layoutY="163.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@image/repondre.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
       <Label fx:id="recupererID" layoutX="689.0" layoutY="21.0" prefHeight="18.0" prefWidth="60.0" text="3" visible="false" />

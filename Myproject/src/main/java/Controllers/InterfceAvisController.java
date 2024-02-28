@@ -24,10 +24,17 @@ public class InterfceAvisController implements Initializable {
     ServiceAvis sa=new ServiceAvis();
     int i=-1;
     @FXML
-    private JFXButton actualiseraviB;
+    private Label ajoutL;
+
+    @FXML
+    private Label modifierL;
 
     @FXML
     private JFXButton ajoutaviB;
+
+    @FXML
+    private JFXButton actualiseraviB;
+
 
     @FXML
     private AnchorPane anchorAvis;
@@ -79,7 +86,8 @@ public class InterfceAvisController implements Initializable {
 
     @FXML
     private ImageView etoileC5;
-
+    @FXML
+    private JFXButton ajoutB;
     @FXML
     private JFXButton modifieraviB;
     @FXML
@@ -88,6 +96,16 @@ public class InterfceAvisController implements Initializable {
     private Label recupererID;
     @FXML
     private TextField nomPTF;
+    @FXML
+    private ImageView ajoutImage;
+    @FXML
+    private JFXButton confirmerB2;
+
+    @FXML
+    private ImageView modifierI;
+
+    @FXML
+    private Label modifierl;
 
 
     @FXML
@@ -104,6 +122,21 @@ public class InterfceAvisController implements Initializable {
     @FXML
     private TableView<Avis> table_avis;
 
+    public void setCommentaireTF(String commentaireTF) {
+        this.commentaireTF.setText(commentaireTF);
+    }
+
+    public void setNomPTF(String nomPTF) {
+        this.nomPTF.setText(nomPTF);
+    }
+
+    public TextArea getCommentaireTF() {
+        return commentaireTF;
+    }
+
+    public TextField getNomPTF() {
+        return nomPTF;
+    }
 
     @FXML
     void noteA(ActionEvent event) {
@@ -163,8 +196,88 @@ public class InterfceAvisController implements Initializable {
     }
     @FXML
     void actualiserAvis(ActionEvent event) {
-refreshtable_avis();
+        refreshtable_avis();
     }
+
+    @FXML
+    void ajoutanchor(ActionEvent event) {
+         anchorAvis.setVisible(true);
+         ajoutL.setVisible(true);
+         ajoutaviB.setVisible(true);
+         ajoutImage.setVisible(true);
+
+    }
+
+
+    @FXML
+    void modifierAnchor(ActionEvent event) {
+        anchorAvis.setVisible(true);
+        modifierL.setVisible(true);
+        confirmerB2.setVisible(true);
+        modifierI.setVisible(true);
+        setNomPTF( table_avis.getSelectionModel().getSelectedItem().getNomP());
+        setCommentaireTF(table_avis.getSelectionModel().getSelectedItem().getCommentaire());
+        int n=table_avis.getSelectionModel().getSelectedItem().getNote();
+        switch (n)
+        {
+            case(1):
+                etoileC1.setVisible(true);
+                etoileC2.setVisible(false);
+                etoileC3.setVisible(false);
+                etoileC4.setVisible(false);
+                etoileC5.setVisible(false);
+                i=1;
+                break;
+            case(2):
+                etoileC1.setVisible(true);
+                etoileC2.setVisible(true);
+                etoileC3.setVisible(false);
+                etoileC4.setVisible(false);
+                etoileC5.setVisible(false);
+                i=2;
+                break;
+            case(3):
+                etoileC1.setVisible(true);
+                etoileC2.setVisible(true);
+                etoileC3.setVisible(true);
+                etoileC4.setVisible(false);
+                etoileC5.setVisible(false);
+                i=3;
+                break;
+            case(4):
+                etoileC1.setVisible(true);
+                etoileC2.setVisible(true);
+                etoileC3.setVisible(true);
+                etoileC4.setVisible(true);
+                etoileC5.setVisible(false);
+                i=4;
+                break;
+            case(5):
+                etoileC1.setVisible(true);
+                etoileC2.setVisible(true);
+                etoileC3.setVisible(true);
+                etoileC4.setVisible(true);
+                etoileC5.setVisible(true);
+                i=5;
+
+
+        }
+    }
+
+    @FXML
+    void modifieravis(ActionEvent event) {
+        int idc= Integer.parseInt(recupererID.getText());
+        int idp= sa.repurerID_produit(nomPTF.getText());
+        int ida=sa.repurerID_avis(idp,idc);
+        sa.update(new Avis(ida,idc,idp,commentaireTF.getText(),i));
+        anchorAvis.setVisible(false);
+        modifierL.setVisible(false);
+        confirmerB2.setVisible(false);
+        modifierI.setVisible(false);
+
+    }
+
+
 
     @FXML
     void ajouteravis(ActionEvent event) {
@@ -175,6 +288,11 @@ refreshtable_avis();
         System.out.println(i);
         int idP=sa.repurerID_produit(nomPTF.getText());
         sa.add(new Avis(id,idP,commentaire,i));
+        /********/
+        anchorAvis.setVisible(false);
+        ajoutL.setVisible(false);
+        ajoutaviB.setVisible(false);
+        ajoutImage.setVisible(false);
     }
 
     @FXML

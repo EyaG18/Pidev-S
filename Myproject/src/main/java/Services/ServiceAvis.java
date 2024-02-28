@@ -115,4 +115,20 @@ public class ServiceAvis implements Services<Avis>{
         }
         return rep;
     }
+    public int repurerID_avis(Integer idp ,Integer idc){
+        String requete="SELECT id_avis FROM avis WHERE id_produit= '"+idp+"' AND id_client='"+idc+"'";
+        int rep=0;
+        try {
+            ste= conn.createStatement();
+            ResultSet rs= ste.executeQuery(requete);
+
+            if(rs.next())
+            {
+                rep= rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return rep;
+    }
 }
