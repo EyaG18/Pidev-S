@@ -82,7 +82,36 @@ public class CardProduct implements Initializable {
     void addBtnP(ActionEvent event) {
 
     }
+/********************Yasmine******************/
+@FXML
+void commenter(ActionEvent event) {
 
+}
+
+    @FXML
+    void noteA(ActionEvent event) {
+
+    }
+
+    @FXML
+    void noteB(ActionEvent event) {
+
+    }
+
+    @FXML
+    void noteC(ActionEvent event) {
+
+    }
+
+    @FXML
+    void noteD(ActionEvent event) {
+
+    }
+
+    @FXML
+    void noteE(ActionEvent event) {
+
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setQuantity();

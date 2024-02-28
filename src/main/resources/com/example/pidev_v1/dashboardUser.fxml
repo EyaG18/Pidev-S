@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="719.0" prefWidth="1016.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pidev_v1.dashboardUser">
+ <children>
+      <Pane layoutX="-1.0" prefHeight="719.0" prefWidth="270.0">
+         <children>
+            <ImageView fitHeight="142.0" fitWidth="264.0" layoutX="28.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@assets/logo.png" />
+               </image>
+            </ImageView>
+            <AnchorPane prefHeight="719.0" prefWidth="264.0" style="-fx-background-color: #C6E6FB;">
+               <children>
+                  <Button layoutX="30.0" layoutY="253.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="199.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Page d'acceuil" />
+                  <Button layoutX="30.0" layoutY="356.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="199.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Explorer" />
+                  <Button layoutX="30.0" layoutY="304.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="199.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Consulter Votre Profil" />
+                  <Button layoutX="30.0" layoutY="415.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="199.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Réclamer" />
+                  <Button layoutX="56.0" layoutY="571.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="148.0" style="-fx-background-color: #C6E6FB;" />
+
+                  <Button layoutX="31.0" layoutY="658.0" mnemonicParsing="false" onAction="#logOut" prefHeight="33.0" prefWidth="199.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Log Out" />
+               </children>
+            </AnchorPane>
+         </children>
+      </Pane>
+      <Text fx:id="userText" layoutX="789.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User" wrappingWidth="167.2000732421875">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Text>
+      <TextField layoutX="617.0" layoutY="20.0" promptText="🔍 Search" style="-fx-border-radius: 5px;" />
+      <Pane layoutX="351.0" layoutY="251.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #C6E6FB;">
+         <children>
+            <Text layoutX="61.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Produits">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Text>
+            <Text layoutX="126.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" text="200">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Text>
+            <Text layoutX="14.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="🏷">
+               <font>
+                  <Font size="62.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+      <Pane layoutX="566.0" layoutY="251.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #C6E6FB;">
+         <children>
+            <Text layoutX="60.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Livraison">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Text>
+            <Text layoutX="126.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" text="30">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Text>
+            <Text layoutX="14.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="🚚">
+               <font>
+                  <Font size="47.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+      <Pane layoutX="780.0" layoutY="251.0" prefHeight="200.0" prefWidth="211.0" style="-fx-background-color: #C6E6FB;">
+         <children>
+            <Text layoutX="50.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reclamation">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Text>
+            <Text layoutX="126.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" text="10">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Text>
+            <Text layoutX="14.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="🚩">
+               <font>
+                  <Font size="42.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+      <Pane layoutX="351.0" layoutY="462.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #C6E6FB;">
+         <children>
+            <Text layoutX="60.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Commands">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Text>
+            <Text layoutX="126.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" text="80">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Text>
+            <Text layoutX="14.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="📦">
+               <font>
+                  <Font size="42.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+      <Pane layoutX="566.0" layoutY="462.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #C6E6FB;">
+         <children>
+            <Text layoutX="60.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Clients">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Text>
+            <Text layoutX="126.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" text="6">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Text>
+            <Text layoutX="14.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="👤">
+               <font>
+                  <Font size="42.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+      <Pane layoutX="786.0" layoutY="462.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #C6E6FB;">
+         <children>
+            <Text layoutX="60.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Avis">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Text>
+            <Text layoutX="126.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" text="60">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Text>
+            <Text layoutX="14.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="📝">
+               <font>
+                  <Font size="44.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+   </children>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</AnchorPane>

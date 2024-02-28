@@ -33,17 +33,8 @@ public class PanierService implements IPanier{
 
 
 
-    @Override
-    public void ajouterProduitDansPanier(Produit produit, int quantite) {
-        if (produit. getQteP() >= quantite) { // Vérifie si la quantité demandée est disponible dans le stock
-            mapProduitsDansPanier.put(produit, quantite);
-            produit. setQteP(produit. getQteP() - quantite); // Réduit la quantité disponible dans le stock
-            calculateTotalPanier();
-        } else {
-            System.out.println("La quantité demandée n'est pas disponible dans le stock.");
-        }
-    }
 
+    /****************************************************/
     private void calculateTotalPanier() {
         double total = 0;
         for (Map.Entry<Produit, Integer> entry : mapProduitsDansPanier.entrySet()) {
@@ -54,40 +45,15 @@ public class PanierService implements IPanier{
         this.totalPanier = total;
         System.out.println(totalPanier);
     }
+
+    /****************************************************/
     @Override
     public void supprimerProduitDuPanier(Produit produit) {
         mapProduitsDansPanier.remove(produit);
         calculateTotalPanier();
     }
 
-    @Override
-    public void creerPanier(User p, double tot) {
-
-    }
-
-    @Override
-    public void CreatePanierSsTotal(User p, Map<Produit, Integer> mapProduitsDansPanier) {
-
-
-    }
-
-    @Override
-    public void CreatePanierAvecTotal(User p, Map<Produit, Integer> mapProduitsDansPanier) {
-
-    }
-
-    @Override
-    public void CreateAllPanier(User p, Map<Produit, Integer> mapProduitsDansPanier) {
-
-    }
-
-    @Override
-    public void creerPanierById(int i, double tot) {
-
-
-
-    }
-
+    /****************************************************/
     @Override
     public void CreatePanierForuserOnly(User p) {
         String sql = "INSERT INTO panier (id_user) VALUES ('" + p.getId_user() + "')";
@@ -103,9 +69,10 @@ public class PanierService implements IPanier{
             throw new RuntimeException(e);
         }
     }
-
+/****************************************************/
     @Override
     public void creerPanierbyIdUser(int idc) {
+
         String sql = "INSERT INTO panier (id_user) VALUES (?)";
 
         try {
@@ -117,7 +84,16 @@ public class PanierService implements IPanier{
             throw new RuntimeException(e);
         }
     }
+    /****************************************************/
+    @Override
+    public void createPanierAll(Panier panier) {
 
-
+    }
+    /****************************************************/
+    @Override
+    public Double GetTotalPanier() {
+        return null;
+    }
+/****************************************************/
 
 }

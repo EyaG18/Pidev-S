@@ -142,7 +142,6 @@ public class AjouterProduit implements Initializable {
             alert.showAndWait();
         }
     }*/
-
     @FXML
     void addProduct(MouseEvent event) {
         try {
@@ -160,7 +159,6 @@ public class AjouterProduit implements Initializable {
                 alert.showAndWait();
                 return;
             }
-
             // Vérifier si un produit avec le même nom existe déjà
             if (ps.isProductNameExists(productName)) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);

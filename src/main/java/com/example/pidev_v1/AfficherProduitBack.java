@@ -84,8 +84,12 @@ public class AfficherProduitBack implements Initializable {
     @FXML
     private PieChart pieChart;
 
+    @FXML
+    private Button BtnCheckStatProduits;
+
     SideBarBackForEmployees sb = new SideBarBackForEmployees();
     //sb.GoToProducts(MouseEvent event);
+
 
 
 
@@ -129,6 +133,11 @@ AfficherProd();
     @FXML
     void BtnUpdateProduitt(MouseEvent event) {
 NavigationControler.OpenInterfaceUpdateProduct(event,"ModifierProduit.fxml");
+    }
+
+    @FXML
+    void GoToKPIsProduits(MouseEvent event) {
+        NavigationControler.OpenKPISProduits(event,"KpisProduitsBack.fxml");
     }
 
     ProduitService ps = new ProduitService();
@@ -257,7 +266,7 @@ private String getCategoryNameById(int categoryId) {
         stage.show();
     }
 /*****************************************************************/
-public void nombreProduitsParCategorie() {
+/*public void nombreProduitsParCategorie() {
     pieChart.getData().clear();
 
     String sql = "SELECT c.NomCatégorie, COUNT(p.Id_Produit) " +
@@ -278,7 +287,7 @@ public void nombreProduitsParCategorie() {
     } catch (SQLException e) {
         e.printStackTrace();
     }
-}
+}*/
 /**************************************************/
 /* hedhi Bl Bar chart
 public void prixMoyenProduitsParCategorie() {
@@ -319,8 +328,8 @@ public void prixMoyenProduitsParCategorie() {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         AfficherProd();
-        evolutionPrixProduits();
-         nombreProduitsParCategorie();
+        //evolutionPrixProduits();
+         //nombreProduitsParCategorie();
 
         tActions.setCellFactory(new Callback<TableColumn<Produit, Void>, TableCell<Produit, Void>>() {
             @Override

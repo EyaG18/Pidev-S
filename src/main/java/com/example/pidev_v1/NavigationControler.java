@@ -12,8 +12,6 @@ import java.io.IOException;
 
 public class NavigationControler {
 
-
-
     public static void changeAddproductPage(MouseEvent event, String fxmlFile){
         Parent root = null;
         try {
@@ -64,7 +62,6 @@ public class NavigationControler {
         }
 
     }
-
     public static void OpenInterfaceUpdateProduct(MouseEvent event , String fxmlFile)
     {
         Parent root = null;
@@ -80,17 +77,25 @@ public class NavigationControler {
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
-
-
-
-
-
-
-
     }
 
 
-
+    public static void OpenKPISProduits(MouseEvent event , String fxmlFile)
+    {
+        Parent root = null;
+        try {
+            FXMLLoader loader = new FXMLLoader(NavigationControler.class.getResource(fxmlFile));
+            root = loader.load();
+            KPIsProduitsBackControler Addproduct = loader.getController();
+            Scene scene = new Scene(root);
+            Stage primaryStage = (Stage)((Node) event.getSource()).getScene().getWindow();
+            primaryStage.setScene(scene);
+            primaryStage.setTitle("Statistiques Générales du Stock");
+            primaryStage.show();
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
 
 
 

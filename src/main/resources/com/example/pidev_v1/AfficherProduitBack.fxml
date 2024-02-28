@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.LineChart?>
-<?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
@@ -15,63 +11,56 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 
-<StackPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pidev_v1.AfficherProduitBack">
+<StackPane prefHeight="783.0" prefWidth="1162.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pidev_v1.AfficherProduitBack">
    <children>
       <AnchorPane prefHeight="719.0" prefWidth="1104.0">
          <children>
-            <AnchorPane prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #FFFFFF;" styleClass="white-background" stylesheets="@../../../../java/com/example/pidev_v1/css/style.css">
+            <AnchorPane prefHeight="783.0" prefWidth="1162.0" style="-fx-background-color: #FFFFFF;" styleClass="white-background" stylesheets="@../../../../java/com/example/pidev_v1/css/style.css">
                <children>
-                  <TableView fx:id="TableViewProductBack" layoutX="298.0" layoutY="240.0" prefHeight="159.0" prefWidth="718.0">
+                  <TableView fx:id="TableViewProductBack" layoutX="298.0" layoutY="338.0" prefHeight="340.0" prefWidth="792.0">
                     <columns>
                         <TableColumn fx:id="IdCatProductColumn" prefWidth="123.0" text="Référence Catégorie" />
                       <TableColumn fx:id="NameProductColumn" prefWidth="87.0" text="Nom Produit" />
                         <TableColumn fx:id="PriceProductColumn" prefWidth="93.0" text="Prix Produit" />
                         <TableColumn fx:id="QuantiteProColumn" prefWidth="118.0" text="Quantité en Stock" />
                         <TableColumn fx:id="QteSeulProColumn" minWidth="0.0" prefWidth="119.0" text="Quantité seuil " />
-                        <TableColumn fx:id="ImageProductColumn" prefWidth="197.0" text="Image Produit" />
-                        <TableColumn fx:id="tActions" prefWidth="134.0" text="Mise à jour" />
+                        <TableColumn fx:id="ImageProductColumn" prefWidth="253.0" text="Image Produit" />
+                        <TableColumn fx:id="tActions" prefWidth="78.0" text="Mise à jour" />
                     </columns>
                   </TableView>
-                  <Button fx:id="btnAjouterProdDansAffich" layoutX="453.0" layoutY="209.0" mnemonicParsing="false" onMouseClicked="#afficherInterfaceAjouterProd" prefHeight="25.0" prefWidth="112.0" styleClass="shadow" text="Ajouter">
+                  <Button fx:id="btnAjouterProdDansAffich" layoutX="430.0" layoutY="244.0" mnemonicParsing="false" onMouseClicked="#afficherInterfaceAjouterProd" prefHeight="25.0" prefWidth="112.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" styleClass="shadow" text="Ajouter">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnDeleteProd" layoutX="298.0" layoutY="209.0" mnemonicParsing="false" onMouseClicked="#BtnDeletProduct" prefHeight="25.0" prefWidth="112.0" text="Supprimer">
+                  <Button fx:id="btnDeleteProd" layoutX="305.0" layoutY="244.0" mnemonicParsing="false" onMouseClicked="#BtnDeletProduct" prefHeight="25.0" prefWidth="112.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Supprimer">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnUpdateProd" layoutX="616.0" layoutY="209.0" mnemonicParsing="false" onMouseClicked="#BtnUpdateProduitt" prefHeight="25.0" prefWidth="119.0" text="Modifier">
+                  <Button fx:id="btnUpdateProd" layoutX="562.0" layoutY="244.0" mnemonicParsing="false" onMouseClicked="#BtnUpdateProduitt" prefHeight="25.0" prefWidth="119.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Modifier">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <ImageView fitHeight="25.0" fitWidth="26.0" layoutX="534.0" layoutY="209.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="25.0" fitWidth="26.0" layoutX="511.0" layoutY="244.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../../../../../../../xampp/htdocs/icons8-add-64%20(2).png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="385.0" layoutY="209.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="392.0" layoutY="244.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../../../../../../../xampp/htdocs/icons8-delete-64.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="710.0" layoutY="209.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="656.0" layoutY="244.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../../../../../../../xampp/htdocs/icons8-update-64.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="RefreshiProduiet" layoutX="907.0" layoutY="190.0" mnemonicParsing="false" onMouseClicked="#ActualiserListeProduits" prefHeight="39.0" prefWidth="56.0" style="-fx-background-color: #F7F09BFF;" />
-                  <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="910.0" layoutY="197.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../../../../../../../../xampp/htdocs/icons8-refresh-64.png" />
-                     </image>
-                  </ImageView>
-                  <AnchorPane prefHeight="719.0" prefWidth="262.0" style="-fx-background-color: #C6E6FB;">
+                  <AnchorPane prefHeight="783.0" prefWidth="262.0" style="-fx-background-color: #C6E6FB;">
                      <children>
                         <ImageView fitHeight="142.0" fitWidth="170.0" layoutX="47.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -117,20 +106,16 @@
                         </ImageView>
                      </children>
                   </AnchorPane>
-                  <LineChart fx:id="SecondTry" layoutX="710.0" layoutY="407.0" prefHeight="257.0" prefWidth="334.0">
-                    <xAxis>
-                      <CategoryAxis side="BOTTOM" />
-                    </xAxis>
-                    <yAxis>
-                      <NumberAxis side="LEFT" />
-                    </yAxis>
-                  </LineChart>
-                  <Text layoutX="755.0" layoutY="678.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Evolution Des Prix Généraux Par Catégorie" wrappingWidth="280.13671875">
+                  <Button fx:id="BtnCheckStatProduits" layoutX="703.0" layoutY="244.0" mnemonicParsing="false" onMouseClicked="#GoToKPIsProduits" prefHeight="25.0" prefWidth="112.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Stock">
                      <font>
-                        <Font name="System Bold" size="13.0" />
+                        <Font name="System Bold" size="12.0" />
                      </font>
-                  </Text>
-                  <PieChart fx:id="pieChart" layoutX="274.0" layoutY="407.0" prefHeight="290.0" prefWidth="429.0" />
+                  </Button>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="783.0" layoutY="245.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../../../../../../../xampp/htdocs/icons8-stock-96.png" />
+                     </image>
+                  </ImageView>
                </children>
             </AnchorPane>
          </children>
