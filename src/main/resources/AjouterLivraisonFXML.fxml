@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.gluonhq.charm.glisten.control.BottomNavigationButton?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="561.0" prefWidth="843.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AjouterLivraisonController">
+   <children>
+      <Pane layoutX="634.0" layoutY="20.0" prefHeight="190.0" prefWidth="200.0">
+         <cursor>
+            <Cursor fx:constant="OPEN_HAND" />
+         </cursor>
+         <children>
+            <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Résumer de commande" />
+            <Text layoutX="14.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Article" />
+            <Text layoutX="14.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="frais livraison" />
+            <Text layoutX="14.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total" />
+            <Button layoutX="113.0" layoutY="151.0" mnemonicParsing="false" onAction="#AjouterLivraison" onMouseClicked="#AjouterLivraison" text="Confirmer " />
+            <TextField fx:id="TotalArticleTF" layoutX="105.0" layoutY="52.0" prefHeight="17.0" prefWidth="81.0" />
+            <TextField fx:id="FraisLivTF" layoutX="105.0" layoutY="84.0" prefHeight="17.0" prefWidth="81.0" />
+            <TextField fx:id="TotalTF" layoutX="105.0" layoutY="115.0" prefHeight="17.0" prefWidth="81.0" />
+            <Button layoutX="20.0" layoutY="151.0" mnemonicParsing="false" onAction="#SupprimerLivraison" onMouseClicked="#SupprimerLivraison" text="annuler" />
+         </children>
+      </Pane>
+      <TitledPane animated="false" layoutX="14.0" layoutY="37.0" prefHeight="190.0" prefWidth="618.0" text="Adress Client">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Button layoutX="531.0" layoutY="131.0" mnemonicParsing="false" onMouseClicked="#AjouterCommande" text="Enregistrer" />
+                  <Button layoutX="468.0" layoutY="132.0" mnemonicParsing="false" onMouseClicked="#SupprimerCommande" text="annuler" />
+                  <TextField fx:id="NomPrenomTF" layoutX="14.0" layoutY="24.0" />
+                  <TextField fx:id="NumTel2TD" layoutX="234.0" layoutY="70.0" />
+                  <TextField fx:id="NumTelTF" layoutX="14.0" layoutY="70.0" />
+                  <TextField fx:id="RegionTF" layoutX="15.0" layoutY="119.0" />
+                  <TextField fx:id="VilleTF" layoutX="235.0" layoutY="119.0" />
+                  <Text layoutX="15.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nom et Prénom*" />
+                  <Text layoutX="15.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Numéro du téléphone *" />
+                  <Text layoutX="235.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Numéro du téléphone" />
+                  <Text layoutX="15.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Région *" />
+                  <Text layoutX="234.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ville *" wrappingWidth="38.447265625" />
+                  <Button layoutX="553.0" layoutY="11.0" mnemonicParsing="false" onMouseClicked="#ModifierCommande" text="Modifer" />
+               </children>
+            </AnchorPane>
+        </content>
+      </TitledPane>
+      <TitledPane animated="false" layoutX="14.0" layoutY="227.0" prefHeight="143.0" prefWidth="618.0" text="Detail livraison">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Button layoutX="417.0" layoutY="84.0" mnemonicParsing="false" onMouseClicked="#ConfirmerTypeLivraison" text="Confirmer les détails de livraison" />
+                  <RadioButton layoutX="14.0" layoutY="41.0" mnemonicParsing="false" text="Retrait en magasin" />
+                  <RadioButton layoutX="273.0" layoutY="41.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="144.0" text="Livraison à domicil" />
+               </children>
+            </AnchorPane>
+        </content>
+      </TitledPane>
+      <TitledPane animated="false" layoutX="14.0" layoutY="371.0" prefHeight="168.0" prefWidth="618.0" text="Mode de paiement">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="126.0" prefWidth="617.0">
+               <children>
+                  <Text layoutX="14.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Paiement à la livraison" wrappingWidth="140.51327514648438" />
+                  <RadioButton layoutX="14.0" layoutY="46.0" mnemonicParsing="false" text="Paiement CASH à la livraison" />
+                  <BottomNavigationButton layoutX="533.0" layoutY="108.0" onMouseClicked="#AjouterPaiement" text="Confirmer" />
+               </children>
+            </AnchorPane>
+        </content>
+      </TitledPane>
+   </children>
+   <effect>
+      <ColorAdjust />
+   </effect>
+</AnchorPane>

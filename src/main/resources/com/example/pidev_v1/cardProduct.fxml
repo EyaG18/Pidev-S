@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane fx:id="card_form" prefHeight="195.0" prefWidth="236.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pidev_v1.CardProduct">
+   <children>
+      <Label fx:id="prod_name" layoutX="14.0" layoutY="14.0" prefHeight="27.0" prefWidth="119.0" style="-fx-background-color: #E8E9EB;" />
+      <Label fx:id="prod_price" layoutX="153.0" layoutY="14.0" prefHeight="27.0" prefWidth="62.0" style="-fx-background-color: #E8E9EB;" />
+      <AnchorPane layoutY="50.0" prefHeight="110.0" prefWidth="226.0">
+         <children>
+            <ImageView fx:id="prod_imageView" fitHeight="100.0" fitWidth="192.0" layoutX="20.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </AnchorPane>
+      <Spinner fx:id="prod_spinner" layoutX="19.0" layoutY="160.0" prefHeight="26.0" prefWidth="113.0" />
+      <Button fx:id="prod_addBtn" layoutX="143.0" layoutY="160.0" mnemonicParsing="false" onAction="#addBtnP" prefHeight="26.0" prefWidth="82.0" style="-fx-background-color: #0C2340;" text="Ajouter" textFill="WHITE" />
+   </children>
+</AnchorPane>
