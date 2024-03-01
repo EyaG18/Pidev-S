@@ -97,6 +97,24 @@ public class NavigationControler {
         }
     }
 
+    public static void OpenInterfaceHomePorduits(MouseEvent event , String fxmlFile)
+    {
+        Parent root = null;
+        try {
+            FXMLLoader loader = new FXMLLoader(NavigationControler.class.getResource(fxmlFile));
+            root = loader.load();
+            FeedProduitsCoteClientsController feedProduitsCoteClientsController = loader.getController();
+            Scene scene = new Scene(root);
+            Stage primaryStage = (Stage)((Node) event.getSource()).getScene().getWindow();
+            primaryStage.setScene(scene);
+            primaryStage.setTitle("Statistiques Générales du Stock");
+            primaryStage.show();
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+    }
+
 
 
 

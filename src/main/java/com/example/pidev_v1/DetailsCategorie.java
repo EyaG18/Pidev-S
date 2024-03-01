@@ -336,8 +336,4 @@ void GoToProducts(MouseEvent event) {
 NavigationControler.OpenAffichageProduitsBack(event,"AfficherProduitBack.fxml");
 }
 
-
-
-
-
 }

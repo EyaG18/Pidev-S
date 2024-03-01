@@ -3,9 +3,11 @@ package com.example.pidev_v1;
 //import com.gluonhq.charm.glisten.control.TextField;
 import com.example.pidev_v1.entities.Catégorie;
 import com.example.pidev_v1.entities.Produit;
+import com.example.pidev_v1.entities.User;
 import com.example.pidev_v1.services.CategorieService;
 import com.example.pidev_v1.services.MyListener;
 import com.example.pidev_v1.services.ProduitService;
+import com.example.pidev_v1.services.UserService;
 import com.example.pidev_v1.tools.MyDataBase;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,12 +18,10 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -30,10 +30,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.security.PublicKey;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -81,7 +78,12 @@ public class FeedProduitsCoteClientsController implements Initializable {
 
     ProduitService ps = new ProduitService();
      CategorieService cs = new CategorieService();
+    @FXML
+    private Label LabelUser;
+    private User currentUser;
+    private User selectedUser;
 
+    UserService userService = new UserService();
     private MyListener myListener;
 
     ObservableList<Produit> cardListDataProduits = FXCollections.observableArrayList();
@@ -92,51 +94,23 @@ public class FeedProduitsCoteClientsController implements Initializable {
      AjouterProduit AjProCont = new AjouterProduit();
 
     ComboBox<String> category = new ComboBox<>();
-
-
      Produit p= new Produit();
      Catégorie c = new Catégorie();
 
      AfficherProduitCoteClient afc = new AfficherProduitCoteClient();
 
      ModifierProduit mf = new ModifierProduit();
+    private MyDataBase cnx;
+    private PreparedStatement prepare;
 
-    public void DisplayCategoriesInComboBoxFront() {
-       /* MyDataBase ct = new MyDataBase();
-        Connection cnx = ct.getCnx();
-        String queryCategory = "SELECT * FROM catégorie";
-        try {
-            Statement statement = cnx.createStatement();
-            ResultSet QueryOutput = statement.executeQuery(queryCategory);
-            int rowCount = 0;
-            while (QueryOutput.next()) {
-                String queryCategoryName = QueryOutput.getString("NomCatégorie");
-                System.out.println("Category Name: " + queryCategoryName); // Output for debugging
-                // Add category name to ComboBox
-                ComboBoxFilterCat.getItems().add(queryCategoryName);
-                rowCount++;
-            }
-
-            System.out.println("Nombre de résultats : " + rowCount); // Output for debugging
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            // Fermer la connexion à la base de données
-            try {
-                if (cnx != null) {
-                    cnx.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }*/
-
-
-
-
+    @FXML
+    private Button btnPanier;
+    @FXML
+    void GoToPaniersClient(MouseEvent event) {
 
     }
+
+
     /************************************************************************/
     public void DisplayCategoriesInComboBoxFront2() {
 
@@ -156,56 +130,7 @@ public class FeedProduitsCoteClientsController implements Initializable {
     }
     public void loadproducts(List<Produit> l)
     {
-        /*GridPane gp = new GridPane();
-        gp.setPrefWidth(794);
-        gp.setPrefHeight(400);
-        gp.setHgap(60);
-        FeedProd.getChildren().clear();
-        float x = 20, y = 20;
-        int k = 1;
-        BorderStroke borderStroke = new BorderStroke(Color.DARKGREY, BorderStrokeStyle.SOLID,
-                CornerRadii.EMPTY, new BorderWidths(1, 1, 1, 1));
-        Border border = new Border(borderStroke);
-        for (int i = 0; i < l.size(); i++) {
-            AnchorPane anchorpane = new AnchorPane();
-            Image image = new Image("file:resources/MediaEya/" + l.get(i).getImageP(), 200, 200, false, false);
-            ImageView iv = new ImageView(image);
-            Label title = new Label(l.get(i).getNomP());
-            String s = String.valueOf(l.get(i).getPrixP());
-            Label value = new Label(s);
-            anchorpane.setLayoutX(x);
-            iv.setLayoutY(y);
-            title.setLayoutY(y + 210);
-            value.setLayoutY(y + 240);
-            AnchorPane.setLeftAnchor(iv, 10.0);
-            AnchorPane.setLeftAnchor(title, 10.0);
-            AnchorPane.setLeftAnchor(value, 10.0);
-            anchorpane.setBorder(border);
-            anchorpane.setPrefSize(260, 300);
-            Produit p = l.get(i);
-            anchorpane.setOnMouseClicked(MouseEvent -> {
-                try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("productFXML.fxml"));
-                    Parent product = loader.load();
-                    ProductFXMLController prod = loader.getController();
-                    prod.setproduct(p);
-                    prod.setvisibility(Boolean.TRUE);
-                    Scene secondScene = new Scene(product);
-                    Stage secondStage = new Stage();
-                    secondStage.setScene(secondScene);
-                    secondStage.show();
-                } catch (IOException ex) {
-                    Logger.getLogger(DashboardproducFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            });
-            anchorpane.getChildren().addAll(iv, title,value);
-            if (k == 3) {
-                k = 0;
-            }
-            gp.addColumn(k, anchorpane);
-            k++;
-        }
-        FeedProd.getChildren().addAll(gp);*/
+
     }
 /******************************************/
 public ObservableList<Produit> getProductList() {
@@ -228,7 +153,7 @@ public ObservableList<Produit> getProductList() {
             int qteProduit = rs.getInt("QteP");
             int qteSeuilProduit = rs.getInt("QteSeuilP");
             String imageProduit = rs.getString("ImageP");
-            Produit produit1= new Produit(idCategorie,nomProduit,prixProduit,qteProduit,qteSeuilProduit,imageProduit);
+            Produit produit1= new Produit(idProduit,idCategorie,nomProduit,prixProduit,qteProduit,qteSeuilProduit,imageProduit);
             ListProduct.add(produit1);
         }
     } catch (SQLException ex) {
@@ -236,14 +161,11 @@ public ObservableList<Produit> getProductList() {
     }
     return ListProduct;
 }
-
-
-
 /******************************************/
 
     public void AfficherProduitsClients()
     {
-        System.out.println("Methode AFFICHERProduitsClient est appelle");
+        System.out.println("Methode AFFICHER ProduitsClient en Grid est appelle");
 
     //cardListDataProduits.clear();
         cardListDataProduits.addAll(getProductList());
@@ -251,16 +173,14 @@ public ObservableList<Produit> getProductList() {
         {
             System.out.println("Recuperation reussie ! ");
         } else { System.out.println("erreur de recuperation"); }
-
         //cardListDataProduits.addAll(getProductList());   //on stocke dans notre liste observable liste de sproduits recuperes depuis la base
         int row = 0;
         int column = 0;
-
         menuP_gridpane.getChildren().clear();
         menuP_gridpane.getRowConstraints().clear();
         menuP_gridpane.getColumnConstraints().clear();
 
-        for(int q =0 ; q< cardListDataProduits.size() ; q ++)
+        for(int q =0 ; q< cardListDataProduits.size() ; q ++) //for (Produit produit : cardListDataProduits)
         {
                try {
                    FXMLLoader load = new FXMLLoader();
@@ -269,6 +189,7 @@ public ObservableList<Produit> getProductList() {
                    CardProduct cardProduct = load.getController();
                    MyListener MyListener = null;
                    cardProduct.setDat(cardListDataProduits.get(q) , MyListener);
+                   cardProduct.setCurrentUser(currentUser);
                    if ( column ==3)
                    {
                        column =0;
@@ -277,23 +198,29 @@ public ObservableList<Produit> getProductList() {
               menuP_gridpane.add(pane, column++,row);
                    GridPane.setMargin(pane, new Insets(10));
 
-
                } catch (Exception e)
                {
                    e.printStackTrace();
                }
         }
     }
-
 /******************************************************************/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Methode initaliaze est appelle ! ");
         DisplayCategoriesInComboBoxFront2();
         ComBoxCategorie.setOnAction((ActionEvent event) -> { mf.ReturnNewSelectedCategory();
-
         });
-
+    }
+    /*************************************************/
+    public int userID(User user) {
+        currentUser = user;
+        return currentUser.getId_user();
+    }
+    /************************************************/
+    public void setUser(User user) {
+        currentUser = user;
+        LabelUser.setText(currentUser.getNomuser()+" "+currentUser.getPrenomuser());
         AfficherProduitsClients();
     }
     /*public ObservableList<Produit> getProductsList() {

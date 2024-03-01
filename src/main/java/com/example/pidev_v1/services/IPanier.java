@@ -16,7 +16,9 @@ public interface IPanier {
 
     public void creerPanierbyIdUser(int idc);
 
-    public void createPanierAll(Panier panier);
+    public void createPanierAll(int id_user,int id_Produit,int QuantitéParProduit);
 
     public Double GetTotalPanier();
+
+    public void CreerPanierByEntities(User user,Produit produit, int Quantite);
 }

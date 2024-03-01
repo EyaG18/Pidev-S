@@ -29,28 +29,15 @@ public class PanierService implements IPanier{
     public PanierService() {
         cnx = connect.getCnx();
     }
-
-
-
-
-
     /****************************************************/
     private void calculateTotalPanier() {
-        double total = 0;
-        for (Map.Entry<Produit, Integer> entry : mapProduitsDansPanier.entrySet()) {
-            Produit produit = entry.getKey();
-            int quantite = entry.getValue();
-            total += produit.getPrixP() * quantite;
-        }
-        this.totalPanier = total;
-        System.out.println(totalPanier);
+
     }
 
     /****************************************************/
     @Override
     public void supprimerProduitDuPanier(Produit produit) {
-        mapProduitsDansPanier.remove(produit);
-        calculateTotalPanier();
+
     }
 
     /****************************************************/
@@ -84,16 +71,62 @@ public class PanierService implements IPanier{
             throw new RuntimeException(e);
         }
     }
-    /****************************************************/
-    @Override
-    public void createPanierAll(Panier panier) {
 
+    @Override
+    public void createPanierAll( int id_user, int id_Produit, int QuantitéParProduit) {
+        String sql = "INSERT INTO panier (id_user, Id_Produit, QuantiteParProduit) VALUES (?, ?, ?)";
+
+        try {
+            PreparedStatement ste = cnx.prepareStatement(sql);
+            ste.setInt(1, id_user); // Utilisation d'un paramètre pour définir la valeur de id_user
+            ste.setInt(2,id_Produit);
+            ste.setInt(3,QuantitéParProduit);
+            ste.executeUpdate();
+            System.out.println("Panier créé pour l'utilisateur avec l'ID : " + id_user);
+            System.out.println("Panier est mis à jours aves les produits selectionnes");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
+    /****************************************************/
     /****************************************************/
     @Override
     public Double GetTotalPanier() {
         return null;
     }
+
+    @Override
+    public void CreerPanierByEntities(User user, Produit produit, int Quantite) {
+        String sql = "INSERT INTO panier id_user,Id_Produit, QuantiteParPorduit VALUES (?,?,?)";
+
+        try {
+            PreparedStatement ste = cnx.prepareStatement(sql);
+            ste.setInt(1, user.getId_user()); // Utilisation d'un paramètre pour définir la valeur de id_user
+            ste.setInt(2,produit.getId_Produit());
+            ste.setInt(3,Quantite);
+            ste.executeUpdate();
+            System.out.println("Panier créé pour l'utilisateur avec l'ID : " + user);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+
+    }
 /****************************************************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

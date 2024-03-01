@@ -126,6 +126,25 @@ public class UserService implements CRUD<User >{
         return false;
     }
 
-
+    public User getUserByEmail(String email) {
+        String query = "SELECT * FROM `user` WHERE `EmailUsr` = ?";
+        try (PreparedStatement pstmt = cnx.prepareStatement(query)) {
+            pstmt.setString(1, email);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                int id_user = rs.getInt("id_user");
+                String nomuser = rs.getString("nomuser");
+                String prenomuser = rs.getString("prenomuser");
+                String adrUser = rs.getString("AdrUser");
+                String password = rs.getString("password");
+                int numtel = rs.getInt("Numtel");
+                String role = rs.getString("Role");
+                return new User(id_user, nomuser, prenomuser, adrUser, email, password, numtel, role);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return null;
+    }
 
 }

@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -79,6 +80,21 @@ public class Login implements Initializable {
                 throw new RuntimeException(e);
             }
         }
+        else if (Objects.equals(user.getRole(), "Client" ))
+        {try {
+                fxmlLoader = new FXMLLoader(getClass().getResource("FeedProduitsCoteClients.fxml"));
+                BorderPane root = fxmlLoader.load();
+                Scene scene = new Scene(root);
+                Stage stage = (Stage) TFEmail.getScene().getWindow();
+                stage.setTitle("Arya : Votre Style en Clic : Home Page");
+                stage.setScene(scene);
+                FeedProduitsCoteClientsController controller = fxmlLoader.getController();
+                controller.setUser(user);
+                stage.show();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
         else {
             try {
                 fxmlLoader = new FXMLLoader(getClass().getResource("dashboardUser.fxml"));
@@ -94,7 +110,6 @@ public class Login implements Initializable {
                 throw new RuntimeException(e);
             }
         }
-
     }
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

@@ -1,8 +1,11 @@
-package com.example.pidev_v1;
+package controller;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
-import com.example.pidev_v1.entities.User;
-import com.example.pidev_v1.services.UserService;
+import entities.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,13 +13,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-import java.util.regex.Pattern;
-
-import static java.lang.Integer.parseInt;
+import services.UserService;
+import utilties.DataSource;
 
 public class Authentification {
 
@@ -44,7 +42,7 @@ public class Authentification {
     @FXML
     void Authentificate(ActionEvent event) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Login.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/login.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = (Stage) TFAddress.getScene().getWindow();
             stage.setTitle("Login");
@@ -62,7 +60,7 @@ public class Authentification {
         String fullName = TFFullName.getText();
         String password = TFPassword.getText();
         String address = TFAddress.getText();
-        int numtel = parseInt(TFNum.getText());
+        int numtel = Integer.parseInt(TFNum.getText());
 
         if (email.isEmpty() || fullName.isEmpty() || password.isEmpty() || address.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -128,9 +126,5 @@ public class Authentification {
         assert TFPassword != null : "fx:id=\"TFPassword\" was not injected: check your FXML file 'authentification.fxml'.";
 
     }
-
-
-
-
 
 }

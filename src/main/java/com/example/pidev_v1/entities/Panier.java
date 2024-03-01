@@ -3,11 +3,21 @@ import java.util.Map;
 public class Panier {
    private int Id_Panier;
    private User utilisateurPan;
-   private double totalPanier;
+   private double totalPanier=0;
 
    private Produit produit;
 
    private int QuantiteParProduit;
+
+   public Panier() {
+   }
+
+
+   public Panier(User utilisateurPan, Produit produit, int quantiteParProduit) {
+      this.utilisateurPan = utilisateurPan;
+      this.produit = produit;
+      QuantiteParProduit = quantiteParProduit;
+   }
 
    public Panier(int id_Panier, User utilisateurPan, double totalPanier, Produit produit, int quantiteParProduit) {
       Id_Panier = id_Panier;
@@ -16,6 +26,8 @@ public class Panier {
       this.produit = produit;
       QuantiteParProduit = quantiteParProduit;
    }
+
+
 
    public int getId_Panier() {
       return Id_Panier;
@@ -63,4 +75,13 @@ public class Panier {
       this.produit = produit;
       QuantiteParProduit = quantiteParProduit;
    }
+
+
+
+
+
+
+
+
+
 }
