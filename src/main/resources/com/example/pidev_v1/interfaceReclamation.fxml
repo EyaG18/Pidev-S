@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="714.0" prefWidth="1568.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pidev_v1.InterfaceReclamationController">
+    <children>
+        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+            <children>
+                <BorderPane layoutX="261.0" layoutY="240.0" prefHeight="649.6" prefWidth="882.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <center>
+                        <AnchorPane prefHeight="714.0" prefWidth="1522.0" styleClass="shadow" stylesheets="@test2.css" BorderPane.alignment="CENTER">
+                            <children>
+                                <AnchorPane layoutX="8.0" layoutY="18.6" prefHeight="352.0" prefWidth="624.0" style="-fx-background-color: #fff;" stylesheets="@test2.css" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="50.0">
+                                    <children>
+                                        <TableView fx:id="table_reclamation" layoutY="44.0" prefHeight="308.0" prefWidth="631.0">
+                                            <columns>
+                                                <TableColumn fx:id="nomC1" prefWidth="116.0000171661377" text="Nom Client" />
+                                                <TableColumn fx:id="descriptionC2" minWidth="0.0" prefWidth="196.79985809326172" text="Description" />
+                                                <TableColumn fx:id="dateC3" prefWidth="112.800048828125" text="Date" />
+                                                <TableColumn fx:id="statuC4" prefWidth="111.99996948242188" text="statu" />
+                                                <TableColumn fx:id="typeC5" prefWidth="110.4000244140625" text="Type" />
+                                            </columns>
+                                        </TableView>
+                                        <Label layoutX="5.0" layoutY="14.0" prefHeight="18.0" prefWidth="172.0" text="Consulter Reclamations" textFill="#969696" AnchorPane.bottomAnchor="316.0" AnchorPane.topAnchor="14.0">
+                                            <font>
+                                                <Font name="System Bold" size="15.0" />
+                                            </font>
+                                        </Label>
+                                    </children>
+                                </AnchorPane>
+                                <AnchorPane layoutX="676.0" layoutY="48.6" prefHeight="354.0" prefWidth="587.0" style="-fx-background-color: #fff;" stylesheets="@test2.css" AnchorPane.leftAnchor="676.0" AnchorPane.rightAnchor="306.39999999999986" AnchorPane.topAnchor="48.6">
+                                    <children>
+                                        <Label layoutX="14.0" layoutY="15.0" prefHeight="22.0" prefWidth="188.0" text="Consulter mes Réponses" textFill="#969696" AnchorPane.bottomAnchor="316.0" AnchorPane.topAnchor="14.0">
+                                            <font>
+                                                <Font name="System Bold" size="15.0" />
+                                            </font>
+                                        </Label>
+                                        <TableView fx:id="table_reponse" layoutY="45.0" prefHeight="308.0" prefWidth="586.0">
+                                            <columns>
+                                                <TableColumn fx:id="daterC1" prefWidth="114.39996337890625" text="Date_Reponse" />
+                                                <TableColumn fx:id="reponseC2" prefWidth="471.20001220703125" text="Reponse" />
+                                            </columns>
+                                        </TableView>
+                                    </children>
+                                </AnchorPane>
+                                <JFXButton fx:id="supprimerReponseB" layoutX="1134.0" layoutY="414.0" onAction="#supprimerReponse" prefHeight="39.0" prefWidth="101.0" style="-fx-background-color: #ff5979;" stylesheets="@test2.css" text="       supprimer" textAlignment="RIGHT" />
+                                <ImageView fitHeight="24.0" fitWidth="35.0" layoutX="1144.0" layoutY="422.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../../../image/poubelle-de-recyclage.png" />
+                                    </image>
+                                </ImageView>
+                                <JFXButton fx:id="RepondreB" layoutX="529.0" layoutY="413.0" onAction="#repondre" prefHeight="39.0" prefWidth="101.0" style="-fx-background-color: #ffbf59;" stylesheets="@test2.css" text="       Repondre" textAlignment="RIGHT" AnchorPane.topAnchor="413.0" />
+                                <ImageView fitHeight="33.0" fitWidth="28.0" layoutX="536.0" layoutY="419.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../../../image/repondre.png" />
+                                    </image>
+                                </ImageView>
+                                <JFXButton fx:id="actualiserB" layoutX="416.0" layoutY="413.0" onAction="#actualiserreclamation" prefHeight="39.0" prefWidth="101.0" style="-fx-background-color: #76c2f5;" stylesheets="@test2.css" text="       Actualiser" textAlignment="RIGHT" />
+                                <JFXButton fx:id="actualisereponseB" layoutX="1020.0" layoutY="414.0" onAction="#actualiserreponse" prefHeight="39.0" prefWidth="101.0" style="-fx-background-color: #76c2f5;" stylesheets="@test2.css" text="       Actualiser" textAlignment="RIGHT" />
+                                <ImageView fitHeight="33.0" fitWidth="28.0" layoutX="422.0" layoutY="419.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../../../image/symbole-de-recyclage.png" />
+                                    </image>
+                                </ImageView>
+                                <ImageView fitHeight="33.0" fitWidth="28.0" layoutX="1026.0" layoutY="420.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../../../image/symbole-de-recyclage.png" />
+                                    </image>
+                                </ImageView>
+                            </children></AnchorPane>
+                    </center>
+                </BorderPane>
+            </children>
+        </AnchorPane>
+    </children>
+</StackPane>

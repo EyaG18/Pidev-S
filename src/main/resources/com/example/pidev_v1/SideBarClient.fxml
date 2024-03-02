@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="703.0" prefWidth="261.0" style="-fx-background-color: #C6E6FB;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pidev_v1.SideBarClient">
+   <children>
+      <ImageView fitHeight="142.0" fitWidth="170.0" layoutX="46.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../../../../../../xampp/htdocs/logo2.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="30.0" layoutY="213.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="199.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Page d'acceuil" />
+      <Button layoutX="30.0" layoutY="316.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="199.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Explorer" />
+      <Button layoutX="30.0" layoutY="264.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="199.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Consulter Votre Profil" />
+      <Button layoutX="30.0" layoutY="375.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="199.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Réclamer" />
+      <Button layoutX="56.0" layoutY="571.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="148.0" style="-fx-background-color: #C6E6FB;" />
+      <ImageView fitHeight="48.0" fitWidth="148.0" layoutX="55.0" layoutY="571.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../../../../../../xampp/htdocs/etoile.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

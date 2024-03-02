@@ -1,0 +1,43 @@
+.white-background{
+    --fxbackground-color: #fff;
+}
+
+.transparent {
+    --fxbackground-color: rgba(0,0,0,0);
+}
+.round-layout {
+    -fx-border-radius : 50;
+    -fx-border-color : #D7D7D7;
+
+}
+
+.mouse-moved:hover
+{
+    --fxbackground-color: #E4E4E4;
+}
+
+.shadow{
+    -fx-effect : dropShadow(three-pass-box , rgba(0,0,0,0),10,0,0,10);
+}
+
+.BtnColourBlue
+{
+    --fxbackground-color: #55BAADE;
+}
+.button{
+    -fx-background-radius: 50;
+}
+
+.BtnColourPink
+{
+    --fxbackground-color: #EEBBDF;
+
+}
+
+
+.ProduitItem {
+
+    --fxbackground-color: #F7F09B;
+    --fxbackground-radius: 30;
+
+}
