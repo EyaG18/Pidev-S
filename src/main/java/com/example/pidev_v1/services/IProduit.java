@@ -23,5 +23,11 @@ public interface IProduit  {
     public void modifyProduct(Produit p);
     public ObservableList<Produit> getProductList();
 
+    public boolean isProductNameExists(String productName);
+
+    public boolean isProductImageExists(String productImage);
+
+
+
 
 }

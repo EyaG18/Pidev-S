@@ -1,6 +1,7 @@
 package com.example.pidev_v1.services;
 
 import com.example.pidev_v1.entities.Catégorie;
+import javafx.collections.ObservableList;
 
 import java.util.List;
 
@@ -26,4 +27,8 @@ public interface ICategorie {
     public Catégorie getCategoryById(int categoryId);
 
     public Catégorie getCategoryBName(String chosenNameC);
+
+    public boolean isCategoryNameExists(String nameCat);
+
+    public ObservableList<Catégorie> getCategoryList();
 }

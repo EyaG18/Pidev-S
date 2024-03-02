@@ -27,23 +27,18 @@ public class SideBarBackForEmployees {
 
     @FXML
     void GoToCategories(MouseEvent event) {
-
     }
-
     @FXML
     void GoToCommandesLivraison(MouseEvent event) {
-
     }
 
     @FXML
     void GoToFournieusseursOffere(ActionEvent event) {
-
     }
 
     @FXML
     void GoToProducts(MouseEvent event) {
 NavigationControler.OpenAffichageProduitsBack(event,"AjouterProduit.fxml");
-
 
     }
 

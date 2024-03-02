@@ -9,29 +9,49 @@ public class User {
     private String EmailUsr;
     private String password;
     private int Numtel;
-    private RoleUser Role;
+    private String Role;
 
+    private String image;
 
     public User() {
     }
 
+    public String getImage() {
+        return image;
+    }
 
+    public void setImage(String image) {
+        this.image = image;
+    }
 
-    public User(String nomuser, String prenomuser, String AdrUser, String EmailUsr, String password, int numtel, RoleUser role) {
+    public User(String nomuser, String prenomuser, String AdrUser, String EmailUsr, String password, int numtel, String role, String image) {
         this.nomuser = nomuser;
         this.prenomuser = prenomuser;
         this.AdrUser= AdrUser;
         this.EmailUsr = EmailUsr;
         this.password = password;
-        this.Numtel = Numtel;
-        this.Role = Role;
+        this.Numtel = numtel;
+        this.Role = role;
+        this.image = image;
     }
 
-    public RoleUser getRole() {
+    public User(int id_user, String nomuser, String prenomuser, String adrUser, String emailUsr, String password, int numtel, String role,String image) {
+        this.id_user = id_user;
+        this.nomuser = nomuser;
+        this.prenomuser = prenomuser;
+        AdrUser = adrUser;
+        EmailUsr = emailUsr;
+        this.password = password;
+        Numtel = numtel;
+        Role = role;
+        this.image = image;
+    }
+
+    public String getRole() {
         return Role;
     }
 
-    public void setRole(RoleUser role) {
+    public void setRole(String role) {
         Role = role;
     }
 
@@ -92,7 +112,8 @@ public class User {
     }
 
     @Override
-    public String toString() {
+    public String
+    toString() {
         return "User{" +
                 "id_user=" + id_user +
                 ", nomuser='" + nomuser + '\'' +
@@ -101,7 +122,7 @@ public class User {
                 ", EmailUsr='" + EmailUsr + '\'' +
                 ", password='" + password + '\'' +
                 ", Numtel=" + Numtel +
-                ", Role=" + Role +
+                ", Role='" + Role + '\'' +
                 '}';
     }
 }

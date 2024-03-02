@@ -3,9 +3,11 @@ package com.example.pidev_v1;
 //import com.gluonhq.charm.glisten.control.TextField;
 import com.example.pidev_v1.entities.Catégorie;
 import com.example.pidev_v1.entities.Produit;
+import com.example.pidev_v1.entities.User;
 import com.example.pidev_v1.services.CategorieService;
 import com.example.pidev_v1.services.MyListener;
 import com.example.pidev_v1.services.ProduitService;
+import com.example.pidev_v1.services.UserService;
 import com.example.pidev_v1.tools.MyDataBase;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,10 +32,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.security.PublicKey;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -81,7 +80,12 @@ public class FeedProduitsCoteClientsController implements Initializable {
 
     ProduitService ps = new ProduitService();
      CategorieService cs = new CategorieService();
+    @FXML
+    private Label LabelUser;
+    private User currentUser;
+    private User selectedUser;
 
+    UserService userService = new UserService();
     private MyListener myListener;
 
     ObservableList<Produit> cardListDataProduits = FXCollections.observableArrayList();
@@ -92,14 +96,14 @@ public class FeedProduitsCoteClientsController implements Initializable {
      AjouterProduit AjProCont = new AjouterProduit();
 
     ComboBox<String> category = new ComboBox<>();
-
-
      Produit p= new Produit();
      Catégorie c = new Catégorie();
 
      AfficherProduitCoteClient afc = new AfficherProduitCoteClient();
 
      ModifierProduit mf = new ModifierProduit();
+    private MyDataBase cnx;
+    private PreparedStatement prepare;
 
     public void DisplayCategoriesInComboBoxFront() {
        /* MyDataBase ct = new MyDataBase();
@@ -131,11 +135,6 @@ public class FeedProduitsCoteClientsController implements Initializable {
                 e.printStackTrace();
             }
         }*/
-
-
-
-
-
     }
     /************************************************************************/
     public void DisplayCategoriesInComboBoxFront2() {
@@ -156,56 +155,7 @@ public class FeedProduitsCoteClientsController implements Initializable {
     }
     public void loadproducts(List<Produit> l)
     {
-        /*GridPane gp = new GridPane();
-        gp.setPrefWidth(794);
-        gp.setPrefHeight(400);
-        gp.setHgap(60);
-        FeedProd.getChildren().clear();
-        float x = 20, y = 20;
-        int k = 1;
-        BorderStroke borderStroke = new BorderStroke(Color.DARKGREY, BorderStrokeStyle.SOLID,
-                CornerRadii.EMPTY, new BorderWidths(1, 1, 1, 1));
-        Border border = new Border(borderStroke);
-        for (int i = 0; i < l.size(); i++) {
-            AnchorPane anchorpane = new AnchorPane();
-            Image image = new Image("file:resources/MediaEya/" + l.get(i).getImageP(), 200, 200, false, false);
-            ImageView iv = new ImageView(image);
-            Label title = new Label(l.get(i).getNomP());
-            String s = String.valueOf(l.get(i).getPrixP());
-            Label value = new Label(s);
-            anchorpane.setLayoutX(x);
-            iv.setLayoutY(y);
-            title.setLayoutY(y + 210);
-            value.setLayoutY(y + 240);
-            AnchorPane.setLeftAnchor(iv, 10.0);
-            AnchorPane.setLeftAnchor(title, 10.0);
-            AnchorPane.setLeftAnchor(value, 10.0);
-            anchorpane.setBorder(border);
-            anchorpane.setPrefSize(260, 300);
-            Produit p = l.get(i);
-            anchorpane.setOnMouseClicked(MouseEvent -> {
-                try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("productFXML.fxml"));
-                    Parent product = loader.load();
-                    ProductFXMLController prod = loader.getController();
-                    prod.setproduct(p);
-                    prod.setvisibility(Boolean.TRUE);
-                    Scene secondScene = new Scene(product);
-                    Stage secondStage = new Stage();
-                    secondStage.setScene(secondScene);
-                    secondStage.show();
-                } catch (IOException ex) {
-                    Logger.getLogger(DashboardproducFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            });
-            anchorpane.getChildren().addAll(iv, title,value);
-            if (k == 3) {
-                k = 0;
-            }
-            gp.addColumn(k, anchorpane);
-            k++;
-        }
-        FeedProd.getChildren().addAll(gp);*/
+
     }
 /******************************************/
 public ObservableList<Produit> getProductList() {
@@ -236,6 +186,8 @@ public ObservableList<Produit> getProductList() {
     }
     return ListProduct;
 }
+
+
 
 
 
@@ -293,8 +245,17 @@ public ObservableList<Produit> getProductList() {
         ComBoxCategorie.setOnAction((ActionEvent event) -> { mf.ReturnNewSelectedCategory();
 
         });
-
         AfficherProduitsClients();
+    }
+    /*************************************************/
+    public int userID(User user) {
+        currentUser = user;
+        return currentUser.getId_user();
+    }
+    /************************************************/
+    public void setUser(User user) {
+        currentUser = user;
+        LabelUser.setText(currentUser.getNomuser()+" "+currentUser.getPrenomuser());
     }
     /*public ObservableList<Produit> getProductsList() {
 

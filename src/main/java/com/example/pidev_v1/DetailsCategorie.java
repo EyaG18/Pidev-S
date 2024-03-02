@@ -89,6 +89,15 @@ public class DetailsCategorie implements Initializable {
                 alert.showAndWait();
                 return; // Sortie de la fonction si le nom de la catégorie est vide
             }
+
+            if (cs.isCategoryNameExists( categoryName))
+            {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erreur lors de l'ajout !");
+                alert.setContentText("Une catégorie avec le meme nom Existe Déja ! Try Again !");
+                alert.showAndWait();
+                return; // Sortie de la fo
+            }
             // Ajout de la catégorie
             cs.addCategory(new Catégorie(categoryName));
 

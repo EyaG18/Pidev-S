@@ -24,6 +24,9 @@
 {
     --fxbackground-color: #55BAADE;
 }
+.button{
+    -fx-background-radius: 50;
+}
 
 .BtnColourPink
 {

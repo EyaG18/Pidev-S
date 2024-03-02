@@ -4,15 +4,21 @@ import com.example.pidev_v1.entities.Panier;
 import com.example.pidev_v1.entities.Produit;
 import com.example.pidev_v1.entities.User;
 
-public interface IPanier {
+import java.util.HashMap;
+import java.util.Map;
 
-    public void ajouterProduitDansPanier(Produit produit, int quantite);
+public interface IPanier {
 
     public void supprimerProduitDuPanier(Produit produit);
 
+    public void CreatePanierForuserOnly(User p);
 
-    public void creerPanier(User p , double tot);
 
-    public void creerPanierById(int i, double tot);
+    public void creerPanierbyIdUser(int idc);
 
+    public void createPanierAll(int id_user,int id_Produit,int QuantitéParProduit);
+
+    public Double GetTotalPanier();
+
+    public void CreerPanierByEntities(User user,Produit produit, int Quantite);
 }

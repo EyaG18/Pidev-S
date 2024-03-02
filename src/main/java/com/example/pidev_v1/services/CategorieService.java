@@ -3,6 +3,7 @@ package com.example.pidev_v1.services;
 import com.example.pidev_v1.entities.Catégorie;
 import com.example.pidev_v1.entities.Produit;
 import com.example.pidev_v1.tools.MyDataBase;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
@@ -284,6 +285,56 @@ public class CategorieService implements ICategorie{
             e.printStackTrace();
         }
         return catégorie;
+    }
+
+    List<Catégorie> categories =getCategoryList();
+
+    @Override
+    public boolean isCategoryNameExists(String nameCat) {
+        for (Catégorie catégorie : categories) {
+            if (catégorie.getNomCatégorie().equals(nameCat)) {
+                System.out.println("Une catégorie du meme nom existe Déja !Try Again ! ");
+                return true;
+                // Le produit avec le même nom existe déjà
+            }
+        }
+        System.out.println("Nom catégorie n'existe pas");
+        return false; // Aucun produit avec le même nom n'a été trouvé
+    }
+
+    @Override
+    public ObservableList<Catégorie> getCategoryList() {
+        ObservableList<Catégorie> ListCat = FXCollections.observableArrayList();
+        MyDataBase db = new MyDataBase();
+        Connection cnx = db.getCnx();
+        //String query = "SELECT p.*, c.NomCatégorie FROM produit p JOIN catégorie c ON p.Id_Catégorie = c.Id_Catégorie"; // Utilisation de la jointure pour récupérer le nom de la catégorie
+        // String query = " SELECT * FROM VueProduit";
+        String query = "SELECT * FROM catégorie";
+        Statement st;
+        ResultSet rs;
+        try {
+            st = cnx.createStatement();
+            rs = st.executeQuery(query);
+            while (rs.next()) {
+                int idCategorie = rs.getInt("Id_Catégorie");
+                String nomProduit = rs.getString("NomCatégorie");
+Catégorie cat = new Catégorie(idCategorie,nomProduit);
+
+                ListCat.add(cat);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return ListCat;
+
+
+
+
+
+
+
+
+
     }
 
 

@@ -11,6 +11,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.AreaChart;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import com.example.pidev_v1.services.ImageTableCell;
@@ -74,8 +78,18 @@ public class AfficherProduitBack implements Initializable {
     @FXML
     private Button RefreshiProduiet;
 
+    @FXML
+    private LineChart<?, ?> SecondTry;
+
+    @FXML
+    private PieChart pieChart;
+
+    @FXML
+    private Button BtnCheckStatProduits;
+
     SideBarBackForEmployees sb = new SideBarBackForEmployees();
     //sb.GoToProducts(MouseEvent event);
+
 
 
 
@@ -119,6 +133,11 @@ AfficherProd();
     @FXML
     void BtnUpdateProduitt(MouseEvent event) {
 NavigationControler.OpenInterfaceUpdateProduct(event,"ModifierProduit.fxml");
+    }
+
+    @FXML
+    void GoToKPIsProduits(MouseEvent event) {
+        NavigationControler.OpenKPISProduits(event,"KpisProduitsBack.fxml");
     }
 
     ProduitService ps = new ProduitService();
@@ -230,8 +249,8 @@ private String getCategoryNameById(int categoryId) {
         IdCatProductColumn.setCellValueFactory(new PropertyValueFactory<>("Id_Catégorie"));
         NameProductColumn.setCellValueFactory(new PropertyValueFactory<>("NomP"));
         PriceProductColumn.setCellValueFactory(new PropertyValueFactory<>("PrixP"));
-        QteSeulProColumn.setCellValueFactory(new PropertyValueFactory<>("QteP"));
-        QuantiteProColumn.setCellValueFactory(new PropertyValueFactory<>("QteSeuilP"));
+        QuantiteProColumn.setCellValueFactory(new PropertyValueFactory<>("QteP"));
+        QteSeulProColumn.setCellValueFactory(new PropertyValueFactory<>("QteSeuilP"));
         ImageProductColumn.setCellValueFactory(new PropertyValueFactory<>("ImageP"));
 
         TableViewProductBack.setItems(listProduits);
@@ -247,11 +266,70 @@ private String getCategoryNameById(int categoryId) {
         stage.show();
     }
 /*****************************************************************/
+/*public void nombreProduitsParCategorie() {
+    pieChart.getData().clear();
+
+    String sql = "SELECT c.NomCatégorie, COUNT(p.Id_Produit) " +
+            "FROM catégorie c " +
+            "LEFT JOIN produit p ON c.Id_Catégorie = p.Id_Catégorie " +
+            "GROUP BY c.NomCatégorie";
+
+    try {
+
+        MyDataBase db = new MyDataBase();
+        Connection cnx = db.getCnx();
+        PreparedStatement statement = cnx.prepareStatement(sql);
+        ResultSet resultSet = statement.executeQuery();
+
+        while (resultSet.next()) {
+            pieChart.getData().add(new PieChart.Data(resultSet.getString(1), resultSet.getInt(2)));
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}*/
+/**************************************************/
+/* hedhi Bl Bar chart
+public void prixMoyenProduitsParCategorie() {
+    barChart.getData().clear();
+
+    String sql = "SELECT c.NomCategorie, AVG(p.PrixP) " +
+            "FROM categorie c " +
+            "LEFT JOIN produit p ON c.Id_Categorie = p.Id_Categorie " +
+            "GROUP BY c.NomCategorie";
+
+    try {
+        Connection conn = database.connectDB();
+        PreparedStatement statement = conn.prepareStatement(sql);
+        ResultSet resultSet = statement.executeQuery();
+
+        XYChart.Series series = new XYChart.Series();
+
+        while (resultSet.next()) {
+            series.getData().add(new XYChart.Data<>(resultSet.getString(1), resultSet.getDouble(2)));
+        }
+
+        barChart.getData().add(series);
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+*/
 
 
+
+
+
+
+
+
+
+/*********************************/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         AfficherProd();
+        //evolutionPrixProduits();
+         //nombreProduitsParCategorie();
 
         tActions.setCellFactory(new Callback<TableColumn<Produit, Void>, TableCell<Produit, Void>>() {
             @Override
@@ -280,9 +358,98 @@ private String getCategoryNameById(int categoryId) {
             }
         });
     }
+/********************************************************************/
+
+/*
+public void comparerQuantitesEtSeuils() {
+    stackedBarChart.getData().clear();
+
+    String sql = "SELECT c.NomCategorie, " +
+            "SUM(p.QteP) AS QuantiteVendue, " +
+            "SUM(p.QteSeuilP) AS SeuilStock " +
+            "FROM categorie c " +
+            "LEFT JOIN produit p ON c.Id_Categorie = p.Id_Categorie " +
+            "GROUP BY c.NomCategorie";
+
+    try {
+        Connection conn = database.connectDB();
+        PreparedStatement statement = conn.prepareStatement(sql);
+        ResultSet resultSet = statement.executeQuery();
+
+        XYChart.Series<String, Number> quantiteVendueSeries = new XYChart.Series<>();
+        XYChart.Series<String, Number> seuilStockSeries = new XYChart.Series<>();
+
+        while (resultSet.next()) {
+            String categorie = resultSet.getString(1);
+            int quantiteVendue = resultSet.getInt(2);
+            int seuilStock = resultSet.getInt(3);
+
+            quantiteVendueSeries.getData().add(new XYChart.Data<>(categorie, quantiteVendue));
+            seuilStockSeries.getData().add(new XYChart.Data<>(categorie, seuilStock - quantiteVendue));
+        }
+
+        quantiteVendueSeries.setName("Quantité Vendue");
+        seuilStockSeries.setName("Seuil de Stock");
+
+        stackedBarChart.getData().addAll(quantiteVendueSeries, seuilStockSeries);
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
 
     /***********Fonction Load page modifier produit ***********************************/
 
+    public void evolutionPrixProduits() {
+        SecondTry.getData().clear();
+
+        String sql = "SELECT p.Id_Catégorie, AVG(p.PrixP) " +
+                "FROM produit p " +
+                "GROUP BY p.Id_Catégorie";
+
+        try {
+
+            MyDataBase db = new MyDataBase();
+            Connection cnx = db.getCnx();
+            PreparedStatement statement = cnx.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
+
+            XYChart.Series series = new XYChart.Series();
+
+            while (resultSet.next()) {
+                series.getData().add(new XYChart.Data<>(String.valueOf(resultSet.getInt(1)), resultSet.getDouble(2)));
+            }
+            SecondTry.getData().add(series);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    /***************************************************************/
     public void loadUpdateProductView() throws IOException
     {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ModifierProduit.fxml"));
