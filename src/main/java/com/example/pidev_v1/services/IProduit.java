@@ -2,7 +2,9 @@ package com.example.pidev_v1.services;
 
 import com.example.pidev_v1.entities.Produit;
 import javafx.collections.ObservableList;
+import org.json.JSONException;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface IProduit  {
@@ -27,7 +29,7 @@ public interface IProduit  {
 
     public boolean isProductImageExists(String productImage);
 
-
+    //public String translateProduct (String s,String l) throws IOException, JSONException;
 
 
 }

@@ -6,16 +6,24 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
@@ -48,6 +56,39 @@ public class dashboardAdminFormUser implements Initializable {
     private Text userText;
     private User currentUser;
     private User selectedUser;
+    @FXML
+    private Label imageFullPath;
+
+
+    @FXML
+    void uploadImage(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choose Image File");
+        File file = fileChooser.showOpenDialog(((Node) event.getSource()).getScene().getWindow());
+        if (file != null) {
+            imageFullPath.setText(file.getName());
+        }
+        String fileName = imageFullPath.getText();
+        if (fileName != null && !fileName.isEmpty()) {
+            try {
+                // Get the resource URL for the uploads directory
+                URL resourceUrl = getClass().getClassLoader().getResource("uploads");
+                if (resourceUrl == null) {
+                    // If the directory doesn't exist, create it
+                    File uploadsDirectory = new File("src/main/resources/upload");
+                    if (!uploadsDirectory.exists()) {
+                        uploadsDirectory.mkdirs();
+                    }
+                    resourceUrl = uploadsDirectory.toURI().toURL();
+                }
+
+                // Copy the uploaded file to the uploads directory
+                Files.copy(new File(file.getPath()).toPath(), Paths.get(resourceUrl.toURI()).resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException | URISyntaxException e) {
+                e.printStackTrace(); // Handle exception properly based on your application's requirements
+            }
+        }
+    }
 
     void goBack(){
         try {
@@ -76,6 +117,7 @@ public class dashboardAdminFormUser implements Initializable {
         String prenomUser = prenomField.getText();
         String adrUser = adresseField.getText();
         String emailUsr = emailField.getText();
+        String image = imageFullPath.getText();
         int numtel = Integer.parseInt(numField.getText());
 
         if(nomUser.isEmpty() || prenomUser.isEmpty() || adrUser.isEmpty() || emailUsr.isEmpty())
@@ -112,10 +154,10 @@ public class dashboardAdminFormUser implements Initializable {
 
         if(selectedUser != null)
         {
-            User user = new User(selectedUser.getId_user(), nomUser,prenomUser,adrUser,emailUsr,selectedUser.getPassword(),numtel,role);
+            User user = new User(selectedUser.getId_user(), nomUser,prenomUser,adrUser,emailUsr,selectedUser.getPassword(),numtel,role,image);
             userService.update(user);
         }else{
-            User user = new User(0,nomUser,prenomUser,adrUser,emailUsr,"password",numtel,role);
+            User user = new User(0,nomUser,prenomUser,adrUser,emailUsr,"password",numtel,role,image);
             userService.add(user);
         }
         goBack();

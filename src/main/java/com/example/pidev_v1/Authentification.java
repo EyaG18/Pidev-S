@@ -6,14 +6,26 @@ import com.example.pidev_v1.services.UserService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Label;
+import javafx.scene.shape.Path;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static java.lang.Integer.parseInt;
@@ -42,6 +54,40 @@ public class Authentification {
     private TextField TFPassword;
 
     @FXML
+    private Label imageFullPath;
+
+
+    @FXML
+    void uploadImage(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choose Image File");
+        File file = fileChooser.showOpenDialog(((Node) event.getSource()).getScene().getWindow());
+        if (file != null) {
+            imageFullPath.setText(file.getName());
+        }
+        String fileName = imageFullPath.getText();
+        if (fileName != null && !fileName.isEmpty()) {
+            try {
+                // Get the resource URL for the uploads directory
+                URL resourceUrl = getClass().getClassLoader().getResource("uploads");
+                if (resourceUrl == null) {
+                    // If the directory doesn't exist, create it
+                    File uploadsDirectory = new File("src/main/resources/upload");
+                    if (!uploadsDirectory.exists()) {
+                        uploadsDirectory.mkdirs();
+                    }
+                    resourceUrl = uploadsDirectory.toURI().toURL();
+                }
+
+                // Copy the uploaded file to the uploads directory
+                Files.copy(new File(file.getPath()).toPath(), Paths.get(resourceUrl.toURI()).resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException | URISyntaxException e) {
+                e.printStackTrace(); // Handle exception properly based on your application's requirements
+            }
+        }
+    }
+
+    @FXML
     void Authentificate(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Login.fxml"));
@@ -62,6 +108,7 @@ public class Authentification {
         String fullName = TFFullName.getText();
         String password = TFPassword.getText();
         String address = TFAddress.getText();
+        String userImage = imageFullPath.getText();
         int numtel = parseInt(TFNum.getText());
 
         if (email.isEmpty() || fullName.isEmpty() || password.isEmpty() || address.isEmpty()) {
@@ -106,10 +153,37 @@ public class Authentification {
             }
         }
 
+        String passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
+        Pattern patternPassword = Pattern.compile(passwordPattern);
+        Matcher matcher = patternPassword.matcher(password);
+
+        if (!matcher.matches()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Invalid Password");
+            alert.setHeaderText(null);
+            alert.setContentText("Password must contain at least:\n- One uppercase letter\n- One lowercase letter\n- One digit\n- One special character\n- Minimum length of 8 characters");
+            alert.showAndWait();
+            return;
+        }
+
+        String emailPattern = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+        Pattern emailPatternCompiled = Pattern.compile(emailPattern);
+        Matcher emailMatcher = emailPatternCompiled.matcher(email);
+
+        if (!emailMatcher.matches()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Invalid email address\n");
+            alert.setHeaderText(null);
+            alert.setContentText("Invalid email address Please retry!");
+            alert.showAndWait();
+            return;
+        }
 
         UserService ps = new UserService();
 
-        User user = new User(0, firstName,lastName, address, email, password, numtel, "Client");
+        String hashedPassword = hashPassword(password);
+
+        User user = new User(0, firstName,lastName, address, email, hashedPassword, numtel, "Client",userImage);
         ps.add(user);
 
 
@@ -129,6 +203,23 @@ public class Authentification {
 
     }
 
+    private String hashPassword(String password) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(password.getBytes());
+            StringBuilder hexString = new StringBuilder();
+
+            for (byte b : hash) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+
+            return hexString.toString();
+        }  catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 
 

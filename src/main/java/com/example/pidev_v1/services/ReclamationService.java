@@ -9,7 +9,7 @@ import java.sql.*;
 
 public class ReclamationService implements Services <Reclamation>  {
 
-    Connection cnx= null;
+    Connection cnx;
     Statement statement= null;
     PreparedStatement ste;
     MyDataBase connect = new MyDataBase();
@@ -103,13 +103,19 @@ public class ReclamationService implements Services <Reclamation>  {
 
         ObservableList<Reclamation> list = FXCollections.observableArrayList();
 
-
+        MyDataBase db = new MyDataBase();
+        Connection cnx = db.getCnx();
 
         String requete1="SELECT user.nomuser, description, date_reclamation, statu_reclamation, type_reclamation FROM reclamation JOIN user ON reclamation.id_client = user.id_user";
         //List<Reclamation> list =new ArrayList<>();
+        Statement st;
+        ResultSet rs;
         try {
-            ste= (PreparedStatement) cnx.createStatement();
-            ResultSet rs= ste.executeQuery(requete1);
+
+            st = cnx.createStatement();
+            rs = st.executeQuery(requete1);
+            //ste= (PreparedStatement)cnx.createStatement();
+            //ResultSet rs= ste.executeQuery(requete1);
             while(rs.next()){
                 list.add(new Reclamation(rs.getString("nomuser"),
                         rs.getString("description"),rs.getDate("date_reclamation"),

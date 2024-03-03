@@ -15,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 
 import java.io.File;
@@ -26,6 +27,10 @@ import java.sql.Statement;
 import java.util.ResourceBundle;
 
 public class ModifierProduit implements Initializable {
+
+
+    @FXML
+    private AnchorPane AnchorPaneModifierProduit;
 
     @FXML
     private ComboBox<String> ComboCategorieProduitUpdate;
@@ -213,7 +218,7 @@ if (selectedCategoryNme != null)
     }
   /**fonction pour recuperer les noms  categorie selon id + Affichage combo Box*****************************************/
 
-  public void DisplayCategoriesInComboBox()
+  public void DisplayCategoriesInComboBox1()
   {
       MyDataBase ct = new MyDataBase();
       Connection cnx = ct.getCnx();
@@ -237,7 +242,7 @@ if (selectedCategoryNme != null)
 /*****Fonction Initialize*************/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        DisplayCategoriesInComboBox();
+        DisplayCategoriesInComboBox1();
         DisplayProductsInComboBox();
         CamboNomProduit.setOnAction ((ActionEvent event) -> {
             ReturnProduitAfterChoosingItFromComboBox(); } ) ;

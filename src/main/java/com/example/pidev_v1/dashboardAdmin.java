@@ -12,12 +12,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class dashboardAdmin implements Initializable {
@@ -27,6 +31,8 @@ public class dashboardAdmin implements Initializable {
     @FXML
     private URL location;
 
+    @FXML
+    private ImageView profilePicture;
 
     @FXML
     private TableColumn<?, ?> adresseCo;
@@ -75,6 +81,10 @@ public class dashboardAdmin implements Initializable {
     @FXML
     void initialize() {
         assert userText != null : "fx:id=\"userText\" was not injected: check your FXML file 'dashboardAdmin.fxml'.";
+    }
+
+    void showUsers()
+    {
 
         nomCo.setCellValueFactory(new PropertyValueFactory<>("nomuser"));
         prenomCo.setCellValueFactory(new PropertyValueFactory<>("prenomuser"));
@@ -82,14 +92,10 @@ public class dashboardAdmin implements Initializable {
         emailCo.setCellValueFactory(new PropertyValueFactory<>("EmailUsr"));
         numCo.setCellValueFactory(new PropertyValueFactory<>("Numtel"));
         roleCo.setCellValueFactory(new PropertyValueFactory<>("Role"));
-        showUsers();
-    }
 
-    void showUsers()
-    {
         UserService userService = new UserService();
         ObservableList<User> userList = FXCollections.observableArrayList(userService.afficher());
-
+        System.out.println(userService.afficher());
         table.setItems(userList);
         table.setOnMouseClicked((event)->{
             handleTableClicked();
@@ -108,6 +114,24 @@ public class dashboardAdmin implements Initializable {
     public void setUser(User user) {
         currentUser = user;
         userText.setText(currentUser.getNomuser()+" "+currentUser.getPrenomuser());
+        showUsers();
+
+        if (!user.getImage().isEmpty()) {
+            String imagePath = "/upload/" + user.getImage(); // Replace this with the path to your image in resources
+            InputStream inputStream = getClass().getResourceAsStream(imagePath);
+            if (inputStream != null) {
+                Image image = new Image(inputStream);
+                profilePicture.setImage(image);
+            } else {
+                // Handle the case when the resource stream is null
+                System.err.println("Resource stream is null for image: " + imagePath);
+                // Optionally, you can set a default image or display an error message
+            }
+        } else {
+            // Handle the case when the user's image path is empty
+            System.err.println("Image path is empty for user: " + currentUser.getNomuser());
+            // Optionally, you can set a default image or display an error message
+        }
     }
 
     @FXML

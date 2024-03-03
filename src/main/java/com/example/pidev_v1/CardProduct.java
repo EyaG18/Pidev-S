@@ -128,14 +128,24 @@ public class CardProduct implements Initializable {
                 currentStock = result.getInt("QteP");
                 stockThreshold = result.getInt("QteSeuilP");
             }
-            if ((currentStock == stockThreshold)) {
+
+            if ( qty ==0)
+            {
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Une Erreur est Survenue ! ");
+                alert.setHeaderText(null);
+                alert.setContentText("Veuillez choisir la quantité que vous souhaitez ajouter ! ");
+                alert.showAndWait();
+
+            }
+             else if ((currentStock == stockThreshold) ) {
                 System.out.println(currentStock);
                 alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Une Erreur est Survenue ! ");
                 alert.setHeaderText(null);
                 alert.setContentText("Desolée! Ce Produit sera Bientot en Stock ! ");
                 alert.showAndWait();
-            } else if (currentStock < qty)
+            } else if (currentStock < qty )
                 {
                     alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error Message");

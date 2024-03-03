@@ -201,10 +201,7 @@ public class InterfaceAvisController implements Initializable {
         ajoutL.setVisible(true);
         ajoutaviB.setVisible(true);
         ajoutImage.setVisible(true);
-
     }
-
-
     @FXML
     void modifierAnchor(ActionEvent event) {
         anchorAvis.setVisible(true);
@@ -258,22 +255,17 @@ public class InterfaceAvisController implements Initializable {
 
         }
     }
-
     @FXML
     void modifieravis(ActionEvent event) {
-        int idc= Integer.parseInt(recupererID.getText());
-        int idp= sa.repurerID_produit(nomPTF.getText());
-        int ida=sa.repurerID_avis(idp,idc);
-        sa.update(new Avis(ida,idc,idp,commentaireTF.getText(),i));
+        int idc = Integer.parseInt(recupererID.getText());
+        int idp = sa.repurerID_produit(nomPTF.getText());
+        int ida = sa.repurerID_avis(idp, idc);
+        sa.update(new Avis(ida, idc, idp, commentaireTF.getText(), i));
         anchorAvis.setVisible(false);
         modifierL.setVisible(false);
         confirmerB2.setVisible(false);
         modifierI.setVisible(false);
-
     }
-
-
-
     @FXML
     void ajouteravis(ActionEvent event) {
 

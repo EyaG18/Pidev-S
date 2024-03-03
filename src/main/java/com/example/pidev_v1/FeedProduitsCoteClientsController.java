@@ -26,6 +26,9 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
 import java.net.URL;
@@ -66,6 +69,23 @@ public class FeedProduitsCoteClientsController implements Initializable {
     @FXML
     private AnchorPane BigAnchorPane;
 
+    @FXML
+    private Button btnChercher;
+
+    @FXML
+    private Button btnNosOffres;
+
+    @FXML
+    private Button btnPanier;
+
+    @FXML
+    private Button btnProfil;
+
+    @FXML
+    private Button btnReclamer;
+
+
+
 //////////////////////////////////
     @FXML
     private GridPane menuP_gridpane;
@@ -103,12 +123,51 @@ public class FeedProduitsCoteClientsController implements Initializable {
     private MyDataBase cnx;
     private PreparedStatement prepare;
 
+
     @FXML
-    private Button btnPanier;
+    void GoToDonnerReclamation(MouseEvent event) {
+
+    }
+
+    @FXML
+    void GoToExplore(MouseEvent event) {
+
+    }
+
+    @FXML
+    void GoToFeed(MouseEvent event) {
+
+    }
+
     @FXML
     void GoToPaniersClient(MouseEvent event) {
 
     }
+
+    @FXML
+    void GoToVoirOffres(MouseEvent event) {
+
+    }
+
+    @FXML
+    void GotoProfile(MouseEvent event) {
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     /************************************************************************/
@@ -122,7 +181,7 @@ public class FeedProduitsCoteClientsController implements Initializable {
             ResultSet QueryOutput = statement.executeQuery(queryCategory);
             while (QueryOutput.next()) {
                 String categoryName = QueryOutput.getString("NomCatégorie");
-                ComBoxCategorie.getItems().add(categoryName);
+                //ComBoxCategorie.getItems().add(categoryName);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -173,7 +232,7 @@ public ObservableList<Produit> getProductList() {
         {
             System.out.println("Recuperation reussie ! ");
         } else { System.out.println("erreur de recuperation"); }
-        //cardListDataProduits.addAll(getProductList());   //on stocke dans notre liste observable liste de sproduits recuperes depuis la base
+        cardListDataProduits.addAll(getProductList());   //on stocke dans notre liste observable liste de sproduits recuperes depuis la base
         int row = 0;
         int column = 0;
         menuP_gridpane.getChildren().clear();
@@ -208,9 +267,10 @@ public ObservableList<Produit> getProductList() {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Methode initaliaze est appelle ! ");
-        DisplayCategoriesInComboBoxFront2();
-        ComBoxCategorie.setOnAction((ActionEvent event) -> { mf.ReturnNewSelectedCategory();
-        });
+        //DisplayCategoriesInComboBoxFront2();
+        //ComBoxCategorie.setOnAction((ActionEvent event) -> { mf.ReturnNewSelectedCategory();
+        //});
+        //AfficherProduitsClients();
     }
     /*************************************************/
     public int userID(User user) {
@@ -223,25 +283,5 @@ public ObservableList<Produit> getProductList() {
         LabelUser.setText(currentUser.getNomuser()+" "+currentUser.getPrenomuser());
         AfficherProduitsClients();
     }
-    /*public ObservableList<Produit> getProductsList() {
 
-        ObservableList<Produit> ListProducts = FXCollections.observableArrayList();
-        MyDataBase ct = new MyDataBase();
-        Connection cnx= ct.getCnx();
-        String query = "SELECT * FROM produit"; // Assurez-vous de remplacer "books" par le nom de votre table approprié
-        Statement st;
-        ResultSet rs;
-        try {
-            st = cnx.createStatement();
-            rs = st.executeQuery(query);
-            Produit produit;
-            while (rs.next()) {
-                produit =new Produit(rs.getInt("Id_Catégorie"),rs.getString("NomP"),rs.getFloat("PrixP"),rs.getInt("QteP"),rs.getInt("QteSeuilP"),rs.getString("ImageP"));
-                ListProducts.add(produit);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return ListProducts;
-    }*/
 }

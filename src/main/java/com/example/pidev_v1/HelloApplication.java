@@ -16,13 +16,13 @@ import static com.example.pidev_v1.API.TwilioSMS.sendSMS;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        //FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("AfficherProduitCoteClient.fxml"));
+        //FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("WelcomeBack.fxml"));
        //FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("AfficherProduitBack.fxml"));
         //FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("KpisProduitsBack.fxml"));
        //FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("FeedProduitsCoteClients.fxml"));
-        //FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("authentification.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("authentification.fxml"));
         //FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("dashboardAdminFormUser.fxml"));
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("interfaceAvis.fxml"));
+        //FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("interfaceAvis.fxml"));
         Scene scene = new Scene(fxmlLoader.<Parent>load(), 1056, 785);
         stage.setTitle("Arya :Store Management Tool :Authentification");
         stage.setScene(scene);
@@ -33,11 +33,9 @@ public class HelloApplication extends Application {
         MyDataBase Db = new MyDataBase();
         Db.getCnx();
 
-        ServiceAvis serviceAvis = new ServiceAvis();
-        Avis avis = new Avis(3,27,"bonjour test yassmine",5);
-        serviceAvis.add(avis);
-        //ps.addProduct(produit);
-
+        //UserService userService = new UserService();
+        //User user = userService.getUserByEmail("eya.gadhoumi@esprit.tn");
+        //System.out.println(user);
 
         //UserService us = new UserService();
         //us.add(user);

@@ -9,7 +9,7 @@ public class MyDataBase {
     public static final String url = "jdbc:mysql://localhost:3306/pidev2";
     public static final String user ="root";
     public static final  String pwd="";
-    private Connection cnx ;
+    private static Connection cnx ;
     public static  MyDataBase ct  ;
 
     public MyDataBase()
@@ -22,7 +22,7 @@ public class MyDataBase {
         }
     }
 
-    public Connection getCnx() {
+    public static Connection getCnx() {
         return cnx;
     }
 

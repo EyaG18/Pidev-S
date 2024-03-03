@@ -21,7 +21,7 @@ public class UserService implements CRUD<User >{
 
     @Override
     public void add(User p) {
-        String req = "INSERT INTO `user`(`nomuser`, `prenomuser`, `AdrUser`, `EmailUsr`, `password`, `Numtel`, `Role`) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String req = "INSERT INTO `user`(`nomuser`, `prenomuser`, `AdrUser`, `EmailUsr`, `password`, `Numtel`, `Role`,image) VALUES (?, ?, ?, ?, ?, ?, ?,?)";
         try {
             PreparedStatement pstmt = cnx.prepareStatement(req);
             pstmt.setString(1, p.getNomuser());
@@ -31,6 +31,7 @@ public class UserService implements CRUD<User >{
             pstmt.setString(5, p.getPassword());
             pstmt.setInt(6, p.getNumtel());
             pstmt.setString(7, p.getRole());
+            pstmt.setString(8,p.getImage());
             pstmt.executeUpdate();
             System.out.println("Utilisateur ajouté avec succès");
         } catch (SQLException ex) {
@@ -59,7 +60,7 @@ public class UserService implements CRUD<User >{
 
     @Override
     public void update(User p) {
-        String req = "UPDATE `user` SET `nomuser`=?, `prenomuser`=?, `AdrUser`=?, `EmailUsr`=?, `password`=?, `Numtel`=?, `Role`=? WHERE `id_user`=?";
+        String req = "UPDATE `user` SET `nomuser`=?, `prenomuser`=?, `AdrUser`=?, `EmailUsr`=?, `password`=?, `Numtel`=?, `Role`=? , `image`=? WHERE `id_user`=?";
         try {
             PreparedStatement pstmt = cnx.prepareStatement(req);
                     pstmt.setString(1, p.getNomuser());
@@ -69,7 +70,8 @@ public class UserService implements CRUD<User >{
             pstmt.setString(5, p.getEmailUsr());
             pstmt.setInt(6, p.getNumtel());
             pstmt.setString(7, p.getRole());
-            pstmt.setInt(8, p.getId_user());
+            pstmt.setString(8,p.getImage());
+            pstmt.setInt(9, p.getId_user());
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows > 0) {
                 System.out.println("Utilisateur mis à jour avec succès");
@@ -95,9 +97,10 @@ public class UserService implements CRUD<User >{
                 String adrUser = rs.getString("AdrUser");
                 String emailUsr = rs.getString("EmailUsr");
                 String password = rs.getString("password");
+                String image = rs.getString("image");
                 int numtel = rs.getInt("Numtel");
                 String role = rs.getString("Role");
-                users.add(new User(id_user, nomuser, prenomuser, adrUser, emailUsr,password, numtel, role));
+                users.add(new User(id_user, nomuser, prenomuser, adrUser, emailUsr,password, numtel, role, image ));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -139,7 +142,8 @@ public class UserService implements CRUD<User >{
                 String password = rs.getString("password");
                 int numtel = rs.getInt("Numtel");
                 String role = rs.getString("Role");
-                return new User(id_user, nomuser, prenomuser, adrUser, email, password, numtel, role);
+                String image = rs.getString("image");
+                return new User(id_user, nomuser, prenomuser, adrUser, email, password, numtel, role,image);
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

@@ -70,7 +70,6 @@ public class DetailsCategorie implements Initializable {
     @FXML
     void GetSelectedCategory(MouseEvent event) {
           indexCat = TableViewCategory.getSelectionModel().getSelectedItem().getId_CatégorieC();
-
           if (indexCat <= -1)
           { return; }
           CategoryFieldText.setText(ColumnNameCategory.getCellData(indexCat).toString());
@@ -219,8 +218,8 @@ public class DetailsCategorie implements Initializable {
 
         ColumnNameCategory.setCellValueFactory(new PropertyValueFactory<>("NomCatégorie"));
         TableViewCategory.setItems(ListCategoryObservable);
-        // Utilisez la même liste observable pour la liste filtrée
-        FilteredList<Catégorie> catégorieFilteredList = new FilteredList<>(ListCategoryObservable, b -> true);
+
+        /*FilteredList<Catégorie> catégorieFilteredList = new FilteredList<>(ListCategoryObservable, b -> true);
         KeywordsTextLabel.textProperty().addListener((observableValue, oldValue, newValue) -> {
             catégorieFilteredList.setPredicate(Catégorie -> {
                 // if no search value then display all data with no changes
@@ -232,11 +231,9 @@ public class DetailsCategorie implements Initializable {
             });
         });
 
-        // Utilisez la même liste filtrée pour la liste triée
         SortedList<Catégorie> SortedCategoryList = new SortedList<>(catégorieFilteredList);
         SortedCategoryList.comparatorProperty().bind(TableViewCategory.comparatorProperty());
-        TableViewCategory.setItems(SortedCategoryList);
-
+        TableViewCategory.setItems(SortedCategoryList);*/
     }
     /*********************************************************************/
 

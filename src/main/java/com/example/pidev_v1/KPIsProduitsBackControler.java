@@ -7,10 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.PieChart;
-import javafx.scene.chart.XYChart;
+import javafx.scene.chart.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -46,6 +43,9 @@ public class KPIsProduitsBackControler implements Initializable {
 
     @FXML
     private Label NomUserSession;
+
+    @FXML
+    private BarChart<?, ?> barChart1;
 
     @FXML
     private LineChart<?, ?> SecondTry;
@@ -109,14 +109,16 @@ public class KPIsProduitsBackControler implements Initializable {
         for (Produit produit : listProduits) {
             if (produit.getQteP() <= produit.getQteSeuilP()) {
                 // Ajouter l'identifiant du produit à la chaîne de notification
-                // notificationMsg.append(" Produit ID: ").append(produit.getId_Produit()).append("\n");
+                notificationMsg.append(" Produit ID: ").append(produit.getId_Produit()).append("\n");
                 System.out.println(produit.getId_Produit());
                 // stockInsuffisant = true; // Définir à true car il y a un stock insuffisant
+                if (notificationMsg.length() > 0) {
+                    // Envoyer la notification par SMS si des produits sont en rupture de stock
+                    sendSMS(23067230, notificationMsg.toString());
+                }
             }
         }
-
         System.out.println("Tous les produits sont en stock.");
-
     }
 
 /********************************************/
@@ -179,6 +181,52 @@ NavigationControler.OpenAffichageProduitsBack(event,"AfficherProduitBack.fxml");
         }
     }
 
+
+
+
+    public void Statistiques8stock_Porudits()
+    {
+        System.out.println("fonction stat produits panier est appllee");
+        CategoryAxis xAxis = new CategoryAxis();
+        NumberAxis yAxis = new NumberAxis();
+        xAxis.setLabel("Produit");
+        yAxis.setLabel("Quantité");
+
+        // Création du graphique BarChart
+        BarChart<String, Number> barChart1 = new BarChart<>(xAxis, yAxis);
+        barChart1.setTitle("Statistique de Stock et Panier");
+        String sql = "SELECT p.NomP, SUM(p.QteP) AS Stock, IFNULL(SUM(pa.QuantiteParProduit), 0) AS Panier " +
+                "FROM Produit p " +
+                "LEFT JOIN Panier pa ON p.Id_Produit = pa.Id_Produit " +
+                "GROUP BY p.NomP";
+        // Exécution de la requête SQL pour récupérer les données de stock et de panier
+        try {
+            MyDataBase db = new MyDataBase();
+            Connection cnx = db.getCnx();
+            PreparedStatement statement;
+            statement = cnx.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
+            System.out.println("eya");
+
+            // Ajout des séries de données au graphique
+            while (resultSet.next()) {
+                String produit = resultSet.getString("NomP");
+                int stock = resultSet.getInt("QteP");
+                int panier = resultSet.getInt("QuantiteParProduit");
+
+                XYChart.Series<String, Number> series = new XYChart.Series<>();
+                series.setName(produit);
+                series.getData().add(new XYChart.Data<>("Stock", stock));
+                series.getData().add(new XYChart.Data<>("Panier", panier));
+                barChart1.getData().addAll(series);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 /*******************************************************/
 
 public void nombreProduitsParCategorie() {
@@ -205,7 +253,13 @@ public void nombreProduitsParCategorie() {
 }
 
 /***************************************************************/
-
+@Override
+public void initialize(URL url, ResourceBundle resourceBundle) {
+    prixMoyenProduitsParCategorie();
+    nombreProduitsParCategorie();
+    evolutionPrixProduits();
+    //Statistiques8stock_Porudits();
+}
 public void prixMoyenProduitsParCategorie() {
     barChart.getData().clear();
 
@@ -232,11 +286,4 @@ public void prixMoyenProduitsParCategorie() {
     }
 }
 
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        prixMoyenProduitsParCategorie();
-        nombreProduitsParCategorie();
-        evolutionPrixProduits();
-    }
 }

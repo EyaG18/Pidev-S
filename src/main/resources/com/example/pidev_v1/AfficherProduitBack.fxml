@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -11,55 +10,15 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <StackPane prefHeight="783.0" prefWidth="1162.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pidev_v1.AfficherProduitBack">
    <children>
       <AnchorPane prefHeight="719.0" prefWidth="1104.0">
          <children>
-            <AnchorPane prefHeight="783.0" prefWidth="1162.0" style="-fx-background-color: #FFFFFF;" styleClass="white-background" stylesheets="@../../../../java/com/example/pidev_v1/css/style.css">
+            <AnchorPane layoutX="2.0" prefHeight="783.0" prefWidth="1162.0" style="-fx-background-color: #FFFFFF;" styleClass="white-background" stylesheets="@../../../../java/com/example/pidev_v1/css/style.css">
                <children>
-                  <TableView fx:id="TableViewProductBack" layoutX="298.0" layoutY="338.0" prefHeight="340.0" prefWidth="792.0">
-                    <columns>
-                        <TableColumn fx:id="IdCatProductColumn" prefWidth="123.0" text="Référence Catégorie" />
-                      <TableColumn fx:id="NameProductColumn" prefWidth="87.0" text="Nom Produit" />
-                        <TableColumn fx:id="PriceProductColumn" prefWidth="93.0" text="Prix Produit" />
-                        <TableColumn fx:id="QuantiteProColumn" prefWidth="118.0" text="Quantité en Stock" />
-                        <TableColumn fx:id="QteSeulProColumn" minWidth="0.0" prefWidth="119.0" text="Quantité seuil " />
-                        <TableColumn fx:id="ImageProductColumn" prefWidth="253.0" text="Image Produit" />
-                        <TableColumn fx:id="tActions" prefWidth="78.0" text="Mise à jour" />
-                    </columns>
-                  </TableView>
-                  <Button fx:id="btnAjouterProdDansAffich" layoutX="430.0" layoutY="244.0" mnemonicParsing="false" onMouseClicked="#afficherInterfaceAjouterProd" prefHeight="25.0" prefWidth="112.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" styleClass="shadow" text="Ajouter">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="btnDeleteProd" layoutX="305.0" layoutY="244.0" mnemonicParsing="false" onMouseClicked="#BtnDeletProduct" prefHeight="25.0" prefWidth="112.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Supprimer">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="btnUpdateProd" layoutX="562.0" layoutY="244.0" mnemonicParsing="false" onMouseClicked="#BtnUpdateProduitt" prefHeight="25.0" prefWidth="119.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Modifier">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Button>
-                  <ImageView fitHeight="25.0" fitWidth="26.0" layoutX="511.0" layoutY="244.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../../../../../../../../xampp/htdocs/icons8-add-64%20(2).png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="392.0" layoutY="244.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../../../../../../../../xampp/htdocs/icons8-delete-64.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="648.0" layoutY="245.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../../../../../../../../xampp/htdocs/icons8-update-64.png" />
-                     </image>
-                  </ImageView>
-                  <AnchorPane prefHeight="783.0" prefWidth="262.0" style="-fx-background-color: #C6E6FB;">
+                  <AnchorPane layoutX="-3.0" prefHeight="783.0" prefWidth="184.0" style="-fx-background-color: #C6E6FB;">
                      <children>
                         <ImageView fitHeight="142.0" fitWidth="170.0" layoutX="47.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -71,51 +30,169 @@
                               <Image url="@../../../../../../../../../../xampp/htdocs/logout.png" />
                            </image>
                         </ImageView>
-                        <Button fx:id="UsersBoutons" layoutX="30.0" layoutY="200.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="199.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Utilisateurs" />
-                        <Button fx:id="CommandesLivraisosBTN" layoutX="31.0" layoutY="257.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="199.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Commandes et Livraisons" />
-                        <Button fx:id="BtnProduits" layoutX="31.0" layoutY="317.0" mnemonicParsing="false" onMouseClicked="#GoToProducts" prefHeight="33.0" prefWidth="199.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Produits" />
-                        <Button fx:id="BtnCRM" layoutX="31.0" layoutY="381.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="199.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Relations Clients" />
-                        <Button fx:id="BrnFournisseursAppelsOffres" layoutX="30.0" layoutY="442.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="199.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Fournisseurs &amp; Appels d'offres" />
-                        <Button fx:id="BtnCategories" layoutX="32.0" layoutY="499.0" mnemonicParsing="false" onMouseClicked="#GoToCategories" prefHeight="39.0" prefWidth="199.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Catégories de Produits" />
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane fx:id="filter" layoutX="262.0" prefHeight="180.0" prefWidth="838.0">
-                     <children>
-                        <Separator layoutX="37.0" layoutY="120.0" prefHeight="0.0" prefWidth="860.0" style="-fx-background-color: #C6E6FB;" />
-                        <AnchorPane fx:id="profil" layoutX="651.0" layoutY="-1.0" prefHeight="123.0" prefWidth="246.0">
-                           <children>
-                              <ImageView fitHeight="50.0" fitWidth="54.0" layoutX="71.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../../../../../../../../../xampp/htdocs/user.png" />
-                                 </image>
-                              </ImageView>
-                              <Label fx:id="NomUserSession" layoutX="80.0" layoutY="91.0" prefHeight="18.0" prefWidth="144.0">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Separator layoutX="28.0" orientation="VERTICAL" prefHeight="123.0" prefWidth="5.0" style="-fx-background-color: #C6E6FB;" />
-                           </children>
-                        </AnchorPane>
-                        <TextField fx:id="KeywordsTextLabel" layoutX="176.0" layoutY="64.0" prefHeight="26.0" prefWidth="402.0" />
-                        <ImageView fitHeight="33.0" fitWidth="25.0" layoutX="119.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+                        <Button fx:id="UsersBoutons" layoutX="30.0" layoutY="200.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="148.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Utilisateurs" />
+                        <Button fx:id="CommandesLivraisosBTN" layoutX="31.0" layoutY="257.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="138.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Commandes et Livraisons" />
+                        <Button fx:id="BtnProduits" layoutX="31.0" layoutY="317.0" mnemonicParsing="false" onMouseClicked="#GoToProducts" prefHeight="33.0" prefWidth="148.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Produits" />
+                        <Button fx:id="BtnCRM" layoutX="31.0" layoutY="381.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="155.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Relations Clients" />
+                        <Button fx:id="BrnFournisseursAppelsOffres" layoutX="30.0" layoutY="442.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="138.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Fournisseurs &amp; Appels d'offres" />
+                        <Button fx:id="BtnCategories" layoutX="32.0" layoutY="499.0" mnemonicParsing="false" onMouseClicked="#GoToCategories" prefHeight="39.0" prefWidth="107.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Catégories de Produits" />
+                        <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="95.0" layoutY="161.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../../../../../../../xampp/htdocs/icons8-search-60.png" />
+                              <Image url="@../../../../../../../../../../xampp/htdocs/icons8-delete-64.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="25.0" fitWidth="26.0" layoutX="55.0" layoutY="574.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../../../../../../xampp/htdocs/icons8-add-64%20(2).png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="133.0" layoutY="564.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../../../../../../xampp/htdocs/icons8-update-64.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="111.0" fitWidth="83.0" layoutX="116.0" layoutY="613.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../../../../../../xampp/htdocs/icons8-stock-96.png" />
                            </image>
                         </ImageView>
                      </children>
                   </AnchorPane>
-                  <Button fx:id="BtnCheckStatProduits" layoutX="703.0" layoutY="244.0" mnemonicParsing="false" onMouseClicked="#GoToKPIsProduits" prefHeight="25.0" prefWidth="112.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Stock">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Button>
-                  <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="783.0" layoutY="245.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../../../../../../../../xampp/htdocs/icons8-stock-96.png" />
-                     </image>
-                  </ImageView>
                   <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="597.0" layoutY="194.0" pickOnBounds="true" preserveRatio="true" />
+                  <AnchorPane layoutX="218.0" layoutY="24.0" prefHeight="340.0" prefWidth="938.0" style="-fx-background-color: #fff;" styleClass="shadow" stylesheets="@test2.css">
+                     <children>
+                        <TableView fx:id="TableViewProductBack" layoutX="14.0" layoutY="52.0" prefHeight="276.0" prefWidth="747.0">
+                          <columns>
+                              <TableColumn fx:id="IdCatProductColumn" prefWidth="123.0" text="Référence Catégorie" />
+                            <TableColumn fx:id="NameProductColumn" prefWidth="87.0" text="Nom Produit" />
+                              <TableColumn fx:id="PriceProductColumn" prefWidth="93.0" text="Prix Produit" />
+                              <TableColumn fx:id="QuantiteProColumn" prefWidth="118.0" text="Quantité en Stock" />
+                              <TableColumn fx:id="QteSeulProColumn" minWidth="0.0" prefWidth="102.0" text="Quantité seuil " />
+                              <TableColumn fx:id="ImageProductColumn" prefWidth="270.0" text="Image Produit" />
+                          </columns>
+                        </TableView>
+                        <Button fx:id="btnAjouterProdDansAffich" layoutX="773.0" layoutY="60.0" mnemonicParsing="false" onMouseClicked="#afficherInterfaceAjouterProd" prefHeight="39.0" prefWidth="121.0" style="-fx-border-radius: 5px; -fx-background-color: #ffbfec;" styleClass="shadow" text="Ajouter">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btnUpdateProd" layoutX="768.0" layoutY="119.0" mnemonicParsing="false" onMouseClicked="#BtnUpdateProduitt" prefHeight="39.0" prefWidth="131.0" style="-fx-border-radius: 5px; -fx-background-color: #f19d19;" text="Modifier">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btnDeleteProd" layoutX="768.0" layoutY="180.0" mnemonicParsing="false" onMouseClicked="#BtnDeletProduct" prefHeight="39.0" prefWidth="131.0" style="-fx-border-radius: 5px; -fx-background-color: #ca2d4b;" text="Supprimer">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="BtnCheckStatProduits" layoutX="773.0" layoutY="244.0" mnemonicParsing="false" onMouseClicked="#GoToKPIsProduits" prefHeight="39.0" prefWidth="138.0" style="-fx-border-radius: 5px; -fx-background-color: #f7f09b;" text="Stock">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="AnchorAjouterProduit" layoutX="218.0" layoutY="373.0" prefHeight="395.0" prefWidth="427.0" style="-fx-background-color: #ffffff;" styleClass="shadow" stylesheets="@test2.css" visible="false">
+                     <children>
+                        <Text layoutX="25.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Catégorie :" wrappingWidth="88.77603912353516">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="25.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nom du Produit:" wrappingWidth="113.98307228088379">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="25.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Prix du Produit :" wrappingWidth="113.9830722808839">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="25.0" layoutY="235.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantité Seuil de rupture :" wrappingWidth="120.39999389648438">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="25.0" layoutY="287.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Image du Produit :" wrappingWidth="120.39999389648438">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Text>
+                        <Button layoutX="221.0" layoutY="312.0" mnemonicParsing="false" onMouseClicked="#SelectImageProduct" prefHeight="30.0" prefWidth="89.0" style="-fx-background-color: #5BAADE;" styleClass="BtnColourBlue" stylesheets="@../../../../java/com/example/pidev_v1/css/style.css" text="Séléctionner" />
+                        <Button layoutX="331.0" layoutY="312.0" mnemonicParsing="false" onMouseClicked="#addProduct" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #5BAADE;" styleClass="BtnColourBlue" stylesheets="@../../../../java/com/example/pidev_v1/css/style.css" text="Confirmer" />
+                        <ComboBox fx:id="ComboCategorieProduit" layoutX="264.0" layoutY="75.0" prefWidth="150.0" promptText="Choisir" />
+                        <TextField fx:id="NameProduitLabel" layoutX="265.0" layoutY="109.0" />
+                        <TextField fx:id="ProductPriceField" layoutX="265.0" layoutY="148.0" />
+                        <TextField fx:id="QteStockProduitLabel" layoutX="265.0" layoutY="185.0" />
+                        <TextField fx:id="QteSeuilProductLabel" layoutX="265.0" layoutY="226.0" />
+                        <TextField fx:id="productImageField" layoutX="265.0" layoutY="260.0" />
+                        <Text fill="#5baade" fontSmoothingType="LCD" layoutX="83.0" layoutY="40.0" strokeType="INSIDE" strokeWidth="0.0" text="Nouveau Produit" textAlignment="CENTER" wrappingWidth="281.5367126464844">
+                           <font>
+                              <Font name="System Bold" size="24.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="25.0" layoutY="212.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantité en Stock:" wrappingWidth="113.9830722808839">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="AnchorPaneModifierProduit" layoutX="661.0" layoutY="373.0" prefHeight="395.0" prefWidth="490.0" style="-fx-background-color: #ffffff;" styleClass="shadow" stylesheets="@test2.css" visible="false">
+                     <children>
+                        <ComboBox fx:id="ComboCategorieProduitUpdate" layoutX="127.0" layoutY="73.0" prefWidth="150.0" promptText="Choisir" />
+                        <Text layoutX="14.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Catégorie :" wrappingWidth="88.77603912353516">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="14.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nom du Produit:" wrappingWidth="113.98307228088379">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="14.0" layoutY="173.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Prix du Produit :" wrappingWidth="113.9830722808839">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="9.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantité en Stock:" wrappingWidth="113.9830722808839">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="10.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantité Seuil de rupture :" wrappingWidth="120.39999389648438">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="10.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Image du Produit :" wrappingWidth="120.39999389648438">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="NameProduitLabelUpdate" layoutX="128.0" layoutY="117.0" />
+                        <TextField fx:id="ProductPriceFieldUpdate" layoutX="130.0" layoutY="156.0" />
+                        <TextField fx:id="QteStockProduitLabelUpdate" layoutX="130.0" layoutY="193.0" />
+                        <TextField fx:id="QteSeuilProductLabelUpdate" layoutX="130.0" layoutY="235.0" />
+                        <TextField fx:id="productImageFieldUpdate" layoutX="127.0" layoutY="277.0" />
+                        <Text layoutX="340.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Produit à Modifier :" wrappingWidth="120.39999389648438">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Text>
+                        <ComboBox fx:id="CamboNomProduit" layoutX="325.0" layoutY="94.0" prefWidth="150.0" promptText="Nom Produit" />
+                        <Button fx:id="confirmUpdatepro" layoutX="298.0" layoutY="322.0" mnemonicParsing="false" onMouseClicked="#ConfirmerModifcation" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #5BAADE;" styleClass="BtnColourBlue" stylesheets="@../../../../java/com/example/pidev_v1/css/style.css" text="Confirmer" />
+                        <Button fx:id="selectimageproforupdate" layoutX="200.0" layoutY="322.0" mnemonicParsing="false" onMouseClicked="#SelectImageProdUpdate" prefHeight="30.0" prefWidth="89.0" style="-fx-background-color: #5BAADE;" styleClass="BtnColourBlue" stylesheets="@../../../../java/com/example/pidev_v1/css/style.css" text="Séléctionner" />
+                        <Text fill="#5baade" fontSmoothingType="LCD" layoutX="66.0" layoutY="40.0" strokeType="INSIDE" strokeWidth="0.0" text="Mettre à jour Votre Produit" textAlignment="CENTER" wrappingWidth="341.9367370605469">
+                           <font>
+                              <Font name="System Bold" size="24.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </AnchorPane>
                </children>
             </AnchorPane>
          </children>

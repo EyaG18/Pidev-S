@@ -3,9 +3,17 @@ package com.example.pidev_v1.services;
 import com.example.pidev_v1.entities.Catégorie;
 import com.example.pidev_v1.entities.Produit;
 import com.example.pidev_v1.tools.MyDataBase;
+import com.twilio.http.Request;
+import com.twilio.http.Response;
+import com.twilio.twiml.fax.Receive;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.net.URLEncoder;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -317,6 +325,11 @@ public class ProduitService implements IProduit {
         return false; // Au
     }
 
+
+    }
+
+
+
 /********************************/
 
 
@@ -335,4 +348,6 @@ public class ProduitService implements IProduit {
 
 
 
-}
+
+
+
