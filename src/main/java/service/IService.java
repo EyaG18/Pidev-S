@@ -20,4 +20,11 @@ public interface IService <T>{
 
 
     void updateOffreByTitreOffre(String oldTitreOffre, String newTitreOffre, LocalDate newDateDebut, LocalDate newDateFin, String newReduction, int newIdProduit);
+
+
+
+    float getPrixAfterReduction(int idProduit);
+
+
+
 }

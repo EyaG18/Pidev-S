@@ -1,37 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="window" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: lightblue;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AjouterOffreController">
+<AnchorPane fx:id="window" prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: White;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AjouterOffreController">
    <children>
-      <DatePicker fx:id="date_debutTF" layoutX="220.0" layoutY="62.0" />
-      <DatePicker fx:id="date_finTF" layoutX="220.0" layoutY="135.0" />
-      <TextField fx:id="titre_offreTF" layoutX="45.0" layoutY="62.0" />
-      <TextField fx:id="reductionTF" layoutX="45.0" layoutY="135.0" />
-      <Text layoutX="93.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="titre offre" wrappingWidth="51.763671875" />
-      <Text layoutX="93.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="reduction" />
-      <Text layoutX="557.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="id produit" />
-      <Text layoutX="271.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="date debut" />
-      <Text layoutX="280.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="date fin" />
-      <Button fx:id="ajoutbutt" layoutX="555.0" layoutY="131.0" mnemonicParsing="false" onAction="#ajouter" text="Ajouter" />
-      <TableView fx:id="tableoffre" layoutX="-4.0" layoutY="207.0" prefHeight="313.0" prefWidth="747.0">
+      <DatePicker fx:id="date_debutTF" layoutX="385.0" layoutY="231.0" />
+      <DatePicker fx:id="date_finTF" layoutX="385.0" layoutY="272.0" />
+      <TextField fx:id="titre_offreTF" layoutX="385.0" layoutY="52.0" prefHeight="25.0" prefWidth="174.0" />
+      <TextField fx:id="reductionTF" layoutX="385.0" layoutY="96.0" prefHeight="25.0" prefWidth="174.0" />
+      <Text layoutX="304.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="titre offre" wrappingWidth="51.763671875" />
+      <Text layoutX="304.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="reduction" />
+      <Text layoutX="303.0" layoutY="163.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nom Produit" />
+      <Text layoutX="300.0" layoutY="248.0" strokeType="OUTSIDE" strokeWidth="0.0" text="date debut" />
+      <Text layoutX="309.0" layoutY="289.0" strokeType="OUTSIDE" strokeWidth="0.0" text="date fin" />
+      <Button fx:id="ajoutbutt" layoutX="860.0" layoutY="98.0" mnemonicParsing="false" onAction="#ajouter" prefHeight="39.0" prefWidth="87.0" text="Ajouter" />
+      <TableView fx:id="tableoffre" layoutX="257.0" layoutY="362.0" prefHeight="263.0" prefWidth="744.0">
         <columns>
-          <TableColumn fx:id="idproduitaff" prefWidth="136.0" text="ID Produit" />
-          <TableColumn fx:id="datedebutaff" prefWidth="135.0" text="Date Debut" />
-            <TableColumn fx:id="datefinaff" prefWidth="128.0" text="Date Fin" />
-            <TableColumn fx:id="reductionaff" prefWidth="167.0" text="Reduction" />
-            <TableColumn fx:id="titreaff" prefWidth="180.0" text="Titre Offre" />
+          <TableColumn fx:id="nomproduitaff" prefWidth="114.0" text="ID Produit" />
+          <TableColumn fx:id="datedebutaff" prefWidth="119.0" text="Date Debut" />
+            <TableColumn fx:id="datefinaff" prefWidth="98.0" text="Date Fin" />
+            <TableColumn fx:id="reductionaff" prefWidth="131.0" text="Reduction" />
+            <TableColumn fx:id="titreaff" prefWidth="284.0" text="Titre Offre" />
         </columns>
       </TableView>
-      <Button layoutX="262.0" layoutY="524.0" mnemonicParsing="false" onAction="#supprimer" text="Supprimer" />
-      <Button fx:id="modifierButton" layoutX="374.0" layoutY="524.0" mnemonicParsing="false" onAction="#modifier" text="Modifier" />
-      <TextField fx:id="id_produitTF" layoutX="509.0" layoutY="62.0" />
-      <Button fx:id="nextbutt" layoutX="681.0" layoutY="524.0" mnemonicParsing="false" onAction="#front" text="front" />
+      <Button layoutX="860.0" layoutY="257.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="39.0" prefWidth="87.0" text="Supprimer" />
+      <Button fx:id="modifierButton" layoutX="860.0" layoutY="171.0" mnemonicParsing="false" onAction="#modifier" prefHeight="39.0" prefWidth="87.0" text="Modifier" />
+      <Button fx:id="nextbutt" layoutX="926.0" layoutY="651.0" mnemonicParsing="false" onAction="#front" text="front" />
+      <AnchorPane prefHeight="700.0" prefWidth="257.0" style="-fx-background-color: #C6E6FB;">
+         <children>
+            <Button fx:id="UsersBoutons" layoutX="30.0" layoutY="200.0" mnemonicParsing="false" onMouseClicked="#GoToUsers" prefHeight="33.0" prefWidth="199.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Utilisateurs" />
+            <Button fx:id="CommandesLivraisosBTN" layoutX="31.0" layoutY="257.0" mnemonicParsing="false" onMouseClicked="#GoToCommandesLivraison" prefHeight="33.0" prefWidth="199.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Commandes et Livraisons" />
+            <Button fx:id="BtnProduits" layoutX="31.0" layoutY="317.0" mnemonicParsing="false" onMouseClicked="#GoToProducts" prefHeight="33.0" prefWidth="199.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Produits" />
+            <Button fx:id="BtnCRM" layoutX="31.0" layoutY="381.0" mnemonicParsing="false" onAction="#GotoCRM" onMouseClicked="#GoToCRM" prefHeight="33.0" prefWidth="199.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Relations Clients" />
+            <Button fx:id="BrnFournisseursAppelsOffres" layoutX="30.0" layoutY="442.0" mnemonicParsing="false" onMouseClicked="#GoToFournisseurs" prefHeight="39.0" prefWidth="199.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Fournisseurs" />
+            <Button fx:id="BtnCategories" layoutX="32.0" layoutY="502.0" mnemonicParsing="false" onMouseClicked="#GoToCategories" prefHeight="39.0" prefWidth="199.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Catégories de Produits" />
+            <ImageView fitHeight="266.0" fitWidth="187.0" layoutX="50.0" layoutY="-17.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../xampp/htdocs/logo2.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="BtnOffres" layoutX="32.0" layoutY="552.0" mnemonicParsing="false" onMouseClicked="#GoToOffres" prefHeight="39.0" prefWidth="199.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Offres " />
+         </children>
+      </AnchorPane>
+      <ComboBox fx:id="nom_produitTF" layoutX="397.0" layoutY="146.0" prefWidth="150.0" />
    </children>
 </AnchorPane>

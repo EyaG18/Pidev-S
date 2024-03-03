@@ -11,8 +11,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class FournisseurService implements IService<Fournisseur> {
 
@@ -110,10 +108,69 @@ public class FournisseurService implements IService<Fournisseur> {
         }
     }
 
+    public int GetProductIDbyName(String nomp) {
+        int id_produit=0;
+        try {
+            String sql = "SELECT id_Produit FROM produit WHERE NomP = ?";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, nomp);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()) {
+                id_produit = resultSet.getInt("id_Produit");
+            }
+
+            resultSet.close();
+            preparedStatement.close();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return id_produit;
+    }
+
     @Override
     public void updateOffreByTitreOffre(String oldTitreOffre, String newTitreOffre, LocalDate newDateDebut, LocalDate newDateFin, String newReduction, int newIdProduit) {
 
     }
 
 
+
+    @Override
+    public float getPrixAfterReduction(int idProduit) {
+        return 0;
+    }
+
+
+
+
+    public String getProductNameById(int productId) {
+    String productName = null;
+    Connection conn = null;
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
+
+    try {
+        conn = DataSource.getInstance().getCnx();
+        String query = "SELECT NomP FROM produit WHERE Id_Produit = ?";
+        pstmt = conn.prepareStatement(query);
+        pstmt.setInt(1, productId);
+        rs = pstmt.executeQuery();
+
+        if (rs.next()) {
+            productName = rs.getString("NomP");
+        }
+    } catch (SQLException e) {
+        e.printStackTrace(); // Handle the exception appropriately in your application
+    } finally {
+        // Close the resources
+        try {
+            if (rs != null) rs.close();
+            if (pstmt != null) pstmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    return productName;
 }
+}
+

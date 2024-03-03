@@ -46,7 +46,7 @@ public class AfficherOffreController {
         // Add column headers
         Font headerFont = Font.font("System", FontWeight.BOLD, 14); // You can adjust the font size as needed
 
-// Add column headers
+        // Add column headers
         Label dateDebutLabel = new Label("Date Debut");
         dateDebutLabel.setFont(headerFont);
         rlist.add(dateDebutLabel, 1, 0);
@@ -63,6 +63,9 @@ public class AfficherOffreController {
         titreOffreLabel.setFont(headerFont);
         rlist.add(titreOffreLabel, 4, 0);
 
+        Label prixAfterReductionLabel = new Label("Prix After Reduction");
+        prixAfterReductionLabel.setFont(headerFont);
+        rlist.add(prixAfterReductionLabel, 5, 0); // Add a new column for Prix After Reduction
 
         int row = 1;
         for (Offre offre : offreList) {
@@ -72,11 +75,14 @@ public class AfficherOffreController {
             rlist.add(new Label(offre.getReduction()), 3, row);
             rlist.add(new Label(offre.getTitre_Offre()), 4, row);
 
-            // Fetch image path for the current Offre
-
+            // Calculate and display Prix After Reduction
+            float prixAfterReduction = OS.getPrixAfterReduction(offre.getId_Produit()); // Assuming OffreService method is implemented correctly
+            Label prixAfterReductionValueLabel = new Label(String.valueOf(prixAfterReduction));
+            rlist.add(prixAfterReductionValueLabel, 5, row);
 
             row++;
         }
     }
+
 
 }

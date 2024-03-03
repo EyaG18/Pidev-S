@@ -3,7 +3,6 @@ package service;
 import entities.Offre;
 import utils.DataSource;
 import java.sql.Connection;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -12,14 +11,16 @@ import java.util.List;
 import java.sql.PreparedStatement;
 import java.time.LocalDate;
 
-public class OffreService implements IService<Offre>{
+public class OffreService implements IService<Offre> {
 
     private Connection conn;
     private Statement ste;
+
     public OffreService() {
-        conn= DataSource.getInstance().getCnx();
+        conn = DataSource.getInstance().getCnx();
     }
-    public void add(Offre offre){
+
+    public void add(Offre offre) {
         try {
             // Prepare the insert query
             String query = "INSERT INTO Offre (Id_Produit, date_debut, date_fin, reduction, titre_offre) VALUES (?, ?, ?, ?, ?)";
@@ -42,7 +43,6 @@ public class OffreService implements IService<Offre>{
             // Handle exceptions
         }
     }
-
 
 
     @Override
@@ -90,19 +90,18 @@ public class OffreService implements IService<Offre>{
     }
 
 
-
     @Override
 
     public List<Offre> readAll() {
-        String requete="select * from offre";
-        List<Offre> list=new ArrayList<>();
+        String requete = "select * from offre";
+        List<Offre> list = new ArrayList<>();
         try {
-            ste= conn.createStatement();
-            ResultSet rs=ste.executeQuery(requete);
-            while (rs.next()){
-                list.add(new Offre(rs.getInt(1),rs.getInt(2), rs.getDate(3).toLocalDate(), rs.getDate(4).toLocalDate(),rs.getString(5),rs.getString(6)));
+            ste = conn.createStatement();
+            ResultSet rs = ste.executeQuery(requete);
+            while (rs.next()) {
+                list.add(new Offre(rs.getInt(1), rs.getInt(2), rs.getDate(3).toLocalDate(), rs.getDate(4).toLocalDate(), rs.getString(5), rs.getString(6)));
 
-           }
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -112,21 +111,20 @@ public class OffreService implements IService<Offre>{
     @Override
     public Offre readById(int idOffre) {
 
-            String requete = "select * from offre where idOffre = ?";
-            try {
-                PreparedStatement ps = conn.prepareStatement(requete);
-                ps.setInt(1, idOffre);
-                ResultSet rs = ps.executeQuery();
-                if (rs.next()) {
-                    return new Offre(rs.getInt(1), rs.getInt(2), rs.getDate(3).toLocalDate(), rs.getDate(4).toLocalDate(), rs.getString(5), rs.getString(6));
-                } else {
-                    return null; // No Offre found with the given idOffre
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+        String requete = "select * from offre where idOffre = ?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(requete);
+            ps.setInt(1, idOffre);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return new Offre(rs.getInt(1), rs.getInt(2), rs.getDate(3).toLocalDate(), rs.getDate(4).toLocalDate(), rs.getString(5), rs.getString(6));
+            } else {
+                return null; // No Offre found with the given idOffre
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-
+    }
 
 
     @Override
@@ -155,7 +153,6 @@ public class OffreService implements IService<Offre>{
     }
 
 
-
     public String getProduitImageById(int Id_Produit) {
         String imagePath = null;
         String query = "SELECT ImageP FROM produit WHERE Id_Produit = ?";
@@ -172,5 +169,42 @@ public class OffreService implements IService<Offre>{
         }
 
         return imagePath;
+    }
+
+
+    @Override
+    public float getPrixAfterReduction(int idProduit) {
+        // Fetch the original price from the Produit table using the idProduit
+        String produitQuery = "SELECT PrixP FROM produit WHERE Id_Produit = ?";
+        try (PreparedStatement produitStmt = conn.prepareStatement(produitQuery)) {
+            produitStmt.setInt(1, idProduit);
+            ResultSet produitRs = produitStmt.executeQuery();
+            if (produitRs.next()) {
+                float originalPrice = produitRs.getFloat("PrixP");
+
+                // Fetch the reduction from the Offre table for the given idProduit
+                String reductionQuery = "SELECT reduction FROM offre WHERE Id_Produit = ?";
+                try (PreparedStatement reductionStmt = conn.prepareStatement(reductionQuery)) {
+                    reductionStmt.setInt(1, idProduit);
+                    ResultSet reductionRs = reductionStmt.executeQuery();
+                    if (reductionRs.next()) {
+                        float reductionPercentage = reductionRs.getFloat("reduction");
+
+                        // Calculate the discounted price after the reduction
+                        float reductionAmount = originalPrice * reductionPercentage / 100;
+                        return originalPrice - reductionAmount; // Apply reduction amount
+                    } else {
+                        return originalPrice; // No reduction found, return the original price
+                    }
+                }
+            } else {
+                return -1; // Indicates produit not found or error fetching price
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle the exception appropriately in your application
+            return -1; // Indicates an error
+
+
+        }
     }
 }
