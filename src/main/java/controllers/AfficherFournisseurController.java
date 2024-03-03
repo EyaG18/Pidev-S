@@ -9,6 +9,8 @@ import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,8 +20,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import service.FournisseurService;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-
 import java.net.Authenticator;
 import java.net.PasswordAuthentication;
 import java.net.URL;
@@ -85,13 +85,8 @@ public class AfficherFournisseurController implements Initializable {
     void GotoCRM(ActionEvent event) {
 
     }
-
-
-
-
-
-
-
+    @FXML
+    private TextField recherchenom;
     @FXML
     private TextField adrTF;
     private Fournisseur selectedFournisseur; // To store the selected Fournisseur
@@ -236,6 +231,8 @@ public class AfficherFournisseurController implements Initializable {
         alert.setContentText(contentText);
         alert.showAndWait();
     }
+
+
     @FXML
     void modifier(ActionEvent event) {
         if (selectedFournisseur != null) {
@@ -245,4 +242,41 @@ public class AfficherFournisseurController implements Initializable {
         }
 
     }
+
+
+    @FXML
+    void rechercher(ActionEvent event) {
+        // Get the search term from the TextField
+        String searchTerm = recherchenom.getText().trim().toLowerCase();
+
+        // Create a filtered list to hold the filtered items
+        FilteredList<Fournisseur> filteredList = new FilteredList<>(table.getItems());
+
+        // Set a predicate to filter items based on the search term
+        filteredList.setPredicate(fournisseur -> {
+            if (searchTerm.isEmpty()) {
+                // If the search term is empty, show all items
+                return true;
+            } else {
+                // Otherwise, check if the fournisseur's nom contains the search term
+                return fournisseur.getNom_fournisseur().toLowerCase().contains(searchTerm);
+            }
+        });
+
+        // Wrap the filtered list in a SortedList to enable sorting
+        SortedList<Fournisseur> sortedList = new SortedList<>(filteredList);
+
+        // Bind the sorted list to the TableView
+        sortedList.comparatorProperty().bind(table.comparatorProperty());
+        table.setItems(sortedList);
+    }
+
+
+    @FXML
+    void actualiser(ActionEvent event) {
+        refreshTable();
+    }
+
+
 }
+

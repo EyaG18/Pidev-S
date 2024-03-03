@@ -25,7 +25,7 @@
       <Button fx:id="ajoutbutt" layoutX="860.0" layoutY="98.0" mnemonicParsing="false" onAction="#ajouter" prefHeight="39.0" prefWidth="87.0" text="Ajouter" />
       <TableView fx:id="tableoffre" layoutX="257.0" layoutY="362.0" prefHeight="263.0" prefWidth="744.0">
         <columns>
-          <TableColumn fx:id="nomproduitaff" prefWidth="114.0" text="ID Produit" />
+          <TableColumn fx:id="nomproduitaff" prefWidth="114.0" text="Reference" />
           <TableColumn fx:id="datedebutaff" prefWidth="119.0" text="Date Debut" />
             <TableColumn fx:id="datefinaff" prefWidth="98.0" text="Date Fin" />
             <TableColumn fx:id="reductionaff" prefWidth="131.0" text="Reduction" />
@@ -52,5 +52,6 @@
          </children>
       </AnchorPane>
       <ComboBox fx:id="nom_produitTF" layoutX="397.0" layoutY="146.0" prefWidth="150.0" />
+      <Button layoutX="859.0" layoutY="302.0" mnemonicParsing="false" onAction="#notifier" prefHeight="39.0" prefWidth="87.0" text="Notifier" />
    </children>
 </AnchorPane>

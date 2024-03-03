@@ -7,6 +7,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javafx.scene.control.Alert;
@@ -129,7 +131,8 @@ public class AjouterOffreController {
     }
 
 
-
+    private Connection conn;
+    private PreparedStatement ps;
 
 
 
@@ -137,6 +140,9 @@ public class AjouterOffreController {
     void ajouter(ActionEvent event) {
         LocalDate dateDebut = date_debutTF.getValue();
         LocalDate dateFin = date_finTF.getValue();
+
+        System.out.println(dateFin);
+        System.out.println(dateDebut);
 
         // Check if the dates are selected
         if (dateDebut == null || dateFin == null) {
@@ -174,10 +180,10 @@ public class AjouterOffreController {
         // Refresh the table view to display the updated data
         AfficherOffre();
     }
-    private Connection conn;
 
-    private int getIdProduitByName(String productName) {
-        int id_produit=0;
+
+    private Integer getIdProduitByName(String productName) {
+       /* int id_produit=0;
         try {
             String sql = "SELECT Id_Produit FROM produit WHERE NomP = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
@@ -192,7 +198,24 @@ public class AjouterOffreController {
         } catch(SQLException e) {
             e.printStackTrace();
         }
-        return id_produit;
+        return id_produit;*/
+
+        DataSource db = new DataSource();
+       conn = db.getCnx();
+        String query = "SELECT Id_Produit FROM produit WHERE NomP = ?";;
+        try {
+             ps = conn.prepareStatement(query);
+            ps.setString(1, productName);
+            ResultSet resultSet = ps.executeQuery();
+            if (resultSet.next()) {
+                System.out.println("Yes id produit recupere");
+                return resultSet.getInt("Id_Produit");
+
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return 0;
     }
 
     public ObservableList<Offre> getOffreList() {
@@ -219,9 +242,8 @@ public class AjouterOffreController {
         return offreList;
     }
 
-
     public String getProductById(int idProduit) {
-        String productName = null; // Initialize to default value
+       String productName = null; // Initialize to default value
 
         // Prepare the SQL query to fetch the product name based on the Id_Produit
         String query = "SELECT NomP FROM produit WHERE Id_Produit = ?";
@@ -240,16 +262,17 @@ public class AjouterOffreController {
     }
 
     public void AfficherOffre() {
+        System.out.println("methode afficher est appellee");
         ObservableList<Offre> listOffres = getOffreList();
+        System.out.println("methode get list offree appelee");
         nomproduitaff.setCellValueFactory(new PropertyValueFactory<>("Id_Produit"));
         datedebutaff.setCellValueFactory(new PropertyValueFactory<>("date_debut"));
         datefinaff.setCellValueFactory(new PropertyValueFactory<>("date_fin"));
         reductionaff.setCellValueFactory(new PropertyValueFactory<>("reduction"));
         titreaff.setCellValueFactory(new PropertyValueFactory<>("titre_Offre"));
-
-
         tableoffre.setItems(listOffres);
     }
+
 
 
 
@@ -416,5 +439,54 @@ public class AjouterOffreController {
             e.printStackTrace(); // Handle loading error
         }
     }
+  /*  @FXML
+    void notifier(ActionEvent event) {
 
+        // Get the product ID of the new offer
+        int idProduit = getIdProduitByName(nom_produitTF.getValue());
+
+        // Retrieve the list of users who have purchased the product
+        List<Integer> userIds = getUserIdsByProductId(idProduit);
+
+        // Notify each user about the new offer
+        for (Integer userId : userIds) {
+            notifyUserAboutOffer(userId);
+        }
+
+        // Show a success message or perform any other necessary actions
+        showAlert(Alert.AlertType.INFORMATION, "Success", "Users Notified", "All active users have been notified about the new offer.");
+    }
+
+    // Method to retrieve the list of user IDs who have purchased the product
+    private List<Integer> getUserIdsByProductId(int idProduit) {
+        List<Integer> userIds = new ArrayList<>();
+
+        // Query the panier table to get the list of user IDs for the given product ID
+        String query = "SELECT id_user FROM panier WHERE id_produit = ?";
+        try (PreparedStatement statement = conn.prepareStatement(query)) {
+            statement.setInt(1, idProduit);
+            ResultSet resultSet = statement.executeQuery();
+
+            // Iterate through the result set and add user IDs to the list
+            while (resultSet.next()) {
+                int userId = resultSet.getInt("id_user");
+                userIds.add(userId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return userIds;
+    }
+    private void notifyUserAboutOffer(int userId) {
+        // Assuming you have a method to get the username based on the user ID
+        String username = getUsernameById(userId);
+
+        // Display a JavaFX Alert to notify the user about the new offer
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("New Offer Notification");
+        alert.setHeaderText("Hello, " + username + "!");
+        alert.setContentText("A new special offer is available for you. Check it out now!");
+        alert.showAndWait();
+    }*/
 }
