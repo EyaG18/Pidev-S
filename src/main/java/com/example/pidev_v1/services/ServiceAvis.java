@@ -68,7 +68,7 @@ public class ServiceAvis implements Services<Avis>{
 
 
 
-        String requete1="SELECT user.nomuser,produit.NomP,commentaire, note FROM avis JOIN user ON avis.id_client = user.id_user JOIN produit ON avis.id_produit = produit.Id_Produit ";
+        String requete1="SELECT user.nomuser,produit.NomP,commentaire, note ,date_avis FROM avis JOIN user ON avis.id_client = user.id_user JOIN produit ON avis.id_produit = produit.Id_Produit ";
         //List<Reclamation> list =new ArrayList<>();
         try {
             ste=conn.createStatement();
@@ -132,6 +132,21 @@ public class ServiceAvis implements Services<Avis>{
             throw new RuntimeException(e);
         }
         return rep;
+    }
+    public int Count() {
+        String requete = "SELECT COUNT(*) FROM avis";
+        int nb= 0;
+        try {
+            PreparedStatement ps = conn.prepareStatement(requete);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                nb = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return nb;
     }
 }
 

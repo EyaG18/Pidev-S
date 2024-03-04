@@ -47,31 +47,19 @@ public class ReponseController {
 
     @FXML
     private TextField recuperetypeTF;
-
-    public void setRecupererID_TF(String recupererID_TF) {
-        this.recupererID_TF.setText(recupererID_TF);
-    }
-
-
-    public void setRecupererstatuTF(String recupererstatuTF) {
-        this.recupererstatuTF.setText(recupererstatuTF);
-    }
-
-    public void setRecuperetypeTF(String recuperetypeTF) {
-        this.recuperetypeTF.setText(recuperetypeTF);
-    }
-
+int id;
+    void setID_Reclamation(int ID){ id =ID;}
     @FXML
     void confirmer(ActionEvent event) throws ParseException {
 
 
-        int id=ser.repurerID_reclamation(recupererID_TF.getText());
+System.out.println("id controlleur Reponse "+id);
 
 
 
 
         ser.add(new Reponse(id,ReponseTF.getText()));
-        sr.updatepersonalise(new Reclamation(id,recupererID_TF.getText(),recupererstatuTF.getText(),recupererstatuTF.getText()));
+        sr.update(new Reclamation(id));
 
 
 

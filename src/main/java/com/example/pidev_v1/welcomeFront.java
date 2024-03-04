@@ -12,14 +12,14 @@ import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
 
-public class welcomeControllers {
+public class welcomeFront {
+
     @FXML
     private BorderPane borderpane;
+     private User currentUser;
+    FXMLLoader fxmlLoader;
     @FXML
     private Label LabelUser;
-    FXMLLoader fxmlLoader;
-    private User currentUser;
-
 
     public void setUser(User user)
     {
@@ -28,23 +28,24 @@ public class welcomeControllers {
         System.out.println("nomcurrentUser"+currentUser.getId_user());
     }
 
-
     @FXML
-    void gestionAvis(ActionEvent event) throws IOException {
-        AnchorPane view= FXMLLoader.load(getClass().getResource("interfaceAvis.fxml"));
-
+    void gestionAfficherProduits(ActionEvent event) throws IOException {
+        fxmlLoader = new FXMLLoader(getClass().getResource("FeedProduitsCoteClients.fxml"));
+        Parent view = fxmlLoader.load();
         borderpane.setCenter(view);
-
+        FeedProduitsCoteClientsController controller = fxmlLoader.getController();
+        controller.setUser(currentUser);
     }
 
     @FXML
     void gestionReclamation(ActionEvent event) throws IOException {
-
-        fxmlLoader = new FXMLLoader(getClass().getResource("interfaceReclamation.fxml"));
+        /*StackPane view= FXMLLoader.load(getClass().getResource("InterfaceReclamationFront.fxml"));
+        borderpane.setCenter(view);*/
+         fxmlLoader = new FXMLLoader(getClass().getResource("InterfaceReclamationFront.fxml"));
         Parent view = fxmlLoader.load();
         borderpane.setCenter(view);
-        InterfaceReclamationController controller = fxmlLoader.getController();
+        InterfaceReclamationFront controller = fxmlLoader.getController();
         controller.setUser(currentUser);
-
     }
+
 }

@@ -14,6 +14,7 @@ import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -64,13 +65,16 @@ public class CommentaireController implements Initializable {
 
         String user =avis.getNom();
         String comme= avis.getCommentaire();
+        String date= String.valueOf(avis.getDate_avis());
         int note=avis.getNote();
 
         Image img = new Image("utilisateur.png");
         Image img1 = new Image("etoile.png");//servicePublication.displayPDP(post.getId_user())
 
         Label nomuser = (Label) fxmlLoader.getNamespace().get("username");
-        TextField comment=(TextField) fxmlLoader.getNamespace().get("commentTF");
+        Label commentTF = (Label) fxmlLoader.getNamespace().get("commentTF");
+        Label dateL = (Label) fxmlLoader.getNamespace().get("dateL");
+        //TextField comment=(TextField) fxmlLoader.getNamespace().get("commentTF");
         ImageView note1 = (ImageView) fxmlLoader.getNamespace().get("noteA");
         ImageView note2 = (ImageView) fxmlLoader.getNamespace().get("noteB");
         ImageView note3 = (ImageView) fxmlLoader.getNamespace().get("noteC");
@@ -83,7 +87,8 @@ public class CommentaireController implements Initializable {
 
 
         nomuser.setText(user);
-        comment.setText(comme);
+        commentTF.setText(comme);
+        dateL.setText(date);
         switch (note)
         {
             case(1):

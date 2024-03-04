@@ -6,7 +6,9 @@ package com.example.pidev_v1;
 
 
 import com.example.pidev_v1.entities.Avis;
+import com.example.pidev_v1.entities.Reclamation;
 import com.example.pidev_v1.services.ServiceAvis;
+import com.example.pidev_v1.tools.MyDataBase;
 import com.jfoenix.controls.JFXButton;
 
 //import entities.Reponse;
@@ -14,17 +16,25 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Callback;
 
 import java.net.URL;
+import java.sql.*;
 import java.util.Date;
 import java.util.ResourceBundle;
 
 public class InterfceAvisController implements Initializable {
+    private Connection conn;
+    private Statement ste;
+    private PreparedStatement pst;
 
+    public InterfceAvisController(){conn= MyDataBase.getInstance().getCnx();}
     ServiceAvis sa=new ServiceAvis();
     int i=-1;
     @FXML
@@ -125,6 +135,10 @@ public class InterfceAvisController implements Initializable {
 
     @FXML
     private TableView<Avis> table_avis;
+    @FXML
+    private BarChart<?, ?> statAvis;
+    @FXML
+    private Label countL;
 
     public void setCommentaireTF(String commentaireTF) {
         this.commentaireTF.setText(commentaireTF);
@@ -321,6 +335,27 @@ public class InterfceAvisController implements Initializable {
         nomPC2.setCellValueFactory(new PropertyValueFactory<Avis,String>("nomP"));
         commentaireC3.setCellValueFactory(new PropertyValueFactory<Avis,String>("commentaire"));
         noteC4.setCellValueFactory(new PropertyValueFactory<Avis,Integer>("note"));
+
+
+        countL.setText(String.valueOf(sa.Count()));
+        XYChart.Series seriesTendance = new XYChart.Series();
+        String requete = "SELECT produit.NomP, AVG(note) AS moyenne_note FROM avis JOIN produit ON avis.id_produit = produit.Id_Produit  WHERE MONTH(date_avis) = MONTH(CURRENT_DATE()) AND YEAR(date_avis) = YEAR(CURRENT_DATE()) GROUP BY produit.NomP ORDER BY moyenne_note";
+        int m = 0;
+        try {
+            PreparedStatement ps = conn.prepareStatement(requete);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String nomProduit = rs.getString("NomP");
+                double moyenneNote = rs.getDouble("moyenne_note");
+                seriesTendance.getData().add(new XYChart.Data(nomProduit, moyenneNote));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+       statAvis.getData().add(seriesTendance);
+
+
 
 
     }

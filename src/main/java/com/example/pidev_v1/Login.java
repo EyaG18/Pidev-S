@@ -11,6 +11,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -73,7 +74,7 @@ public class Login implements Initializable {
                 Stage stage = (Stage) TFEmail.getScene().getWindow();
                 stage.setTitle("Dashboard");
                 stage.setScene(scene);
-                dashboardAdmin controller = fxmlLoader.getController();
+                welcomeControllers controller = fxmlLoader.getController();
                 controller.setUser(user);
                 stage.show();
             } catch (IOException e) {
@@ -82,7 +83,8 @@ public class Login implements Initializable {
         }
         else {
             try {
-                fxmlLoader = new FXMLLoader(getClass().getResource("FeedProduitsCoteClients.fxml"));
+
+                /*fxmlLoader = new FXMLLoader(getClass().getResource("FeedProduitsCoteClients.fxml"));
                 BorderPane root = fxmlLoader.load();
                 Scene scene = new Scene(root);
                 Stage stage = (Stage) TFEmail.getScene().getWindow();
@@ -91,6 +93,28 @@ public class Login implements Initializable {
                 FeedProduitsCoteClientsController controller = fxmlLoader.getController();
                 controller.setUser(user);
                 stage.show();
+                */
+                  fxmlLoader = new FXMLLoader(getClass().getResource("WelcomeFront.fxml"));
+                BorderPane root = fxmlLoader.load();
+                Scene scene = new Scene(root);
+                Stage stage = (Stage) TFEmail.getScene().getWindow();
+                stage.setTitle("Dashboard");
+                stage.setScene(scene);
+                welcomeFront controller = fxmlLoader.getController();
+                controller.setUser(user);
+                stage.show();
+
+                /***************reclamation*********************/
+                /*fxmlLoader = new FXMLLoader(getClass().getResource("InterfaceReclamationFront.fxml"));
+                StackPane root = fxmlLoader.load();
+                Scene scene = new Scene(root);
+                Stage stage = (Stage) TFEmail.getScene().getWindow();
+                stage.setTitle("Dashboard");
+                stage.setScene(scene);
+                InterfaceReclamationFront controller = fxmlLoader.getController();
+                controller.setUser(user);
+                stage.show();*/
+
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

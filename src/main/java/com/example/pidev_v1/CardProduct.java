@@ -181,14 +181,14 @@ int i;
         i=5;
 
     }
-    public int getIDUser(User user)
+    /*public int getIDUser(User user)
     {
         currentUser =user;
 
         System.out.println("IDcurrentUser"+currentUser.getId_user());
         return currentUser.getId_user();
 
-    }
+    }*/
 
     @FXML
     void ajouterAvis(ActionEvent event) {

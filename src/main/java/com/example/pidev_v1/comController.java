@@ -10,7 +10,7 @@ import javafx.scene.image.ImageView;
 public class comController {
 
     @FXML
-    private TextField commentTF;
+    private Label commentTF;
 
     @FXML
     private ImageView noteA;
@@ -32,6 +32,8 @@ public class comController {
 
     @FXML
     private Label username;
+    @FXML
+    private Label dateL;
     private Avis avisClique;
     public void setAvisInit(Avis DataProduit){
         this.avisClique=DataProduit;

@@ -1,5 +1,7 @@
 package com.example.pidev_v1.entities;
 
+import java.util.Date;
+
 public class Avis {
 
 
@@ -11,6 +13,8 @@ public class Avis {
     private int note;
     private String nom;
     private String nomP;
+    private Date date_avis;
+
 
     //constructeur ajout
     public Avis(int ID_client, int ID_produit, String commentaire, int note) {
@@ -81,20 +85,23 @@ public class Avis {
         this.nomP = nomP;
     }
 
-    @Override
-    public String toString() {
-        return "Avis{" +
-                "nom='" + nom + '\'' +
-                "nomP='" + nomP + '\'' +
-                ", commentaire=" + commentaire +
-                ", note='" + note + '\'' +
-                '}';
+    public Date getDate_avis() {
+        return date_avis;
+    }
+
+    public void setDate_avis(Date date_avis) {
+        this.date_avis = date_avis;
     }
 
 
-
-
-
-
-
+    @Override
+    public String toString() {
+        return "Avis{" +
+                "commentaire='" + commentaire + '\'' +
+                ", note=" + note +
+                ", nom='" + nom + '\'' +
+                ", nomP='" + nomP + '\'' +
+                ", date_avis=" + date_avis +
+                '}';
+    }
 }

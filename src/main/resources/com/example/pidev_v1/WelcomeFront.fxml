@@ -3,6 +3,8 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -10,13 +12,13 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderpane" prefHeight="649.6" prefWidth="882.4" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pidev_v1.welcomeControllers">
+<BorderPane fx:id="borderpane" prefHeight="649.6" prefWidth="882.4" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pidev_v1.welcomeFront">
     <top>
         <AnchorPane prefHeight="34.0" prefWidth="934.0" BorderPane.alignment="CENTER">
             <children>
                 <AnchorPane prefHeight="62.0" prefWidth="244.0" style="-fx-background-color: #C6E6FB;">
                     <children>
-                        <Label layoutX="20.0" layoutY="14.0" prefHeight="19.0" prefWidth="219.0" style="-fx-background-color: #C6E6FB;" text="         System de Gestion ARYA">
+                        <Label layoutX="20.0" layoutY="14.0" prefHeight="19.0" prefWidth="219.0" style="-fx-background-color: #C6E6FB;" text="Application Desktop ARYA">
                             <font>
                                 <Font size="13.0" />
                             </font>
@@ -28,18 +30,21 @@
                 <Circle fill="#54c954" layoutX="1474.0" layoutY="31.0" radius="4.0" stroke="#54c954" strokeType="INSIDE" />
                 <Label layoutX="1190.0" layoutY="24.0" prefHeight="18.0" prefWidth="68.0" text="Welcome" />
                 <Label fx:id="LabelUser" layoutX="1256.0" layoutY="23.0" prefHeight="18.0" prefWidth="134.0" text="Username" />
-                <Label layoutX="243.0" layoutY="24.0" prefHeight="18.0" prefWidth="245.0" text="Overview">
-                    <font>
-                        <Font name="System Bold" size="18.0" />
-                    </font>
-                </Label>
+            <TextField layoutX="362.0" layoutY="23.0" prefHeight="26.0" prefWidth="373.0" />
+            <ImageView fitHeight="26.0" fitWidth="28.0" layoutX="752.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../../../../xampp/htdocs/icons8-search-24.png" />
+               </image>
+            </ImageView>
+            <Separator layoutX="243.0" layoutY="56.0" prefHeight="6.0" prefWidth="1237.0" style="-fx-background-color: #C6E6FB;" />
+            <Separator layoutX="1152.0" layoutY="4.0" orientation="VERTICAL" prefHeight="55.0" prefWidth="2.0" style="-fx-background-color: #C6E6FB;" />
             </children>
         </AnchorPane>
     </top>
     <left>
-        <AnchorPane prefHeight="587.0" prefWidth="217.0" style="-fx-background-color: #C6E6FB;" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="615.0" prefWidth="243.0" style="-fx-background-color: #C6E6FB;" BorderPane.alignment="CENTER">
             <children>
-                <Label layoutX="65.0" layoutY="100.0" prefHeight="26.0" prefWidth="105.0" text="Départements">
+                <Label layoutX="70.0" layoutY="124.0" prefHeight="26.0" prefWidth="105.0" text="Side Bar">
                     <padding>
                         <Insets left="25.0" />
                     </padding>
@@ -47,19 +52,16 @@
                         <Font name="System Bold" size="12.0" />
                     </font>
                 </Label>
-                <JFXButton fx:id="Bproduits" layoutX="15.0" layoutY="126.0" prefHeight="46.0" prefWidth="229.0" text="Gestion Produits" />
-                <JFXButton fx:id="Bcommandes" layoutX="14.0" layoutY="172.0" prefHeight="46.0" prefWidth="230.0" text="Gestion Catégories" />
-                <JFXButton fx:id="Breclamations" layoutX="14.0" layoutY="218.0" onAction="#gestionReclamation" prefHeight="46.0" prefWidth="230.0" text="Gestion Réclamations" />
-                <JFXButton fx:id="Boffres" layoutX="14.0" layoutY="264.0" onAction="#gestionAvis" prefHeight="46.0" prefWidth="230.0" text="Gestion Avis" />
+                <JFXButton layoutX="8.0" layoutY="159.0" onAction="#gestionAfficherProduits" prefHeight="46.0" prefWidth="229.0" text="Acceuil" />
+                <JFXButton layoutX="7.0" layoutY="205.0" prefHeight="46.0" prefWidth="230.0" text="Consulter Votre Profile" />
+                <JFXButton layoutX="7.0" layoutY="251.0" onAction="#gestionReclamation" prefHeight="46.0" prefWidth="230.0" text="Réclamer" />
+                <JFXButton layoutX="7.0" layoutY="297.0" prefHeight="46.0" prefWidth="230.0" text="Explorer" />
                 <ImageView fitHeight="137.0" fitWidth="176.0" layoutX="57.0" layoutY="-27.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../../../../../../../../../../xampp/htdocs/logo2.png" />
+                        <Image url="@../../../../../../../../../../xampp/htdocs/logo2.png" />
                     </image>
                 </ImageView>
-                <JFXButton fx:id="Bproduits1" layoutX="14.0" layoutY="310.0" prefHeight="46.0" prefWidth="229.0" text="Gestion Offres" />
-                <JFXButton fx:id="Bproduits11" layoutX="14.0" layoutY="356.0" prefHeight="46.0" prefWidth="229.0" text="Gestion fournisseurs" />
-                <JFXButton fx:id="Bproduits111" layoutX="14.0" layoutY="402.0" prefHeight="46.0" prefWidth="229.0" text="Gestion Commandes" />
-                <JFXButton fx:id="Bproduits1111" layoutX="15.0" layoutY="448.0" prefHeight="46.0" prefWidth="229.0" text="Gestion Livraisons" />
+                <JFXButton layoutX="7.0" layoutY="343.0" prefHeight="46.0" prefWidth="229.0" text="Nos offres" />
                 <JFXButton layoutX="49.0" layoutY="576.0" prefHeight="39.0" prefWidth="126.0" text="          Déconnexion" />
                 <ImageView fitHeight="25.0" fitWidth="27.0" layoutX="67.0" layoutY="583.0" pickOnBounds="true" preserveRatio="true">
                     <image>
