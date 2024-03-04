@@ -46,5 +46,6 @@
           </children>
       </AnchorPane>
       <ComboBox fx:id="idproduitTF" layoutX="567.0" layoutY="188.0" prefWidth="150.0" />
+      <ImageView fx:id="qrCodeImageView" fitHeight="150.0" fitWidth="200.0" layoutX="285.0" layoutY="405.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>

@@ -1,11 +1,25 @@
 package controllers;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.net.URL;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,6 +30,8 @@ import entities.Fournisseur;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import service.FournisseurService;
 
@@ -74,66 +90,48 @@ public class AjouterFournisseurController implements Initializable {
 
     @FXML
     private Button CommandesLivraisosBTN;
-
     @FXML
     private Button UsersBoutons;
-
 
     @FXML
     void GoToCRM(MouseEvent event) {
 
     }
-
     @FXML
     void GoToCategories(MouseEvent event) {
 
     }
-
     @FXML
     void GoToCommandesLivraison(MouseEvent event) {
 
     }
-
     @FXML
     void GoToFournieusseursOffere(ActionEvent event) {
 
     }
-
     @FXML
     void GoToFournisseurs(MouseEvent event) {
 
     }
-
     @FXML
     void GoToOffres(MouseEvent event) {
 
     }
-
     @FXML
     void GoToProducts(MouseEvent event) {
 
     }
-
     @FXML
     void GoToUsers(MouseEvent event) {
 
     }
-
     @FXML
     void GotoCRM(ActionEvent event) {
 
     }
 
-
-
-
-
-
-
-
-
-
-
+    @FXML
+    private ImageView qrCodeImageView;
 
 
     @FXML
@@ -232,7 +230,16 @@ public class AjouterFournisseurController implements Initializable {
     @FXML
     public void initialize(URL url , ResourceBundle rb)
     {
+
         DisplayCategoriesInComboBox();
+        QRCodeGenerator qrCodeGenerator = new QRCodeGenerator();
+
+        try {
+            // Call displayQRCode using the instance
+            qrCodeImageView.setImage(qrCodeGenerator.new QRCodeDisplay().displayQRCode("https://www.facebook.com/profile.php?id=61555788222917", 200, 200));
+        } catch (IOException | WriterException e) {
+            e.printStackTrace();
+        }
     }
 
     public void DisplayCategoriesInComboBox() {
@@ -257,5 +264,35 @@ public class AjouterFournisseurController implements Initializable {
         }
     }
 
+    public class QRCodeGenerator {
 
-}
+        public static byte[] generateQRCodeImage(String text, int width, int height) throws WriterException, IOException {
+            Map<EncodeHintType, Object> hints = new HashMap<>();
+            hints.put(EncodeHintType.MARGIN, 1);
+            BitMatrix bitMatrix = new QRCodeWriter().encode(text, BarcodeFormat.QR_CODE, width, height, hints);
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            MatrixToImageWriter.writeToStream(bitMatrix, "PNG", outputStream);
+            return outputStream.toByteArray();
+        }
+
+        public class QRCodeDisplay {
+
+            public static Image displayQRCode(String text, int width, int height) throws IOException, WriterException {
+                byte[] qrCodeImage = QRCodeGenerator.generateQRCodeImage(text, width, height);
+                Image qrCode = new Image(new ByteArrayInputStream(qrCodeImage));
+                return qrCode;}
+   /*
+    public void generateAndDisplayQRCode(String data) {
+        // Generate the QR code image as a byte array
+        ByteArrayOutputStream out = QRCode.from(data).to(ImageType.PNG).stream();
+
+        // Convert byte array to JavaFX Image
+        InputStream in = new ByteArrayInputStream(out.toByteArray());
+        Image image = new Image(in);
+
+        // Set the generated QR code image to the ImageView
+        qrCodeImageView.setImage(image);
+    }
+}*/
+
+        }}}

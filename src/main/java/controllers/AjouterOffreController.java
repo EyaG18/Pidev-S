@@ -42,8 +42,8 @@ public class AjouterOffreController {
     @FXML
     private ComboBox<String> nom_produitTF;
 
-    @FXML
-    private TableColumn<Offre, String> nomproduitaff;
+   /* @FXML
+    private TableColumn<Offre, String> nomproduitaff;*/
 
 
     @FXML
@@ -59,7 +59,7 @@ public class AjouterOffreController {
     private TableColumn<Offre, LocalDate> datefinaff;
 
     @FXML
-    private TableColumn<Offre, Integer> idproduitaff;
+    private TableColumn<Offre, Integer> nomproduitaff;
 
     @FXML
     private TextField reductionTF;
@@ -183,23 +183,6 @@ public class AjouterOffreController {
 
 
     private Integer getIdProduitByName(String productName) {
-       /* int id_produit=0;
-        try {
-            String sql = "SELECT Id_Produit FROM produit WHERE NomP = ?";
-            PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setString(1, productName);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if(resultSet.next()) {
-                id_produit = resultSet.getInt("Id_Produit");
-            }
-
-            resultSet.close();
-            preparedStatement.close();
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
-        return id_produit;*/
-
         DataSource db = new DataSource();
        conn = db.getCnx();
         String query = "SELECT Id_Produit FROM produit WHERE NomP = ?";;
@@ -352,11 +335,7 @@ public class AjouterOffreController {
 
     @FXML
     public void initialize() {
-       /* nomproduitaff.setCellValueFactory(new PropertyValueFactory<>("nom_produit"));
-        datedebutaff.setCellValueFactory(new PropertyValueFactory<>("date_debut"));
-        datefinaff.setCellValueFactory(new PropertyValueFactory<>("date_fin"));
-        reductionaff.setCellValueFactory(new PropertyValueFactory<>("reduction"));
-        titreaff.setCellValueFactory(new PropertyValueFactory<>("titre_Offre"));*/
+
         DisplayCategoriesInComboBox();
         AfficherOffre();
 
@@ -423,7 +402,7 @@ public class AjouterOffreController {
     void front(ActionEvent event) {
         try {
             // Load the FXML file for the "AfficherOffre" window
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherOffre.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("AfficherOffre.fxml"));
             Parent root = loader.load();
 
             // Create a new scene
@@ -439,54 +418,5 @@ public class AjouterOffreController {
             e.printStackTrace(); // Handle loading error
         }
     }
-  /*  @FXML
-    void notifier(ActionEvent event) {
 
-        // Get the product ID of the new offer
-        int idProduit = getIdProduitByName(nom_produitTF.getValue());
-
-        // Retrieve the list of users who have purchased the product
-        List<Integer> userIds = getUserIdsByProductId(idProduit);
-
-        // Notify each user about the new offer
-        for (Integer userId : userIds) {
-            notifyUserAboutOffer(userId);
-        }
-
-        // Show a success message or perform any other necessary actions
-        showAlert(Alert.AlertType.INFORMATION, "Success", "Users Notified", "All active users have been notified about the new offer.");
-    }
-
-    // Method to retrieve the list of user IDs who have purchased the product
-    private List<Integer> getUserIdsByProductId(int idProduit) {
-        List<Integer> userIds = new ArrayList<>();
-
-        // Query the panier table to get the list of user IDs for the given product ID
-        String query = "SELECT id_user FROM panier WHERE id_produit = ?";
-        try (PreparedStatement statement = conn.prepareStatement(query)) {
-            statement.setInt(1, idProduit);
-            ResultSet resultSet = statement.executeQuery();
-
-            // Iterate through the result set and add user IDs to the list
-            while (resultSet.next()) {
-                int userId = resultSet.getInt("id_user");
-                userIds.add(userId);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return userIds;
-    }
-    private void notifyUserAboutOffer(int userId) {
-        // Assuming you have a method to get the username based on the user ID
-        String username = getUsernameById(userId);
-
-        // Display a JavaFX Alert to notify the user about the new offer
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("New Offer Notification");
-        alert.setHeaderText("Hello, " + username + "!");
-        alert.setContentText("A new special offer is available for you. Check it out now!");
-        alert.showAndWait();
-    }*/
 }

@@ -1,5 +1,12 @@
 package controllers;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+import com.infobip.model.SmsResponse;
 import entities.Fournisseur;
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
@@ -17,15 +24,27 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import okhttp3.*;
 import service.FournisseurService;
 import javafx.scene.control.Alert;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.net.Authenticator;
 import java.net.PasswordAuthentication;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import javafx.scene.control.TextField;
+
+
 public class AfficherFournisseurController implements Initializable {
 
     @FXML
@@ -42,7 +61,8 @@ public class AfficherFournisseurController implements Initializable {
 
     @FXML
     private TableView<Fournisseur> table;
-
+    @FXML
+    private ImageView qrCodeImageView;
 
     @FXML
     void GoToCRM(MouseEvent event) {
@@ -101,7 +121,9 @@ public class AfficherFournisseurController implements Initializable {
             }
         });
 
+
         refreshTable();
+
     }
 
     public void addFournisseur(Fournisseur fournisseur) {
@@ -216,12 +238,59 @@ public class AfficherFournisseurController implements Initializable {
             // Remove the selected Fournisseur from the table view
             table.getItems().remove(selectedFournisseur);
 
+            // Send SMS to the selected Fournisseur's phone number
+            sendSmsToNumeroFournisseur(selectedFournisseur.getNum_fournisseur());
+
             showAlert(Alert.AlertType.INFORMATION, "Success", "Fournisseur Rejected", "Fournisseur has been rejected and removed from the database.");
         } else {
             // If no fournisseur is selected, show an error message
             showAlert(Alert.AlertType.ERROR, "Error", "No Fournisseur Selected", "Please select a fournisseur to reject.");
         }
     }
+    public void sendSmsToNumeroFournisseur(String phoneNumber) {
+        try {
+            // Infobip API URL
+            String url = "https://9lgjvy.api.infobip.com/sms/2/text/advanced";
+
+            // Infobip API credentials
+            String apiKey = "92c9a60fd771f042053cf3c0c1e5e0aa-8e4bfda1-98ca-4b32-8f3c-c9cc66e8eb7d";
+
+            // Create OkHttpClient instance
+            OkHttpClient client = new OkHttpClient();
+
+            // Create JSON request body
+            MediaType mediaType = MediaType.parse("application/json");
+            String jsonBody = "{\"messages\":[{\"destinations\":[{\"to\":\"21625911783\"}],\"from\":\"ServiceSMS\",\"text\":\"Your fournisseur has been rejected.\"}]}";
+
+            RequestBody body = RequestBody.create(jsonBody, mediaType);
+
+            // Build HTTP request
+            Request request = new Request.Builder()
+                    .url(url)
+                    .post(body)
+                    .addHeader("Authorization", "App " + apiKey)
+                    .addHeader("Content-Type", "application/json")
+                    .addHeader("Accept", "application/json")
+                    .build();
+
+            // Execute HTTP request
+            Response response = client.newCall(request).execute();
+
+            // Check response status
+            if (response.isSuccessful()) {
+                System.out.println("SMS sent successfully to " + phoneNumber);
+            } else {
+                System.out.println("Failed to send SMS to " + phoneNumber);
+            }
+
+            // Close the response body
+            response.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
 
     private void showAlert(Alert.AlertType alertType, String title, String headerText, String contentText) {
@@ -273,10 +342,26 @@ public class AfficherFournisseurController implements Initializable {
 
 
     @FXML
+    void handleSearchInput(KeyEvent event) {
+        // Trigger the search when the user types in the search field
+        rechercher(null);
+
+        // If the search field is empty, reload the original data into the table
+        if (recherchenom.getText().isEmpty()) {
+            refreshTable();
+        }
+    }
+
+
+    @FXML
     void actualiser(ActionEvent event) {
         refreshTable();
     }
 
 
-}
+
+        }
+
+
+
 
