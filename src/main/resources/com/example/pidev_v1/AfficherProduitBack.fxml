@@ -5,7 +5,6 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
@@ -18,48 +17,8 @@
          <children>
             <AnchorPane layoutX="2.0" prefHeight="783.0" prefWidth="1162.0" style="-fx-background-color: #FFFFFF;" styleClass="white-background" stylesheets="@../../../../java/com/example/pidev_v1/css/style.css">
                <children>
-                  <AnchorPane layoutX="-3.0" prefHeight="783.0" prefWidth="184.0" style="-fx-background-color: #C6E6FB;">
-                     <children>
-                        <ImageView fitHeight="142.0" fitWidth="170.0" layoutX="47.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../../../../../../../../xampp/htdocs/logo2.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fitHeight="33.0" fitWidth="131.0" layoutX="75.0" layoutY="616.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../../../../../../../../xampp/htdocs/logout.png" />
-                           </image>
-                        </ImageView>
-                        <Button fx:id="UsersBoutons" layoutX="30.0" layoutY="200.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="148.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Utilisateurs" />
-                        <Button fx:id="CommandesLivraisosBTN" layoutX="31.0" layoutY="257.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="138.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Commandes et Livraisons" />
-                        <Button fx:id="BtnProduits" layoutX="31.0" layoutY="317.0" mnemonicParsing="false" onMouseClicked="#GoToProducts" prefHeight="33.0" prefWidth="148.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Produits" />
-                        <Button fx:id="BtnCRM" layoutX="31.0" layoutY="381.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="155.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Relations Clients" />
-                        <Button fx:id="BrnFournisseursAppelsOffres" layoutX="30.0" layoutY="442.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="138.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Fournisseurs &amp; Appels d'offres" />
-                        <Button fx:id="BtnCategories" layoutX="32.0" layoutY="499.0" mnemonicParsing="false" onMouseClicked="#GoToCategories" prefHeight="39.0" prefWidth="107.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Catégories de Produits" />
-                        <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="95.0" layoutY="161.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../../../../../../../../xampp/htdocs/icons8-delete-64.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fitHeight="25.0" fitWidth="26.0" layoutX="55.0" layoutY="574.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../../../../../../../../xampp/htdocs/icons8-add-64%20(2).png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="133.0" layoutY="564.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../../../../../../../../xampp/htdocs/icons8-update-64.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fitHeight="111.0" fitWidth="83.0" layoutX="116.0" layoutY="613.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../../../../../../../../xampp/htdocs/icons8-stock-96.png" />
-                           </image>
-                        </ImageView>
-                     </children>
-                  </AnchorPane>
                   <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="597.0" layoutY="194.0" pickOnBounds="true" preserveRatio="true" />
-                  <AnchorPane layoutX="218.0" layoutY="24.0" prefHeight="340.0" prefWidth="938.0" style="-fx-background-color: #fff;" styleClass="shadow" stylesheets="@test2.css">
+                  <AnchorPane layoutX="59.0" layoutY="24.0" prefHeight="340.0" prefWidth="938.0" style="-fx-background-color: #fff;" styleClass="shadow" stylesheets="@test2.css">
                      <children>
                         <TableView fx:id="TableViewProductBack" layoutX="14.0" layoutY="52.0" prefHeight="276.0" prefWidth="747.0">
                           <columns>
@@ -82,11 +41,6 @@
                            </font>
                         </Button>
                         <Button fx:id="btnDeleteProd" layoutX="768.0" layoutY="180.0" mnemonicParsing="false" onMouseClicked="#BtnDeletProduct" prefHeight="39.0" prefWidth="131.0" style="-fx-border-radius: 5px; -fx-background-color: #ca2d4b;" text="Supprimer">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="BtnCheckStatProduits" layoutX="773.0" layoutY="244.0" mnemonicParsing="false" onMouseClicked="#GoToKPIsProduits" prefHeight="39.0" prefWidth="138.0" style="-fx-border-radius: 5px; -fx-background-color: #f7f09b;" text="Stock">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>

@@ -93,6 +93,7 @@
                         <Image url="@../../../image/deconnexion.png" />
                     </image>
                 </ImageView>
+            <JFXButton fx:id="btnKPIS" layoutX="1.0" layoutY="494.0" onMouseClicked="#GoToKpisProduits" prefHeight="48.0" prefWidth="239.0" text="KPI's Stock" />
             </children>
         </AnchorPane>
     </left>

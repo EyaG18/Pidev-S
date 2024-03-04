@@ -153,40 +153,8 @@ public class FeedProduitsCoteClientsController implements Initializable {
     void GotoProfile(MouseEvent event) {
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /************************************************************************/
-    public void DisplayCategoriesInComboBoxFront2() {
 
-        MyDataBase ct = new MyDataBase();
-        Connection cnx = ct.getCnx();
-        String queryCategory = "SELECT NomCatégorie FROM catégorie";
-        try {
-            Statement statement = cnx.createStatement();
-            ResultSet QueryOutput = statement.executeQuery(queryCategory);
-            while (QueryOutput.next()) {
-                String categoryName = QueryOutput.getString("NomCatégorie");
-                //ComBoxCategorie.getItems().add(categoryName);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
     public void loadproducts(List<Produit> l)
     {
 

@@ -47,6 +47,19 @@ public class welcomeControllers {
     @FXML
     private BorderPane borderpane;
 
+
+    @FXML
+    private JFXButton btnKPIS;
+
+
+    @FXML
+    void GoToKpisProduits(MouseEvent event) throws IOException {
+        StackPane view =  FXMLLoader.load(getClass().getResource("KpisProduitsBack.fxml"));
+
+        borderpane.setCenter(view);
+
+    }
+
     @FXML
     void GotoAffichageProduits(MouseEvent event) throws IOException {
         StackPane view= FXMLLoader.load(getClass().getResource("AfficherProduitBack.fxml"));

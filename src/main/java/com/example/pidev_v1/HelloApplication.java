@@ -33,6 +33,15 @@ public class HelloApplication extends Application {
         MyDataBase Db = new MyDataBase();
         Db.getCnx();
 
+        PanierService ps = new PanierService();
+
+        java.util.List<Panier> lp = ps.afficherCotenuPanier();
+
+        for( Panier p : lp) {
+            System.out.println(p);
+        }
+
+
         //UserService userService = new UserService();
         //User user = userService.getUserByEmail("eya.gadhoumi@esprit.tn");
         //System.out.println(user);

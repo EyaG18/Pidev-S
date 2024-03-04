@@ -8,6 +8,7 @@ module com.example.pidev_v1 {
     requires com.jfoenix;
     requires org.json;
     requires javafx.web;
+    requires java.desktop;
 
     opens com.example.pidev_v1.entities to javafx.base;
 

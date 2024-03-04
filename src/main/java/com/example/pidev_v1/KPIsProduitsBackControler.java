@@ -45,8 +45,7 @@ public class KPIsProduitsBackControler implements Initializable {
     private Label NomUserSession;
 
     @FXML
-    private BarChart<?, ?> barChart1;
-
+    private BarChart<String, Number> barChart1 ;
     @FXML
     private LineChart<?, ?> SecondTry;
 
@@ -112,13 +111,13 @@ public class KPIsProduitsBackControler implements Initializable {
                 notificationMsg.append(" Produit ID: ").append(produit.getId_Produit()).append("\n");
                 System.out.println(produit.getId_Produit());
                 // stockInsuffisant = true; // Définir à true car il y a un stock insuffisant
-                if (notificationMsg.length() > 0) {
+                //if (notificationMsg.length() > 0) {
                     // Envoyer la notification par SMS si des produits sont en rupture de stock
-                    sendSMS(23067230, notificationMsg.toString());
-                }
+                    //sendSMS(23067230, notificationMsg.toString());
+                //}
             }
         }
-        System.out.println("Tous les produits sont en stock.");
+        System.out.println(notificationMsg);
     }
 
 /********************************************/
@@ -181,24 +180,25 @@ NavigationControler.OpenAffichageProduitsBack(event,"AfficherProduitBack.fxml");
         }
     }
 
-
-
-
-    public void Statistiques8stock_Porudits()
-    {
+    /*************************************************/
+    public void Statistiques8stock_Porudits() {
+        System.out.println("methode statisqtiques produits back appelee");
         System.out.println("fonction stat produits panier est appllee");
+
+        // Définir les axes
         CategoryAxis xAxis = new CategoryAxis();
         NumberAxis yAxis = new NumberAxis();
         xAxis.setLabel("Produit");
         yAxis.setLabel("Quantité");
 
-        // Création du graphique BarChart
-        BarChart<String, Number> barChart1 = new BarChart<>(xAxis, yAxis);
+        // Si votre barChart1 est déjà initialisé, vous pouvez simplement l'utiliser
         barChart1.setTitle("Statistique de Stock et Panier");
+
         String sql = "SELECT p.NomP, SUM(p.QteP) AS Stock, IFNULL(SUM(pa.QuantiteParProduit), 0) AS Panier " +
                 "FROM Produit p " +
                 "LEFT JOIN Panier pa ON p.Id_Produit = pa.Id_Produit " +
                 "GROUP BY p.NomP";
+
         // Exécution de la requête SQL pour récupérer les données de stock et de panier
         try {
             MyDataBase db = new MyDataBase();
@@ -219,15 +219,14 @@ NavigationControler.OpenAffichageProduitsBack(event,"AfficherProduitBack.fxml");
                 series.getData().add(new XYChart.Data<>("Stock", stock));
                 series.getData().add(new XYChart.Data<>("Panier", panier));
                 barChart1.getData().addAll(series);
-
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
-/*******************************************************/
+
+    /*******************************************************/
 
 public void nombreProduitsParCategorie() {
     pieChart.getData().clear();
@@ -251,14 +250,13 @@ public void nombreProduitsParCategorie() {
         e.printStackTrace();
     }
 }
-
 /***************************************************************/
 @Override
 public void initialize(URL url, ResourceBundle resourceBundle) {
     prixMoyenProduitsParCategorie();
     nombreProduitsParCategorie();
     evolutionPrixProduits();
-    //Statistiques8stock_Porudits();
+    Statistiques8stock_Porudits() ;
 }
 public void prixMoyenProduitsParCategorie() {
     barChart.getData().clear();
@@ -267,7 +265,6 @@ public void prixMoyenProduitsParCategorie() {
             "FROM catégorie c " +
             "LEFT JOIN produit p ON c.Id_Catégorie = p.Id_Catégorie " +
             "GROUP BY c.NomCatégorie";
-
     try {
         MyDataBase db = new MyDataBase();
         Connection cnx = db.getCnx();

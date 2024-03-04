@@ -154,7 +154,8 @@ public class CardProduct implements Initializable {
                     alert.showAndWait();
                 }
             else {
-                panierService.createPanierAll(panier1.getUtilisateurPan().getId_user(),prodID,qty);
+                totalP = (qty * produit.getPrixP());
+                panierService.createPanierAll(panier1.getUtilisateurPan().getId_user(),prodID,qty,totalP);
                 alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Panier de l'utilisateur "+ currentUser.getNomuser() + ""+currentUser.getPrenomuser());
                 alert.setHeaderText("");
@@ -163,7 +164,7 @@ public class CardProduct implements Initializable {
                 newStock= produit.getQteP()-qty;
                 produitService.UpdateProduct(prodID,produit.getId_Catégorie(),produit.getNomP(),produit.getPrixP(),newStock,produit.getQteSeuilP(),produit.getImageP());
                 System.out.println("le nouveau stock du produit" + produit.getNomP() + "est : " + newStock);
-                totalP = (qty * produit.getPrixP());
+                //totalP = (qty * produit.getPrixP());
                 System.out.println("Le le total du panier avec le produit "+ prodID + "est : "+totalP + " du client "+ Ident_User);
             }
         } catch (Exception e) {

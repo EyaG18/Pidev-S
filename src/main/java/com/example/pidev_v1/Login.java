@@ -132,13 +132,16 @@ public class Login implements Initializable {
         {
             try {
                 System.out.println("c'est un client qui se connecte");
-                fxmlLoader = new FXMLLoader(getClass().getResource("FeedProduitsCoteClients.fxml"));
-                BorderPane root = fxmlLoader.load();
+                //fxmlLoader = new FXMLLoader(getClass().getResource("FeedProduitsCoteClients.fxml"));
+                fxmlLoader = new FXMLLoader(getClass().getResource("PanierClient.fxml"));
+                //BorderPane root = fxmlLoader.load();
+                AnchorPane root = fxmlLoader.load();
                 Scene scene = new Scene(root);
                 Stage stage = (Stage) TFEmail.getScene().getWindow();
                 stage.setTitle("Arya : Votre Style en Clic : Home Page");
                 stage.setScene(scene);
-                FeedProduitsCoteClientsController controller = fxmlLoader.getController();
+                //FeedProduitsCoteClientsController controller = fxmlLoader.getController();
+                PanierClient controller = fxmlLoader.getController();
                 controller.setUser(user);
                 stage.show();
             } catch (IOException e) {
@@ -157,7 +160,7 @@ public class Login implements Initializable {
                 stage.setScene(scene);
                 welcomeControllers controller = fxmlLoader.getController();
                 controller.setUser(user);
-                loadUserDashboard(user);
+                //loadUserDashboard(user);
                 stage.show();
             } catch (IOException e) {
                 throw new RuntimeException(e);

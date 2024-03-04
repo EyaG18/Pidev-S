@@ -21,11 +21,11 @@
          <children>
             <AnchorPane prefHeight="719.0" prefWidth="1104.0">
                <children>
-                  <AnchorPane prefHeight="783.0" prefWidth="1162.0" style="-fx-background-color: #FFFFFF;" styleClass="white-background" stylesheets="@../../../../java/com/example/pidev_v1/css/style.css">
+                  <AnchorPane layoutX="-46.0" prefHeight="783.0" prefWidth="1162.0" style="-fx-background-color: #FFFFFF;" styleClass="white-background" stylesheets="@../../../../java/com/example/pidev_v1/css/style.css">
                      <children>
-                        <AnchorPane fx:id="filter" layoutX="262.0" prefHeight="78.0" prefWidth="838.0">
+                        <AnchorPane fx:id="filter" layoutX="262.0" prefHeight="78.0" prefWidth="838.0" visible="false">
                            <children>
-                              <Separator layoutX="37.0" layoutY="116.0" prefHeight="4.0" prefWidth="718.0" style="-fx-background-color: #C6E6FB;" />
+                              <Separator layoutX="37.0" layoutY="116.0" prefHeight="4.0" prefWidth="718.0" style="-fx-background-color: #C6E6FB;" visible="false" />
                               <AnchorPane fx:id="profil" layoutX="662.0" prefHeight="114.0" prefWidth="168.0">
                                  <children>
                                     <ImageView fitHeight="50.0" fitWidth="54.0" layoutX="71.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
@@ -38,12 +38,12 @@
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Separator layoutX="28.0" orientation="VERTICAL" prefHeight="115.0" prefWidth="6.0" style="-fx-background-color: #C6E6FB;" />
+                                    <Separator layoutX="28.0" orientation="VERTICAL" prefHeight="115.0" prefWidth="6.0" style="-fx-background-color: #C6E6FB;" visible="false" />
                                  </children>
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <LineChart fx:id="SecondTry" layoutX="773.0" layoutY="120.0" prefHeight="257.0" prefWidth="334.0">
+                        <LineChart fx:id="SecondTry" layoutX="608.0" layoutY="36.0" prefHeight="257.0" prefWidth="334.0">
                            <xAxis>
                               <CategoryAxis side="BOTTOM" />
                            </xAxis>
@@ -51,13 +51,13 @@
                               <NumberAxis side="LEFT" />
                            </yAxis>
                         </LineChart>
-                        <Text layoutX="808.0" layoutY="382.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Evolution Des Prix Généraux Par Catégorie" wrappingWidth="280.13671875">
+                        <Text layoutX="646.0" layoutY="298.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Evolution Des Prix Généraux Par Catégorie" wrappingWidth="280.13671875">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Text>
-                        <PieChart fx:id="pieChart" layoutX="289.0" layoutY="142.0" prefHeight="250.0" prefWidth="378.0" />
-                        <BarChart fx:id="barChart" layoutX="274.0" layoutY="445.0" prefHeight="283.0" prefWidth="409.0">
+                        <PieChart fx:id="pieChart" layoutX="85.0" layoutY="36.0" prefHeight="250.0" prefWidth="378.0" />
+                        <BarChart fx:id="barChart" layoutX="112.0" layoutY="392.0" prefHeight="283.0" prefWidth="409.0">
                           <xAxis>
                             <CategoryAxis side="BOTTOM" />
                           </xAxis>
@@ -65,22 +65,22 @@
                             <NumberAxis side="LEFT" />
                           </yAxis>
                         </BarChart>
-                        <Text layoutX="366.0" layoutY="743.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Prix Moyen des Produits Par Catégorie" wrappingWidth="273.0">
+                        <Text layoutX="180.0" layoutY="690.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Prix Moyen des Produits Par Catégorie" wrappingWidth="273.0">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Text>
-                        <Text layoutX="311.0" layoutY="419.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Produits Existants Par Catégorie" wrappingWidth="280.13671875">
+                        <Text layoutX="146.0" layoutY="321.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Produits Existants Par Catégorie" wrappingWidth="280.13671875">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Text>
-                        <Button fx:id="btnNotifStock" layoutX="590.0" layoutY="366.0" mnemonicParsing="false" onMouseClicked="#GetNotifByApi" prefHeight="39.0" prefWidth="183.0" style="-fx-background-color: #EEBBDF;" text="Etat du Stock">
+                        <Button fx:id="btnNotifStock" layoutX="536.0" layoutY="324.0" mnemonicParsing="false" onMouseClicked="#GetNotifByApi" prefHeight="39.0" prefWidth="183.0" style="-fx-background-color: #EEBBDF;" text="Etat du Stock">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Button>
-                        <BarChart fx:id="barChart1" layoutX="682.0" layoutY="438.0" prefHeight="298.0" prefWidth="467.0">
+                        <BarChart fx:id="barChart1" layoutX="591.0" layoutY="384.0" prefHeight="283.0" prefWidth="494.0">
                           <xAxis>
                             <CategoryAxis side="BOTTOM" />
                           </xAxis>
