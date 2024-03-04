@@ -7,13 +7,16 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -24,7 +27,7 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class dashboardAdmin implements Initializable {
+public class dashboardAdmin {
     @FXML
     private ResourceBundle resources;
 
@@ -65,6 +68,63 @@ public class dashboardAdmin implements Initializable {
     private Button modifierButton;
 
     @FXML
+    private ComboBox<String> filterCombo;
+    @FXML
+    private TextField searchTextField;
+
+    @FXML
+    void ShowStats(ActionEvent event) {
+        BarChart<String, Number> chart = createChart();
+
+        // Create a new stage
+        Stage stage = new Stage();
+        stage.setTitle("Statistics");
+
+        // Add the chart to the scene
+        stage.setScene(new Scene(new Group(chart)));
+
+        // Show the stage
+        stage.show();
+    }
+    private BarChart<String, Number> createChart() {
+        // Sample data for the chart
+        final CategoryAxis xAxis = new CategoryAxis();
+        final NumberAxis yAxis = new NumberAxis();
+        final BarChart<String, Number> chart = new BarChart<>(xAxis, yAxis);
+        chart.setTitle("User Statistics");
+        xAxis.setLabel("Category");
+        yAxis.setLabel("Value");
+
+        UserService userService = new UserService();
+        // Add data series to the chart
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.setName("User Types");
+        series.getData().add(new XYChart.Data<>("Admins", userService.countUsersByRole("administrateur")));
+        series.getData().add(new XYChart.Data<>("Clients", userService.countUsersByRole("Client")));
+        series.getData().add(new XYChart.Data<>("Livreur", userService.countUsersByRole("Livreur")));
+        series.getData().add(new XYChart.Data<>("Employee", userService.countUsersByRole("Employee")));
+
+        // Add the series to the chart
+        chart.getData().add(series);
+
+        return chart;
+    }
+    @FXML
+    void searchUsersTable(KeyEvent event) {
+        nomCo.setCellValueFactory(new PropertyValueFactory<>("nomuser"));
+        prenomCo.setCellValueFactory(new PropertyValueFactory<>("prenomuser"));
+        adresseCo.setCellValueFactory(new PropertyValueFactory<>("AdrUser"));
+        emailCo.setCellValueFactory(new PropertyValueFactory<>("EmailUsr"));
+        numCo.setCellValueFactory(new PropertyValueFactory<>("Numtel"));
+        roleCo.setCellValueFactory(new PropertyValueFactory<>("Role"));
+        UserService userService = new UserService();
+        ObservableList<User> userList = FXCollections.observableArrayList(userService.searchByFilter(filterCombo.getValue(),searchTextField.getText()));
+
+        table.setItems(userList);
+
+    }
+//rBVXKw%1
+    @FXML
     void logOut(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("authentification.fxml"));
@@ -81,18 +141,18 @@ public class dashboardAdmin implements Initializable {
     @FXML
     void initialize() {
         assert userText != null : "fx:id=\"userText\" was not injected: check your FXML file 'dashboardAdmin.fxml'.";
+
     }
 
     void showUsers()
     {
-
+        filterCombo.getItems().setAll("Nom", "Prenom", "Adresse","Email","Numero","Role");
         nomCo.setCellValueFactory(new PropertyValueFactory<>("nomuser"));
         prenomCo.setCellValueFactory(new PropertyValueFactory<>("prenomuser"));
         adresseCo.setCellValueFactory(new PropertyValueFactory<>("AdrUser"));
         emailCo.setCellValueFactory(new PropertyValueFactory<>("EmailUsr"));
         numCo.setCellValueFactory(new PropertyValueFactory<>("Numtel"));
         roleCo.setCellValueFactory(new PropertyValueFactory<>("Role"));
-
         UserService userService = new UserService();
         ObservableList<User> userList = FXCollections.observableArrayList(userService.afficher());
         System.out.println(userService.afficher());
@@ -183,10 +243,6 @@ public class dashboardAdmin implements Initializable {
         }
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-    }
 
 
     /*@Override

@@ -67,7 +67,7 @@ public class UserService implements CRUD<User >{
             pstmt.setString(2, p.getPrenomuser());
             pstmt.setString(3, p.getAdrUser());
             pstmt.setString(4, p.getEmailUsr());
-            pstmt.setString(5, p.getEmailUsr());
+            pstmt.setString(5, p.getPassword());
             pstmt.setInt(6, p.getNumtel());
             pstmt.setString(7, p.getRole());
             pstmt.setString(8, p.getImage());
@@ -115,7 +115,7 @@ public class UserService implements CRUD<User >{
                 return user;
             }
         }
-        return null; // Re
+        return null;
     }
     public boolean checkLoginUser(String email,String password){
         List<User> users = afficher();
@@ -149,6 +149,65 @@ public class UserService implements CRUD<User >{
             System.out.println(ex.getMessage());
         }
         return null;
+    }
+
+    public List<User> searchByFilter(String Filter,String email) {
+        List<User> users = new ArrayList<>();
+        String query = null;
+        switch(Filter)
+        {
+            case "Nom":
+                query = "SELECT * FROM `user` WHERE `nomuser` LIKE ?";
+                break;
+            case "Prenom":
+                query = "SELECT * FROM `user` WHERE `prenomuser` LIKE ?";
+                break;
+            case "Adresse":
+                query = "SELECT * FROM `user` WHERE `AdrUser` LIKE ?";
+                break;
+            case "Email":
+                query = "SELECT * FROM `user` WHERE `EmailUsr` LIKE ?";
+                break;
+            case "Numero":
+                query = "SELECT * FROM `user` WHERE `Numtel` LIKE ?";
+                break;
+            case "Role":
+                query = "SELECT * FROM `user` WHERE `Role` LIKE ?";
+                break;
+        }
+        try (PreparedStatement pstmt = cnx.prepareStatement(query)) {
+            pstmt.setString(1, "%"+email+"%");
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                int id_user = rs.getInt("id_user");
+                String nomuser = rs.getString("nomuser");
+                String prenomuser = rs.getString("prenomuser");
+                String adrUser = rs.getString("AdrUser");
+                String emailUsr = rs.getString("EmailUsr");
+                String password = rs.getString("password");
+                String image = rs.getString("image");
+                int numtel = rs.getInt("Numtel");
+                String role = rs.getString("Role");
+                users.add(new User(id_user, nomuser, prenomuser, adrUser, emailUsr,password, numtel, role,image));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return users;
+    }
+
+    public int countUsersByRole(String role) {
+        String query = "SELECT COUNT(*) AS count FROM `user` WHERE `Role` = ?";
+        try (PreparedStatement pstmt = cnx.prepareStatement(query)) {
+            pstmt.setString(1, role);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("count");
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return 0; // Return 0 if an error occurs or no users found for the given role
     }
 
 }

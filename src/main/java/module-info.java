@@ -6,6 +6,7 @@ module com.example.pidev_v {
     requires java.sql;
     requires javafx.web;
     requires org.json;
+    requires java.mail;
     opens com.example.pidev_v1.entities to javafx.base;
 
     opens com.example.pidev_v1 to javafx.fxml;

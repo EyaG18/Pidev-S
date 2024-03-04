@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : sam. 02 mars 2024 à 02:50
+-- Généré le : lun. 04 mars 2024 à 02:57
 -- Version du serveur : 10.4.25-MariaDB
 -- Version de PHP : 8.1.10
 
@@ -205,11 +205,11 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id_user`, `nomuser`, `prenomuser`, `AdrUser`, `EmailUsr`, `password`, `Numtel`, `Role`, `image`) VALUES
-(4, 'aziz', 'grissa', 'Tunis', 'azizgrissa@gmail.com', '123456', 12345678, 'Client', ''),
-(5, 'Aziz', 'Grissa', 'addresse', 'mohamedaziz.grissa@esprit.tn', '123456', 18759642, 'administrateur', ''),
-(8, 'test', 'test', 'test', 'test@gmail.com', 'password', 12345678, 'Client', ''),
-(9, 'Mohamed', 'Aziz Grissa', 'Tunis', 'azizowski_sanchez@yahoo.fr', 'azizowski_sanchez@yahoo.fr', 12345678, 'Employee', ''),
-(10, 'dtcfyvg', 'ubhinj', 'zafafa', 'azfza@gmail.com', 'fbe72ac0ef8a8f9a81a0bde705a94fc33d2a39c776df83810d613239b7e315ca', 12345678, 'administrateur', ''),
+(4, 'aziz', 'grissa', 'Tunis', 'azizowski10@gmail.com', '7fc8c9f03572ec5c3330b8a401d6923cb8c392e1932d3002c7bbc1bab66a0470', 12345678, 'administrateur', 'grissa.jpg'),
+(5, 'Aziz', 'Grissa', 'addresse', 'mohamedaziz.grissa@esprit.tn', '123456', 18759642, 'administrateur', 'lasmer.jpg'),
+(8, 'test', 'test', 'test', 'test@gmail.com', 'password', 12345678, 'Client', 'lasmer.jpg'),
+(9, 'Mohamed', 'Aziz Grissa', 'Tunis', 'azizowski_sanchez@yahoo.fr', 'azizowski_sanchez@yahoo.fr', 12345678, 'Employee', 'lasmer.jpg'),
+(10, 'dtcfyvg', 'ubhinj', 'zafafa', 'azfza@gmail.com', '6e373f1c31ffed6ff012c2c04dfe3a9a60541f2fc62b2026e9921679acdc9eb4', 12345678, 'administrateur', 'lasmer.jpg'),
 (11, 'Mohamed', 'Aziz Grissa B', 'Tunis', 'azizgrissaaaa@gmail.com', '6e4f4793ce55c8718f220599e10648935cc2714b83b934ec240182b365eb0b14', 12345678, 'Client', 'lasmer.jpg'),
 (12, 'test', 'aziz', 'Tunis', 'testaziz@gmail.com', '5329aa5797a3a38f50327b56527d60596f1e00da6f09c2fce09e53ccf129b128', 12345678, 'administrateur', '426758643_949328800110571_2144119959227790316_n.jpg');
 
