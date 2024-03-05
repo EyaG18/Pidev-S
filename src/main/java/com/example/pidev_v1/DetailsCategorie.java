@@ -67,6 +67,8 @@ public class DetailsCategorie implements Initializable {
     int indexCat = -1;
 
 
+
+
     @FXML
     void GetSelectedCategory(MouseEvent event) {
           indexCat = TableViewCategory.getSelectionModel().getSelectedItem().getId_CatégorieC();
@@ -202,7 +204,7 @@ public class DetailsCategorie implements Initializable {
     }
     /*********************************************************************/
 
-    ObservableList<Catégorie> ListCategoryObservable= FXCollections.observableArrayList();
+    ObservableList<Catégorie> ListCategoryObservable= getCategoryList();
 
     private static int call(TableColumn.CellDataFeatures<Catégorie, Integer> cellData) {
         return cellData.getValue().getId_CatégorieC();
@@ -219,7 +221,7 @@ public class DetailsCategorie implements Initializable {
         ColumnNameCategory.setCellValueFactory(new PropertyValueFactory<>("NomCatégorie"));
         TableViewCategory.setItems(ListCategoryObservable);
 
-        /*FilteredList<Catégorie> catégorieFilteredList = new FilteredList<>(ListCategoryObservable, b -> true);
+        FilteredList<Catégorie> catégorieFilteredList = new FilteredList<>(ListCategoryObservable, b -> true);
         KeywordsTextLabel.textProperty().addListener((observableValue, oldValue, newValue) -> {
             catégorieFilteredList.setPredicate(Catégorie -> {
                 // if no search value then display all data with no changes
@@ -233,7 +235,7 @@ public class DetailsCategorie implements Initializable {
 
         SortedList<Catégorie> SortedCategoryList = new SortedList<>(catégorieFilteredList);
         SortedCategoryList.comparatorProperty().bind(TableViewCategory.comparatorProperty());
-        TableViewCategory.setItems(SortedCategoryList);*/
+        TableViewCategory.setItems(SortedCategoryList);
     }
     /*********************************************************************/
 

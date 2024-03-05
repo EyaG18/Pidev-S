@@ -31,12 +31,6 @@
       <Text layoutX="373.0" layoutY="265.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
       <TextField fx:id="TFPassword" layoutX="373.0" layoutY="271.0" prefHeight="26.0" prefWidth="285.0" style="-fx-background-color: &quot;pink&quot;;" />
       <Button layoutX="458.0" layoutY="314.0" mnemonicParsing="false" onAction="#logIn" prefHeight="26.0" prefWidth="118.0" style="-fx-background-color: #C6E6FB;" text="Log In" />
-      <Text layoutX="373.0" layoutY="414.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dont have an account yet?" />
-      <Button layoutX="511.0" layoutY="397.0" mnemonicParsing="false" onAction="#CreateAccount" style="-fx-background-color: &quot;transparent&quot;;" text="Create an account" textFill="#cee408">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Button>
       <Text fill="#a4a2a2" layoutX="486.0" layoutY="451.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- OR -">
          <font>
             <Font size="16.0" />

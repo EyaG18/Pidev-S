@@ -1,96 +1,130 @@
 package com.example.pidev_v1.services;
 
-
-import com.example.pidev_v1.entities.Commande;
 import com.example.pidev_v1.entities.Livraison;
-import com.example.pidev_v1.services.IService;
-import utlis.DataSource;
-
+import com.example.pidev_v1.entities.Status;
+import com.example.pidev_v1.entities.User;
+import com.example.pidev_v1.tools.MyDataBase;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import java.sql.*;
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Random;
 
-public class LivraisonService implements IService<Livraison> {
+import static com.example.pidev_v1.entities.Status.*;
+
+public class LivraisonService implements IServiceLivraison<Livraison> {
     Connection cnx;
-    private Statement ste;
-    private PreparedStatement pre;
-    private Commande c=new Commande();
 
-    public LivraisonService(){{cnx= DataSource.getInstance().getCnx();}}
+    public LivraisonService() {
+        cnx = MyDataBase.getInstance().getCnx();
+    }
 
     @Override
-    public int Add(Livraison livraison) {
-        String requete="insert into Livraison (	Status_livraison,date_livraison,prix_livraison)";
-        try {
-            pre=cnx.prepareStatement(requete);
-            pre.setString(1,livraison.getStatusLivraison().toString());
-            pre.setDate(2,new java.sql.Date(livraison.getDate_livraison().getTime()));
-            pre.setFloat(3,livraison.getPrix_livraison());
+    public void Add(Livraison livraison) {
+        String requete = "INSERT INTO livraison (Reference, id_commande, AdrUsr, id_user, Status_livraison, date_livraison, prix_livraison) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        // Use LocalDate to represent only the date without time
+        livraison.setDate(LocalDate.now());
+
+        // Generate a random reference
+        int reference = generateRandomReference();
+
+        try (PreparedStatement pre = cnx.prepareStatement(requete)) {
+            pre.setInt(1, reference);
+            pre.setInt(2, livraison.getCommande().getId_commande());
+            pre.setString(3, livraison.getUser().getAdrUser());
+            pre.setInt(4, livraison.getId_user());
+            pre.setString(5, livraison.getStatus().toString());
+            pre.setDate(6, Date.valueOf(livraison.getDate())); // Convert LocalDate to SQL Date
+            pre.setFloat(7, livraison.getPrix_livraison());
+
             pre.executeUpdate();
-            System.out.println("Livraison ajoutee !!");
-    } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println("Livraison ajoutée avec succès.");
+        } catch (SQLException e) {
+            throw new RuntimeException("Erreur lors de l'ajout d'une nouvelle livraison", e);
         }
-        return 0;}
-
-        @Override
-    public List<Livraison> Afficher() {
-        String requete="SELECT * from Livraison ";
-            List<Livraison> list=new ArrayList<>();
-            try {
-                ste=cnx.createStatement();
-                ResultSet rs =ste.executeQuery(requete);
-                while (rs.next()){
-                    list.add(new Livraison(
-                            Livraison.Status_livraison.valueOf(rs.getString(1)),
-                            rs.getDate(2),
-                            rs.getFloat(3)));
-
     }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+
+    // Method to generate a random reference
+    private int generateRandomReference() {
+        Random random = new Random();
+        return random.nextInt(1000); // Generates a random integer between 0 and 999
+    }
+
+    @Override
+    public ObservableList<Livraison> Afficher() {
+        ObservableList<Livraison> livraisons = FXCollections.observableArrayList();
+        String requete = "SELECT * FROM livraison";
+
+        try (Statement ste = cnx.createStatement();
+             ResultSet rs = ste.executeQuery(requete)) {
+            while (rs.next()) {
+                Livraison l = new Livraison();
+                l.setReference(rs.getInt("Reference"));
+                l.setId_user(rs.getInt("id_user"));
+                l.setAdrUser(rs.getString("AdrUser"));
+                l.setStatus(valueOf(rs.getString("Status_livraison"))); // Assuming you have Status as Enum
+
+               // l.setStatus(Status.valueOf(rs.getString("Status_livraison"))); // Assuming you have Status as Enum
+                l.setDate_livraison(rs.getDate("date_livraison").toLocalDate());
+                livraisons.add(l);
             }
-            return null;
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de l'affichage: " + e.getMessage());
         }
+        return livraisons;
+    }
+
     @Override
     public void Delete(Livraison livraison) {
-        String requete="DELETE FROM Livraison WHERE id_livraison=?";
-        try{pre=cnx.prepareStatement(requete);
-            pre.setInt(1,livraison.getId_livraison());
+        String requete = "DELETE FROM Livraison WHERE id_livraison=?";
+        try (PreparedStatement pre = cnx.prepareStatement(requete)) {
+            pre.setInt(1, livraison.getId_livraison());
             pre.executeUpdate();
-            if(pre.executeUpdate()>0)
-                System.out.println("Livraison suprimee!");
-            else System.out.println("Livraison non suprimee !");
-
         } catch (SQLException e) {
-            throw new RuntimeException(e);
-
-            }}
-
-            @Override
-    public void Modify(Livraison livraison) {
-                String requete="UPDATE Commande Set Status_livraison=?,date_livraison=? ,prix_livraison=? WHERE id_livraison=?";
-                try {
-                    pre=cnx.prepareStatement(requete);
-                    pre.setString(4,livraison.getStatusLivraison().toString());
-                    pre.setDate(5,new java.sql.Date(livraison.getDate_livraison().getTime()));
-                    pre.setFloat(6,livraison.getPrix_livraison());
-                    //executeUpdate return 0 ou 1
-                    if(pre.executeUpdate()>0){
-                        System.out.println("Livraison a ete modifiee avec succes !");
-                    }else
-                        System.out.println("Echec de modification");
-                    pre.close(); //to make sure l prestatement is clawzed
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-
-            }
+            throw new RuntimeException("Erreur lors de la suppression de la livraison", e);
+        }
+    }
 
     @Override
-    public Livraison getById(int T) {
-        return null;
+    public void Modify(Livraison livraison, String newStatus) throws Exception {
+        // Check if the status is valid
+        if (valueOf(newStatus) != null) {
+            String requete = "UPDATE livraison SET status_livraison=? WHERE id_livraison=? ";
+            try (PreparedStatement pre = cnx.prepareStatement(requete)) {
+                pre.setString(1, livraison.getStatus().toString()); // Set the status_livraison column to the new status
+                pre.setInt(2, livraison.getId_livraison());
+                int rowsAffected = pre.executeUpdate();
+                if (rowsAffected > 0) {
+                    System.out.println("Commande modifiée avec succès !");
+                } else {
+                    System.out.println("Aucune modification apportée à la commande.");
+                }
+            } catch (SQLException e) {
+                System.out.println("Erreur lors de la modification: " + e.getMessage());
+            }
+        } else {
+            System.out.println("Modification not allowed. Invalid status.");
+        }
+    }
+    public User getUserById(int userId) {
+        User user = null;
+        String query = "SELECT * FROM user WHERE id_user = ?";
+        try (PreparedStatement preparedStatement = cnx.prepareStatement(query)) {
+            preparedStatement.setInt(1, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                user = new User();
+                user.setId_user(resultSet.getInt("id_user"));
+                user.setNomuser(resultSet.getString("nomuser"));
+                // Vous pouvez récupérer d'autres attributs de l'utilisateur ici
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
     }
 }
-
-

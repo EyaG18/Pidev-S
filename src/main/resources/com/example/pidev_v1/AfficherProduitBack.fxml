@@ -5,6 +5,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
@@ -18,7 +19,7 @@
             <AnchorPane layoutX="2.0" prefHeight="783.0" prefWidth="1162.0" style="-fx-background-color: #FFFFFF;" styleClass="white-background" stylesheets="@../../../../java/com/example/pidev_v1/css/style.css">
                <children>
                   <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="597.0" layoutY="194.0" pickOnBounds="true" preserveRatio="true" />
-                  <AnchorPane layoutX="59.0" layoutY="24.0" prefHeight="340.0" prefWidth="938.0" style="-fx-background-color: #fff;" styleClass="shadow" stylesheets="@test2.css">
+                  <AnchorPane layoutX="55.0" layoutY="20.0" prefHeight="344.0" prefWidth="942.0" style="-fx-background-color: #fff;" styleClass="shadow" stylesheets="@test2.css">
                      <children>
                         <TableView fx:id="TableViewProductBack" layoutX="14.0" layoutY="52.0" prefHeight="276.0" prefWidth="747.0">
                           <columns>
@@ -45,9 +46,15 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Button>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="560.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../../../../../../xampp/htdocs/icons8-search-60.png" />
+                           </image>
+                        </ImageView>
+                        <TextField fx:id="KeywordsTextLabelP" layoutX="205.0" layoutY="21.0" prefHeight="26.0" prefWidth="315.0" />
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="AnchorAjouterProduit" layoutX="218.0" layoutY="373.0" prefHeight="395.0" prefWidth="427.0" style="-fx-background-color: #ffffff;" styleClass="shadow" stylesheets="@test2.css" visible="false">
+                  <AnchorPane fx:id="AnchorAjouterProduit" layoutX="65.0" layoutY="373.0" prefHeight="395.0" prefWidth="454.0" style="-fx-background-color: #ffffff;" styleClass="shadow" stylesheets="@test2.css" visible="false">
                      <children>
                         <Text layoutX="25.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Catégorie :" wrappingWidth="88.77603912353516">
                            <font>
@@ -94,7 +101,7 @@
                         </Text>
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="AnchorPaneModifierProduit" layoutX="661.0" layoutY="373.0" prefHeight="395.0" prefWidth="490.0" style="-fx-background-color: #ffffff;" styleClass="shadow" stylesheets="@test2.css" visible="false">
+                  <AnchorPane fx:id="AnchorPaneModifierProduit" layoutX="597.0" layoutY="373.0" prefHeight="395.0" prefWidth="466.0" style="-fx-background-color: #ffffff;" styleClass="shadow" stylesheets="@test2.css" visible="false">
                      <children>
                         <ComboBox fx:id="ComboCategorieProduitUpdate" layoutX="127.0" layoutY="73.0" prefWidth="150.0" promptText="Choisir" />
                         <Text layoutX="14.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Catégorie :" wrappingWidth="88.77603912353516">

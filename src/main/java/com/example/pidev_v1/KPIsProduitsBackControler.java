@@ -111,10 +111,10 @@ public class KPIsProduitsBackControler implements Initializable {
                 notificationMsg.append(" Produit ID: ").append(produit.getId_Produit()).append("\n");
                 System.out.println(produit.getId_Produit());
                 // stockInsuffisant = true; // Définir à true car il y a un stock insuffisant
-                //if (notificationMsg.length() > 0) {
+                if (notificationMsg.length() > 0) {
                     // Envoyer la notification par SMS si des produits sont en rupture de stock
-                    //sendSMS(23067230, notificationMsg.toString());
-                //}
+                    sendSMS(23067230, notificationMsg.toString());
+                }
             }
         }
         System.out.println(notificationMsg);
@@ -211,8 +211,8 @@ NavigationControler.OpenAffichageProduitsBack(event,"AfficherProduitBack.fxml");
             // Ajout des séries de données au graphique
             while (resultSet.next()) {
                 String produit = resultSet.getString("NomP");
-                int stock = resultSet.getInt("QteP");
-                int panier = resultSet.getInt("QuantiteParProduit");
+                int stock = resultSet.getInt("Stock");
+                int panier = resultSet.getInt("Panier");
 
                 XYChart.Series<String, Number> series = new XYChart.Series<>();
                 series.setName(produit);

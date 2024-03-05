@@ -1,131 +1,179 @@
 package com.example.pidev_v1.services;
 
 import com.example.pidev_v1.entities.Commande;
-import com.example.pidev_v1.entities.Panier;
-import utlis.DataSource;
+import com.example.pidev_v1.entities.Status;
+import com.example.pidev_v1.entities.User;
+import com.example.pidev_v1.tools.MyDataBase;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Random;
 
-public class CommandeService implements IService<Commande> {
-    Connection cnx;
-    private Statement ste;
-    private PreparedStatement pre;
+public class CommandeService implements IService<Commande>{
+    private Connection cnx;
 
-    public CommandeService(){cnx= DataSource.getInstance().getCnx();}
+    public CommandeService() {
+        this.cnx = MyDataBase.getInstance().getCnx();
+    }
+
 
     @Override
-    public int Add(Commande commande) {
-        String requete="insert into Commande (produit,Quantite,status_com,Date_com,livrable) values(?,?,?,?,?,?,?)" ;
-        try {
-            pre=cnx.prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
-            pre.setString(3,commande.getProduit());
-            pre.setFloat(4,commande.getQuantite());
-            pre.setString(5,commande.getStatus().toString());
-            pre.setDate(6,new java.sql.Date(commande.getDate_com().getTime()));
-            pre.setBoolean(7, commande.isLivrable());
+    public void Add(Commande commande) {
+        Random random = new Random();
+        int randomReference = random.nextInt(Integer.MAX_VALUE); // Example: generates random integer up to max int value
+        commande.setReference(randomReference);
 
-            int affectedRows =pre.executeUpdate();
-            //vérifier si la commande a ete ajoutée
-            if (affectedRows ==0){
-                throw new SQLException("aucune ligne affectée");
-            }
-            //recuperer l 'id de la nouvelle commande pour le prochain usage
+        String requete = "INSERT INTO commande (Reference, Id_Panier, id_user, livrable, Date_com, Status, Prix_total) VALUES (?, ?, ?, ?, ?, ?)";
+        // Set current date and time
+        java.time.LocalDateTime now = java.time.LocalDateTime.now();
+        java.sql.Timestamp sqlDateTime = java.sql.Timestamp.valueOf(now);
+        commande.setDate(now); // Use the original LocalDateTime object 'now'
+        try (PreparedStatement pre = cnx.prepareStatement(requete, Statement.RETURN_GENERATED_KEYS)) {
+            pre.setInt(1, commande.getReference());
+            pre.setInt(2, commande.getId_Panier());
+            pre.setInt(3, commande.getIdUser());
+            pre.setBoolean(4, commande.isLivrable());
+            pre.setTimestamp(5,sqlDateTime );
+            pre.setString(6, commande.getStatut().toString());
+            pre.setFloat(7,commande.getPrix_total());
+
+            pre.executeUpdate();
             try (ResultSet generatedKeys = pre.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                    return generatedKeys.getInt(1);
-                }
-                else {
-                    throw new SQLException("Échec de la création, pas d'ID obtenu");
+                    System.out.println("New commande ID: " + generatedKeys.getInt(1));
                 }
             }
         } catch (SQLException e) {
-            System.out.println("Erreur d'ajout");
+            e.printStackTrace();
+            System.out.println("Erreur d'ajout: " + e.getMessage());
         }
-        return  0;
     }
 
     @Override
-    public List<Commande> Afficher() {
-        String requete="SELECT * from Commande ";
-        List<Commande> list=new ArrayList<>();
-        try {
-            ste=cnx.createStatement();
-             ResultSet rs =ste.executeQuery(requete);
-             while (rs.next()){
-                 list.add(new Commande(
-                         (Panier) rs.getObject(1),
-                         rs.getString(3),
-                         rs.getInt(4) ,
-                         Commande.status_com.valueOf(rs.getString(5)), // Convert string to enum
-                         rs.getDate(6),
-                         rs.getBoolean(7)));
-             }
+    public ObservableList<Commande> Afficher() {
 
+        ObservableList<Commande> commandes = FXCollections.observableArrayList();
+        String requete = "SELECT * FROM commande";
+        try (Statement ste = cnx.createStatement();
+             ResultSet rs = ste.executeQuery(requete)) {
+            while (rs.next()) {
+                LocalDateTime now = LocalDateTime.now();
+                Commande commande = new Commande();
+                commande.setReference(rs.getInt("Reference"));
+                commande.setId_Panier(rs.getInt("Id_Panier"));
+                commande.setIdUser(rs.getInt("id_user"));
+                commande.setLivrable(rs.getBoolean("livrable"));
+                commande.setDate(now); // Use the original LocalDateTime object 'now'
+                commande.setStatut(Status.valueOf(rs.getString("Status"))); // Assuming you have Status as Enum
+                commande.setPrix_total(rs.getFloat("Prix_total"));
+                // Récupérer les informations de l'utilisateur associé à cette commande
+                User user = getUserById(commande.getIdUser()); // Implémentez cette méthode pour récupérer l'utilisateur par son ID
+
+                // Définir l'utilisateur associé à la commande
+                commande.setUser(user);
+
+                commandes.add(commande);
+            }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            System.out.println("Erreur lors de l'affichage: " + e.getMessage());
         }
-        return null;
+        return commandes;
     }
-
+    private void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();}
     @Override
     public void Delete(Commande commande) {
-    String requete ="Delete FROM ommand where id_commande=?";
-    try{pre=cnx.prepareStatement(requete);
-        pre.setInt(1,commande.getId_commande());
-        pre.executeUpdate();
-        if(pre.executeUpdate()>0)
-            System.out.println("Commande suprimee!");
-        else System.out.println("Commande non suprimee !");
+        String requete = "DELETE FROM commande WHERE Reference = ?";
 
-    } catch (SQLException e) {
-        throw new RuntimeException(e);
-    }
-    }
-
-    @Override
-    public void Modify(Commande commande) {
-        String requete="UPDATE Commande Set produit=?,Quantite=?,livrable=? WHERE id_commande=? AND id_user=? ";
-   try {
-       pre=cnx.prepareStatement(requete);
-       pre.setString(1,commande.getProduit());
-       pre.setFloat(2,commande.getQuantite());
-       pre.setBoolean(3, commande.isLivrable());
-
-       //executeUpdate return 0 ou 1
-       if(pre.executeUpdate()>0){
-           System.out.println("Commande a ete modifiee avec succes !");
-       }else
-           System.out.println("Echec de modification");
-            pre.close(); //to make sure l prestatement is clawzed
-   } catch (SQLException e) {
-       throw new RuntimeException(e);
-   }
-
-    }
-
-    @Override
-    public Commande getById(int id_commande) {
-        String requete="SELECT * FROM Commande WHERE id_commande=?";
-        Commande commande = null;
-        try {
-            pre=cnx.prepareStatement(requete);
-            pre.setInt(1, id_commande);
-            ResultSet rs = pre.executeQuery();
-            if (rs.next()) {
-                commande = new Commande(
-                        (Panier) rs.getObject(1),
-                        rs.getString("produit"),
-                        rs.getFloat("Quantite"),
-                        Commande.status_com.valueOf(rs.getString("status_com")),
-                        rs.getDate("Date_com"),
-                        rs.getBoolean("livrable")
-                );
+        try (PreparedStatement pre = cnx.prepareStatement(requete)) {
+            pre.setInt(1, commande.getReference());
+            int affectedRows = pre.executeUpdate();
+            if (affectedRows > 0) {
+                System.out.println("Commande supprimée avec succès !");
+            } else {
+                System.out.println("Aucune commande trouvée avec la réference spécifiée.");
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println("Erreur lors de la suppression de la commande: " + e.getMessage());
+            // Gérer l'exception ici ou remonter l'exception pour la gérer ailleurs si nécessaire
         }
-        return commande;
-    }}
+    }
+
+
+
+    @Override
+    public void Modify(Commande commande, String newStatus) throws Exception {
+        // Check if the status is valid
+        if (Status.valueOf(newStatus) != null) {
+            String requete = "UPDATE commande SET Status=? WHERE Reference=?";
+            try (PreparedStatement pre = cnx.prepareStatement(requete)) {
+                pre.setObject(1, newStatus);
+                pre.setInt(2, commande.getReference());
+                int rowsAffected = pre.executeUpdate();
+                if (rowsAffected > 0) {
+                    System.out.println("Commande modifiée avec succès !");
+                } else {
+                    System.out.println("Aucune modification apportée à la commande.");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                System.out.println("Erreur lors de la modification: " + e.getMessage());
+            }
+        } else {
+            System.out.println("Modification not allowed. Invalid status.");
+        }
+    }
+    @Override
+    public void DeleteCommandebyRef(int Reference) {
+        // Implement if needed, similar to Delete method but using Reference
+    }
+
+    public double getTotalPanier(int Id_Panier) throws SQLException {
+        double totalPanier = 0.0;
+        String query = "SELECT totalPanier FROM panier WHERE Id_Panier = ?";
+
+        try (PreparedStatement statement = cnx.prepareStatement(query)) {
+            statement.setInt(1, Id_Panier);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    totalPanier = resultSet.getDouble("totalPanier");
+                }
+            }
+        }
+
+        return totalPanier; // Retourne la valeur calculée du total du panier
+    }
+
+    public User getUserById(int userId) {
+        User user = null;
+        String query = "SELECT * FROM user WHERE id_user = ?";
+        try (PreparedStatement preparedStatement = cnx.prepareStatement(query)) {
+            preparedStatement.setInt(1, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                user = new User();
+                user.setId_user(resultSet.getInt("id_user"));
+                user.setNomuser(resultSet.getString("nomuser"));
+                // Vous pouvez récupérer d'autres attributs de l'utilisateur ici
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
+
+
+}

@@ -20,7 +20,9 @@ public class HelloApplication extends Application {
        //FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("AfficherProduitBack.fxml"));
         //FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("KpisProduitsBack.fxml"));
        //FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("FeedProduitsCoteClients.fxml"));
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("authentification.fxml"));
+       FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("authentification.fxml"));
+        //FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("PanierClient.fxml"));
+       // FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("BackLivraison.fxml"));
         //FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("dashboardAdminFormUser.fxml"));
         //FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("interfaceAvis.fxml"));
         Scene scene = new Scene(fxmlLoader.<Parent>load(), 1056, 785);
@@ -33,13 +35,7 @@ public class HelloApplication extends Application {
         MyDataBase Db = new MyDataBase();
         Db.getCnx();
 
-        PanierService ps = new PanierService();
 
-        java.util.List<Panier> lp = ps.afficherCotenuPanier();
-
-        for( Panier p : lp) {
-            System.out.println(p);
-        }
 
 
         //UserService userService = new UserService();

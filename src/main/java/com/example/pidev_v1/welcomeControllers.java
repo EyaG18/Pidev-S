@@ -65,9 +65,7 @@ public class welcomeControllers {
         StackPane view= FXMLLoader.load(getClass().getResource("AfficherProduitBack.fxml"));
 
         borderpane.setCenter(view);
-
     }
-
     @FXML
     void GotoAffichagesCategories(MouseEvent event) throws IOException {
         StackPane view= FXMLLoader.load(getClass().getResource("DetailsCategorie.fxml"));
@@ -85,13 +83,13 @@ public class welcomeControllers {
     @FXML
     void gestionReclamation(ActionEvent event) throws IOException {
         StackPane view= FXMLLoader.load(getClass().getResource("interfaceReclamation.fxml"));
-
         borderpane.setCenter(view);
     }
 
     public void setUser(User user) {
         currentUser = user;
         EmployeSession.setText(currentUser.getNomuser()+" "+currentUser.getPrenomuser());
+
     }
 
 

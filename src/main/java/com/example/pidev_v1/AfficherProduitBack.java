@@ -7,6 +7,8 @@ import com.example.pidev_v1.services.ProduitService;
 import com.example.pidev_v1.tools.MyDataBase;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -142,7 +144,8 @@ public class AfficherProduitBack implements Initializable {
     private TextField NameProduitLabel;
     @FXML
     private TextField productImageField;
-
+    @FXML
+    private TextField KeywordsTextLabelP;
 
     @FXML
     private ComboBox<String> ComboCategorieProduit;
@@ -218,6 +221,10 @@ AfficherProd();
         AnchorAjouterProduit.setVisible(true);
     }
     /*******************************************************************************************************/
+    ObservableList<Produit> ListProductObservable = getProductList();
+
+
+    /*************************************************/
     public ObservableList<Produit> getProductList() {
         ObservableList<Produit> ListProduct = FXCollections.observableArrayList();
         MyDataBase db = new MyDataBase();
@@ -369,7 +376,66 @@ private String getCategoryNameById(int categoryId) {
             ReturnProduitAfterChoosingItFromComboBox(); } ) ;
         ComboCategorieProduitUpdate.setOnAction((ActionEvent event)-> {
             ReturnNewSelectedCategory();
-        }); }
+        });
+
+    /*
+     FilteredList<Catégorie> catégorieFilteredList = new FilteredList<>(ListCategoryObservable, b -> true);
+        KeywordsTextLabel.textProperty().addListener((observableValue, oldValue, newValue) -> {
+            catégorieFilteredList.setPredicate(Catégorie -> {
+                // if no search value then display all data with no changes
+                if (newValue == null || newValue.isBlank()) {
+                    return true;
+                }
+                String searchKeyWordsCategory = newValue.toLowerCase();
+                return Catégorie.getNomCatégorie().toLowerCase().contains(searchKeyWordsCategory);
+            });
+        });
+
+        SortedList<Catégorie> SortedCategoryList = new SortedList<>(catégorieFilteredList);
+        SortedCategoryList.comparatorProperty().bind(TableViewCategory.comparatorProperty());
+        TableViewCategory.setItems(SortedCategoryList);
+   */
+        /*FilteredList<Produit> catégorieFilteredList = new FilteredList<>(ListCategoryObservable, b -> true);
+        KeywordsTextLabel.textProperty().addListener((observableValue, oldValue, newValue) -> {
+            catégorieFilteredList.setPredicate(Catégorie -> {
+                // if no search value then display all data with no changes
+                if (newValue == null || newValue.isBlank()) {
+                    return true;
+                }
+                String searchKeyWordsCategory = newValue.toLowerCase();
+                return Catégorie.getNomCatégorie().toLowerCase().contains(searchKeyWordsCategory);
+            });
+        });
+
+        SortedList<Produit> SortedCategoryList = new SortedList<Produit>(catégorieFilteredList);
+        SortedCategoryList.comparatorProperty().bind(TableViewProductBack.comparatorProperty());
+        TableViewProductBack.setItems(SortedCategoryList);
+*/
+        FilteredList<Produit> produitFilteredList = new FilteredList<>(ListProductObservable, b -> true);
+        KeywordsTextLabelP.textProperty().addListener((observableValue, oldValue, newValue) -> {
+            produitFilteredList.setPredicate(produit -> {
+                if (newValue == null || newValue.isBlank()) {
+                    return true; // Afficher toutes les données si le champ de recherche est vide
+                }
+
+                String searchTerm = newValue.toLowerCase();
+
+                // Vérifier si le terme de recherche correspond à l'un des champs du produit
+                return produit.getNomP().toLowerCase().contains(searchTerm)
+                        || String.valueOf(produit.getPrixP()).contains(searchTerm)
+                        || String.valueOf(produit.getQteP()).contains(searchTerm)
+                        || String.valueOf(produit.getQteSeuilP()).contains(searchTerm)
+                        || produit.getImageP().toLowerCase().contains(searchTerm)
+                        || String.valueOf(produit.getId_Catégorie()).contains(searchTerm);
+            });
+        });
+
+        SortedList<Produit> sortedProductList = new SortedList<>(produitFilteredList);
+        sortedProductList.comparatorProperty().bind(TableViewProductBack.comparatorProperty());
+        TableViewProductBack.setItems(sortedProductList);
+
+
+    }
 
     public void DisplayCategoriesInComboBox1()
     {
@@ -565,7 +631,6 @@ void SelectImageProduct(MouseEvent event) {
         productImageField.setText(((File) selectedFile).getAbsolutePath());
     }
 }
-
     @FXML
     void SelectImageProdUpdate(MouseEvent event) {
         FileChooser fileChooser = new FileChooser();
@@ -578,7 +643,6 @@ void SelectImageProduct(MouseEvent event) {
             productImageFieldUpdate.setText(((File) selectedFile).getAbsolutePath());
         }
     }
-
     Produit produit ;
 Produit produit1;
 
@@ -588,7 +652,8 @@ Produit produit1;
         int selectedCategoryID;
         Catégorie c = ReturnNewSelectedCategory();
         selectedCategoryID = c.getId_CatégorieC();
-
+String chosennewnameP = NameProduitLabelUpdate.getText();
+String chosennewImageP = productImageFieldUpdate.getText();
 
         if (NameProduitLabelUpdate.getText().equals("") || ProductPriceFieldUpdate.getText().equals("") || productImageFieldUpdate.getText().equals("") || QteStockProduitLabelUpdate.getText().equals("") || QteSeuilProductLabelUpdate.getText().equals("")) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -596,6 +661,25 @@ Produit produit1;
             alert.showAndWait();
             return;
         }
+
+
+        if (ps.isProductImageExists(chosennewImageP)) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur lors de la modification !");
+            alert.setContentText("Un produit avec la même photo existe déjà.");
+            alert.showAndWait();
+            return;
+        }
+
+
+        if (ps.isProductNameExists(chosennewnameP)) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur lors de la modification !");
+            alert.setContentText("Un produit avec le même nom existe déjà.");
+            alert.showAndWait();
+            return;
+        }
+
 
         produit1.setId_Catégorie(selectedCategoryID);
         produit1.setNomP(NameProduitLabelUpdate.getText());

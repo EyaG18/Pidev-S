@@ -10,7 +10,7 @@ import java.util.List;
 
 public class UserService implements CRUD<User >{
 
-    Connection cnx= null;
+    Connection cnx;
     Statement statement= null;
     private PreparedStatement ste;
     MyDataBase connect = new MyDataBase();
@@ -63,7 +63,7 @@ public class UserService implements CRUD<User >{
         String req = "UPDATE `user` SET `nomuser`=?, `prenomuser`=?, `AdrUser`=?, `EmailUsr`=?, `password`=?, `Numtel`=?, `Role`=? , `image`=? WHERE `id_user`=?";
         try {
             PreparedStatement pstmt = cnx.prepareStatement(req);
-                    pstmt.setString(1, p.getNomuser());
+            pstmt.setString(1, p.getNomuser());
             pstmt.setString(2, p.getPrenomuser());
             pstmt.setString(3, p.getAdrUser());
             pstmt.setString(4, p.getEmailUsr());

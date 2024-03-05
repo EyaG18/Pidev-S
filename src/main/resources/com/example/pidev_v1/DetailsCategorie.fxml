@@ -4,12 +4,13 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-
 
 <StackPane style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pidev_v1.DetailsCategorie">
    <children>
@@ -49,6 +50,12 @@
                   </Text>
                </children>
             </AnchorPane>
+            <TextField fx:id="KeywordsTextLabel" layoutX="290.0" layoutY="68.0" prefHeight="26.0" prefWidth="389.0" />
+            <ImageView fitHeight="26.0" fitWidth="34.0" layoutX="689.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../../../../xampp/htdocs/icons8-search-60.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </children>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxWidth="-Infinity" prefHeight="703.0" prefWidth="907.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pidev_v1.BackCommandeLivraison">
+   <children>
+      <TableView fx:id="Table_commande" layoutX="285.0" layoutY="190.0" prefHeight="430.0" prefWidth="612.0">
+        <columns>
+          <TableColumn fx:id="Reference" prefWidth="81.60003662109375" text="Réference" />
+          <TableColumn fx:id="client" prefWidth="74.39996337890625" text="Client" />
+            <TableColumn fx:id="Date" prefWidth="78.4000244140625" text="Date" />
+            <TableColumn fx:id="Status_com" prefWidth="136.79998779296875" text="Status_commande" />
+            <TableColumn fx:id="ModeLivraison" prefWidth="153.60001220703123" text="Mode de livraison" />
+            <TableColumn fx:id="prix_total" prefWidth="75.0" text="Prix Total" />
+        </columns>
+      </TableView>
+      <Text layoutX="291.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gestion des commandes et Livraisons">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Text>
+      <Line endX="100.0" layoutX="694.0" layoutY="78.0" startX="-370.0000305175781" startY="7.62939453125E-6" stroke="#eebbdf" />
+      <Line endX="100.0" layoutX="448.0" layoutY="87.0" startX="-100.0" stroke="#eebbdf" />
+      <Line endX="100.0" layoutX="605.0" layoutY="54.0" startX="100.0" startY="-54.0" stroke="#eebbdf" />
+      <Button layoutX="755.0" layoutY="620.0" mnemonicParsing="false" onAction="#Ajouter" onMouseClicked="#reclamer" prefHeight="34.0" prefWidth="78.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Ajouter" />
+      <Button fx:id="supprimer" layoutX="617.0" layoutY="620.0" mnemonicParsing="false" onAction="#Supprimer" onMouseClicked="#reclamer" prefHeight="34.0" prefWidth="78.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Supprimer" />
+      <AnchorPane prefHeight="702.0" prefWidth="262.0" style="-fx-background-color: #C6E6FB;">
+         <children>
+            <Button fx:id="UsersBoutons" layoutX="30.0" layoutY="200.0" mnemonicParsing="false" onMouseClicked="#GoToUsers" prefHeight="33.0" prefWidth="199.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Utilisateurs" />
+            <Button fx:id="CommandesLivraisosBTN" layoutX="31.0" layoutY="257.0" mnemonicParsing="false" onMouseClicked="#GoToCommandesLivraison" prefHeight="33.0" prefWidth="199.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Commandes et Livraisons" />
+            <Button fx:id="BtnProduits" layoutX="31.0" layoutY="317.0" mnemonicParsing="false" onMouseClicked="#GoToProducts" prefHeight="33.0" prefWidth="199.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Produits" />
+            <Button fx:id="BtnCRM" layoutX="31.0" layoutY="381.0" mnemonicParsing="false" onAction="#GotoCRM" prefHeight="33.0" prefWidth="199.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Relations Clients" />
+            <Button fx:id="BrnFournisseursAppelsOffres" layoutX="30.0" layoutY="442.0" mnemonicParsing="false" onAction="#GoToFournieusseursOffere" prefHeight="39.0" prefWidth="199.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Fournisseurs &amp; Appels d'offres" />
+            <Button fx:id="BtnCategories" layoutX="32.0" layoutY="502.0" mnemonicParsing="false" onMouseClicked="#GoToCategories" prefHeight="39.0" prefWidth="199.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Catégories de Produits" />
+         </children>
+      </AnchorPane>
+      <ButtonBar layoutX="332.0" layoutY="124.0" prefHeight="40.0" prefWidth="200.0" />
+       <MenuButton fx:id="StatusModifier" layoutX="617.0" layoutY="131.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="98.0" text="Status">
+           <items>
+               <MenuItem mnemonicParsing="false" onAction="#changeStatusToAttente" text="EN ATTENTE" />
+               <MenuItem mnemonicParsing="false" onAction="#changeStatusToTraitee" text="TRAITEE" />
+               <MenuItem mnemonicParsing="false" onAction="#changeStatusToAnnulee" text="ANNULEE" />
+           </items>
+       </MenuButton>
+   </children>
+</AnchorPane>

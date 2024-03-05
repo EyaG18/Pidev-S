@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 public class PanierService implements IPanier{
 
-    Connection cnx= null;
+    Connection cnx;
     Statement statement= null;
     private PreparedStatement ste;
     MyDataBase connect = new MyDataBase();
@@ -129,18 +129,32 @@ public class PanierService implements IPanier{
 
     @Override
     public void truncatePanier() {
-        try {
+        /*try {
             Statement ste = cnx.createStatement();
             String requete = "truncate table panier";
             ste.execute(requete);
             System.out.println("Panier vide !");
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
+        }*/
+
+        try {
+            // Supprimer temporairement la contrainte de clé étrangère
+            Statement disableFK = cnx.createStatement();
+            disableFK.execute("SET FOREIGN_KEY_CHECKS=0");
+
+            // Tronquer la table panier
+            Statement ste = cnx.createStatement();
+            String requete = "TRUNCATE TABLE panier";
+            ste.execute(requete);
+            System.out.println("Panier vidé !");
+
+            // Rétablir la contrainte de clé étrangère
+            Statement enableFK = cnx.createStatement();
+            enableFK.execute("SET FOREIGN_KEY_CHECKS=1");
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
         }
-
-
-
-
     }
 
     @Override
@@ -154,9 +168,6 @@ public class PanierService implements IPanier{
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         }
-
-
-
 
     }
 

@@ -24,15 +24,15 @@ public class User {
         this.image = image;
     }
 
-    public User(String nomuser, String prenomuser, String AdrUser, String EmailUsr, String password, int numtel, String role,String image) {
+    public User(String nomuser, String prenomuser, String AdrUser, String EmailUsr, String password, int numtel, String role, String image) {
         this.nomuser = nomuser;
         this.prenomuser = prenomuser;
         this.AdrUser= AdrUser;
         this.EmailUsr = EmailUsr;
         this.password = password;
-        this.Numtel = Numtel;
-        this.Role = Role;
-        this.image=image;
+        this.Numtel = numtel;
+        this.Role = role;
+        this.image = image;
     }
 
     public User(int id_user, String nomuser, String prenomuser, String adrUser, String emailUsr, String password, int numtel, String role,String image) {
@@ -44,7 +44,7 @@ public class User {
         this.password = password;
         Numtel = numtel;
         Role = role;
-        this.image=image;
+        this.image = image;
     }
 
     public String getRole() {

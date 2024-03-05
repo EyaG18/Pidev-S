@@ -4,6 +4,7 @@
 <?import javafx.collections.FXCollections?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -46,8 +47,8 @@
          </font>
       </Text>
       <TextField layoutX="617.0" layoutY="20.0" promptText="🔍 Search" style="-fx-border-radius: 5px;" />
-      <Button layoutX="527.0" layoutY="493.0" mnemonicParsing="false" onAction="#Annuler" prefHeight="33.0" prefWidth="199.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Annuler" />
-      <Button layoutX="741.0" layoutY="493.0" mnemonicParsing="false" onAction="#Confirmer" prefHeight="33.0" prefWidth="199.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Confirmer" />
+      <Button layoutX="527.0" layoutY="543.0" mnemonicParsing="false" onAction="#Annuler" prefHeight="33.0" prefWidth="199.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Annuler" />
+      <Button layoutX="741.0" layoutY="543.0" mnemonicParsing="false" onAction="#Confirmer" prefHeight="33.0" prefWidth="199.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Confirmer" />
       <TextField fx:id="nomField" layoutX="399.0" layoutY="280.0" prefHeight="26.0" prefWidth="198.0" />
       <Text layoutX="399.0" layoutY="276.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nom" />
       <TextField fx:id="prenomField" layoutX="635.0" layoutY="275.0" prefHeight="26.0" prefWidth="198.0" />
@@ -69,7 +70,9 @@
             </FXCollections>
          </items>
       </ComboBox>
-      <Text layoutX="747.0" layoutY="551.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nb: Default password= &quot;password&quot;" />
+      <Text layoutX="747.0" layoutY="601.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nb: Default password= &quot;password&quot;" />
+      <Button layoutX="399.0" layoutY="449.0" mnemonicParsing="false" onAction="#uploadImage" prefHeight="32.0" prefWidth="103.0" text="Upload Image" />
+      <Label fx:id="imageFullPath" layoutX="513.0" layoutY="457.0" />
    </children>
 
 
