@@ -7,7 +7,6 @@ import com.example.pidev_v1.entities.User;
 import com.example.pidev_v1.services.CategorieService;
 import com.example.pidev_v1.services.MyListener;
 import com.example.pidev_v1.services.ProduitService;
-import com.example.pidev_v1.services.UserService;
 import com.example.pidev_v1.tools.MyDataBase;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,14 +31,22 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.security.PublicKey;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
+import javafx.scene.layout.BorderPane;
 
 public class FeedProduitsCoteClientsController implements Initializable {
 
+    @FXML
+    private Label LabelUser;
+    private User currentUser;
+    private User selectedUser;
 
     @FXML
     private ComboBox<String> ComBoxCategorie;
@@ -68,7 +75,7 @@ public class FeedProduitsCoteClientsController implements Initializable {
     @FXML
     private AnchorPane BigAnchorPane;
 
-//////////////////////////////////
+    //////////////////////////////////
     @FXML
     private GridPane menuP_gridpane;
 
@@ -79,63 +86,32 @@ public class FeedProduitsCoteClientsController implements Initializable {
     private ScrollPane prod_scrollpane;
 
     ProduitService ps = new ProduitService();
-     CategorieService cs = new CategorieService();
-    @FXML
-    private Label LabelUser;
-    private User currentUser;
-    private User selectedUser;
+    CategorieService cs = new CategorieService();
 
-    UserService userService = new UserService();
+
+
+
     private MyListener myListener;
 
     ObservableList<Produit> cardListDataProduits = FXCollections.observableArrayList();
     ObservableList<Catégorie> ListCategoryObservable = FXCollections.observableArrayList();
 
-     List<Produit> l = new ArrayList<>();
+    List<Produit> l = new ArrayList<>();
 
-     AjouterProduit AjProCont = new AjouterProduit();
+    AjouterProduit AjProCont = new AjouterProduit();
 
     ComboBox<String> category = new ComboBox<>();
-     Produit p= new Produit();
-     Catégorie c = new Catégorie();
 
-     AfficherProduitCoteClient afc = new AfficherProduitCoteClient();
 
-     ModifierProduit mf = new ModifierProduit();
-    private MyDataBase cnx;
-    private PreparedStatement prepare;
+    Produit p= new Produit();
+    Catégorie c = new Catégorie();
 
-    public void DisplayCategoriesInComboBoxFront() {
-       /* MyDataBase ct = new MyDataBase();
-        Connection cnx = ct.getCnx();
-        String queryCategory = "SELECT * FROM catégorie";
-        try {
-            Statement statement = cnx.createStatement();
-            ResultSet QueryOutput = statement.executeQuery(queryCategory);
-            int rowCount = 0;
-            while (QueryOutput.next()) {
-                String queryCategoryName = QueryOutput.getString("NomCatégorie");
-                System.out.println("Category Name: " + queryCategoryName); // Output for debugging
-                // Add category name to ComboBox
-                ComboBoxFilterCat.getItems().add(queryCategoryName);
-                rowCount++;
-            }
+    AfficherProduitCoteClient afc = new AfficherProduitCoteClient();
 
-            System.out.println("Nombre de résultats : " + rowCount); // Output for debugging
+    ModifierProduit mf = new ModifierProduit();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            // Fermer la connexion à la base de données
-            try {
-                if (cnx != null) {
-                    cnx.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }*/
-    }
+
+
     /************************************************************************/
     public void DisplayCategoriesInComboBoxFront2() {
 
@@ -153,51 +129,47 @@ public class FeedProduitsCoteClientsController implements Initializable {
             e.printStackTrace();
         }
     }
-    public void loadproducts(List<Produit> l)
-    {
 
-    }
-/******************************************/
-public ObservableList<Produit> getProductList() {
-    ObservableList<Produit> ListProduct = FXCollections.observableArrayList();
-    MyDataBase db = new MyDataBase();
-    Connection cnx = db.getCnx();
-    //String query = "SELECT p.*, c.NomCatégorie FROM produit p JOIN catégorie c ON p.Id_Catégorie = c.Id_Catégorie"; // Utilisation de la jointure pour récupérer le nom de la catégorie
-    // String query = " SELECT * FROM VueProduit";
-    String query = "SELECT * FROM produit";
-    Statement st;
-    ResultSet rs;
-    try {
-        st = cnx.createStatement();
-        rs = st.executeQuery(query);
-        while (rs.next()) {
-            int idProduit = rs.getInt("Id_Produit");
-            int idCategorie = rs.getInt("Id_Catégorie");
-            String nomProduit = rs.getString("NomP");
-            float prixProduit = rs.getFloat("PrixP");
-            int qteProduit = rs.getInt("QteP");
-            int qteSeuilProduit = rs.getInt("QteSeuilP");
-            String imageProduit = rs.getString("ImageP");
-            Produit produit1= new Produit(idCategorie,nomProduit,prixProduit,qteProduit,qteSeuilProduit,imageProduit);
-            ListProduct.add(produit1);
+    /******************************************/
+    public ObservableList<Produit> getProductList() {
+        ObservableList<Produit> ListProduct = FXCollections.observableArrayList();
+        MyDataBase db = new MyDataBase();
+        Connection cnx = db.getCnx();
+        //String query = "SELECT p.*, c.NomCatégorie FROM produit p JOIN catégorie c ON p.Id_Catégorie = c.Id_Catégorie"; // Utilisation de la jointure pour récupérer le nom de la catégorie
+        // String query = " SELECT * FROM VueProduit";
+        String query = "SELECT * FROM produit";
+        Statement st;
+        ResultSet rs;
+        try {
+            st = cnx.createStatement();
+            rs = st.executeQuery(query);
+            while (rs.next()) {
+                int idProduit = rs.getInt("Id_Produit");
+                int idCategorie = rs.getInt("Id_Catégorie");
+                String nomProduit = rs.getString("NomP");
+                float prixProduit = rs.getFloat("PrixP");
+                int qteProduit = rs.getInt("QteP");
+                int qteSeuilProduit = rs.getInt("QteSeuilP");
+                String imageProduit = rs.getString("ImageP");
+                Produit produit1= new Produit(idCategorie,nomProduit,prixProduit,qteProduit,qteSeuilProduit,imageProduit);
+                ListProduct.add(produit1);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
-    } catch (SQLException ex) {
-        ex.printStackTrace();
+        return ListProduct;
     }
-    return ListProduct;
-}
 
 
 
-
-
-/******************************************/
+    /******************************************/
 
     public void AfficherProduitsClients()
     {
         System.out.println("Methode AFFICHERProduitsClient est appelle");
 
-    //cardListDataProduits.clear();
+
+        //cardListDataProduits.clear();
         cardListDataProduits.addAll(getProductList());
         if ( cardListDataProduits != null)
         {
@@ -214,30 +186,33 @@ public ObservableList<Produit> getProductList() {
 
         for(int q =0 ; q< cardListDataProduits.size() ; q ++)
         {
-               try {
-                   FXMLLoader load = new FXMLLoader();
-                   load.setLocation(getClass().getResource("cardProduct.fxml"));
-                   AnchorPane pane = load.load();
-                   CardProduct cardProduct = load.getController();
-                   MyListener MyListener = null;
-                   cardProduct.setDat(cardListDataProduits.get(q) , MyListener);
-                   if ( column ==3)
-                   {
-                       column =0;
-                       row += 1;
-                   }
-              menuP_gridpane.add(pane, column++,row);
-                   GridPane.setMargin(pane, new Insets(10));
+            try {
+                FXMLLoader load = new FXMLLoader();
+                load.setLocation(getClass().getResource("cardProduct.fxml"));
+                AnchorPane pane = load.load();
+                CardProduct cardProduct = load.getController();
+                MyListener MyListener = null;
+                cardProduct.setDat(cardListDataProduits.get(q) , MyListener);
+                CardProduct controller = load.getController();
+                controller.setUser(currentUser);
+
+                if ( column ==3)
+                {
+                    column =0;
+                    row += 1;
+                }
+                menuP_gridpane.add(pane, column++,row);
+                GridPane.setMargin(pane, new Insets(10));
 
 
-               } catch (Exception e)
-               {
-                   e.printStackTrace();
-               }
+            } catch (Exception e)
+            {
+                e.printStackTrace();
+            }
         }
     }
 
-/******************************************************************/
+    /******************************************************************/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Methode initaliaze est appelle ! ");
@@ -245,18 +220,24 @@ public ObservableList<Produit> getProductList() {
         ComBoxCategorie.setOnAction((ActionEvent event) -> { mf.ReturnNewSelectedCategory();
 
         });
+
         AfficherProduitsClients();
     }
-    /*************************************************/
-    public int userID(User user) {
-        currentUser = user;
-        return currentUser.getId_user();
-    }
-    /************************************************/
-    public void setUser(User user) {
-        currentUser = user;
+    /***********************************/
+
+
+    public void setUser(User user)
+    {
+        currentUser =user;
         LabelUser.setText(currentUser.getNomuser()+" "+currentUser.getPrenomuser());
+        System.out.println("nomcurrentUser"+currentUser.getId_user());
+        AfficherProduitsClients();
     }
+
+    /**********Bouton Reclamation**************/
+
+
+
     /*public ObservableList<Produit> getProductsList() {
 
         ObservableList<Produit> ListProducts = FXCollections.observableArrayList();

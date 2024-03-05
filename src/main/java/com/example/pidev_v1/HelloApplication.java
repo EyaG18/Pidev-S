@@ -29,6 +29,7 @@ public class HelloApplication extends Application {
        //FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("FeedProduitsCoteClients.fxml"));
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("authentification.fxml"));
         //FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("dashboardAdminFormUser.fxml"));
+        //FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("WelcomeBack.fxml"));
         Scene scene = new Scene(fxmlLoader.<Parent>load(), 1056, 785);
         stage.setTitle("Arya :Store Management Tool :Authentification");
         stage.setScene(scene);

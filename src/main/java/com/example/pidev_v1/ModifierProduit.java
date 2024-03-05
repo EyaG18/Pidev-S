@@ -78,7 +78,7 @@ public class ModifierProduit implements Initializable {
 
     }
 
-Produit produit ;
+    Produit produit ;
     ProduitService ps = new ProduitService();
     CategorieService cs = new CategorieService();
 
@@ -101,7 +101,7 @@ Produit produit ;
 
     }
 /**************************************************************************************/
-/**************************************************************/
+    /**************************************************************/
     public void DisplayProductsInComboBox()
     {
         MyDataBase ct = new MyDataBase();
@@ -131,24 +131,24 @@ Produit produit ;
             System.out.println("Produit non trouvé.");
         }*/
     }
-/***************************************************************/
-public Produit ReturnProduitAfterChoosingItFromComboBox() {
-    String SelectedProductName = CamboNomProduit.getValue(); // Récupérer le nom du produit sélectionné
-    if (SelectedProductName != null) { // Vérifier si un produit est sélectionné
-        Produit produit = ps.GetProductByName(SelectedProductName); // Obtenir le produit à partir de son nom
-        if (produit != null) {
-            System.out.println("Produit trouvé : " + produit);
-            return produit;
+    /***************************************************************/
+    public Produit ReturnProduitAfterChoosingItFromComboBox() {
+        String SelectedProductName = CamboNomProduit.getValue(); // Récupérer le nom du produit sélectionné
+        if (SelectedProductName != null) { // Vérifier si un produit est sélectionné
+            Produit produit = ps.GetProductByName(SelectedProductName); // Obtenir le produit à partir de son nom
+            if (produit != null) {
+                System.out.println("Produit trouvé : " + produit);
+                return produit;
+            } else {
+                System.out.println("Produit non trouvé.");
+                return null;
+            }
         } else {
-            System.out.println("Produit non trouvé.");
+            System.out.println("Aucun produit sélectionné.");
             return null;
         }
-    } else {
-        System.out.println("Aucun produit sélectionné.");
-        return null;
     }
-}
-/************************************************************/
+    /************************************************************/
     public Produit ReturnProduitAfterChoosingItFromComboBox1() {
         System.out.println("Méthode ReturnProduitAfterChoosingItFromComboBox appelée");
 
@@ -173,22 +173,22 @@ public Produit ReturnProduitAfterChoosingItFromComboBox() {
     {
         System.out.println("Bonjour , Fonction ReturnNewSelectedCategory");
         String selectedCategoryNme = ComboCategorieProduitUpdate.getValue(); // Récupérer le nom du produit sélectionné
-if (selectedCategoryNme != null)
-{
-    Catégorie cat = cs.getCategoryBName(selectedCategoryNme);
-    System.out.println("La catégorie est :" + cat);
-    if (cat != null) {
-        showAlert(Alert.AlertType.INFORMATION, "catégorie trouvé", "Le catégorie a été trouvé : " );
-        return cat;
-    } else {
-        showAlert(Alert.AlertType.WARNING, "catégorie non trouvé", "Aucun catégorie correspondant trouvé.");
-        return null;
-    }
+        if (selectedCategoryNme != null)
+        {
+            Catégorie cat = cs.getCategoryBName(selectedCategoryNme);
+            System.out.println("La catégorie est :" + cat);
+            if (cat != null) {
+                showAlert(Alert.AlertType.INFORMATION, "catégorie trouvé", "Le catégorie a été trouvé : " );
+                return cat;
+            } else {
+                showAlert(Alert.AlertType.WARNING, "catégorie non trouvé", "Aucun catégorie correspondant trouvé.");
+                return null;
+            }
 
-    } else {
-        showAlert(Alert.AlertType.WARNING, "Aucune catégorie sélectionné", "Veuillez sélectionner une catégorie.");
-        return null;
-    }
+        } else {
+            showAlert(Alert.AlertType.WARNING, "Aucune catégorie sélectionné", "Veuillez sélectionner une catégorie.");
+            return null;
+        }
     }
 
     private void showAlert(Alert.AlertType alertType, String title, String content) {
@@ -198,7 +198,7 @@ if (selectedCategoryNme != null)
         alert.setContentText(content);
         alert.showAndWait();
     }
-/*fonction pour charger image*/
+    /*fonction pour charger image*/
     @FXML
     void SelectImageProdUpdate(MouseEvent event) {
         FileChooser fileChooser = new FileChooser();
@@ -211,39 +211,39 @@ if (selectedCategoryNme != null)
             productImageFieldUpdate.setText(((File) selectedFile).getAbsolutePath());
         }
     }
-  /**fonction pour recuperer les noms  categorie selon id + Affichage combo Box*****************************************/
+    /**fonction pour recuperer les noms  categorie selon id + Affichage combo Box*****************************************/
 
-  public void DisplayCategoriesInComboBox()
-  {
-      MyDataBase ct = new MyDataBase();
-      Connection cnx = ct.getCnx();
-      String queryCategory = "SELECT NomCatégorie FROM catégorie";
-      try {
-          Statement statement = cnx.createStatement();
-          ResultSet QueryOutput = statement.executeQuery(queryCategory);
+    public void DisplayCategoriesInComboBox()
+    {
+        MyDataBase ct = new MyDataBase();
+        Connection cnx = ct.getCnx();
+        String queryCategory = "SELECT NomCatégorie FROM catégorie";
+        try {
+            Statement statement = cnx.createStatement();
+            ResultSet QueryOutput = statement.executeQuery(queryCategory);
 
-          // Clear ComboBox before adding new items
-          ComboCategorieProduitUpdate.getItems().clear();
+            // Clear ComboBox before adding new items
+            ComboCategorieProduitUpdate.getItems().clear();
 
-          while (QueryOutput.next()) {
-              String queryCategoryName1 = QueryOutput.getString("NomCatégorie");
-              // Add category name to ComboBox
-              ComboCategorieProduitUpdate.getItems().add(queryCategoryName1);
-          }
-      } catch (SQLException e) {
-          e.printStackTrace();
-      }
-  }
-/*****Fonction Initialize*************/
+            while (QueryOutput.next()) {
+                String queryCategoryName1 = QueryOutput.getString("NomCatégorie");
+                // Add category name to ComboBox
+                ComboCategorieProduitUpdate.getItems().add(queryCategoryName1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    /*****Fonction Initialize*************/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         DisplayCategoriesInComboBox();
         DisplayProductsInComboBox();
         CamboNomProduit.setOnAction ((ActionEvent event) -> {
             ReturnProduitAfterChoosingItFromComboBox(); } ) ;
-    ComboCategorieProduitUpdate.setOnAction((ActionEvent event)-> {
-        ReturnNewSelectedCategory();
-    }); }
+        ComboCategorieProduitUpdate.setOnAction((ActionEvent event)-> {
+            ReturnNewSelectedCategory();
+        }); }
 
 
 }

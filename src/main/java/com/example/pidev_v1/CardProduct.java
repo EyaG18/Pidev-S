@@ -1,28 +1,32 @@
 package com.example.pidev_v1;
 
+import com.example.pidev_v1.entities.Avis;
 import com.example.pidev_v1.entities.Produit;
 import com.example.pidev_v1.entities.User;
 import com.example.pidev_v1.services.MyListener;
-import com.example.pidev_v1.tools.MyDataBase;
+import com.example.pidev_v1.services.ProduitService;
+import com.example.pidev_v1.services.ServiceAvis;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
-
-import static com.example.pidev_v1.tools.MyDataBase.user;
 
 public class CardProduct implements Initializable {
 
@@ -44,143 +48,164 @@ public class CardProduct implements Initializable {
     @FXML
     private Spinner<Integer> prod_spinner;
 
+    @FXML
+    private ImageView etoileC1;
+
+    @FXML
+    private ImageView etoileC2;
+
+    @FXML
+    private ImageView etoileC3;
+
+    @FXML
+    private ImageView etoileC4;
+
+    @FXML
+    private ImageView etoileC5;
+
     private SpinnerValueFactory<Integer> spin;
 
     private Produit produit;
-    private Image image;
+    private Image image ;
 
     private int prodID;
     private String prod_image;
     private float price;
 
     private int ProdID;
+
     private Connection connect;
     private PreparedStatement prepare;
     private ResultSet result;
 
     private Alert alert;
 
+    ServiceAvis sa=new ServiceAvis();
+    @FXML
+    private TextField commentaireTF;
+
     private int qty;
-    private double totalP;
+    private double totalP ;
     private double pr;
-
     private MyListener myListener;
-    User user;
-    User currentUser=new User();
 
-    public void setCurrentUser(User user) {
-     currentUser = user;
+    private User currentUser;
+
+
+    public void setUser(User user)
+    {
+        currentUser =user;
+
+        System.out.println("nomcurrentUser5555555/***/"+currentUser.getId_user());
+
     }
 
-    public void setDat(Produit produit, MyListener myListener) throws FileNotFoundException {
-        prodID = produit.getId_Produit();
+    public void setDat(Produit produit , MyListener myListener) throws FileNotFoundException {
+        prodID=produit.getId_Produit();
         this.produit = produit;
-        this.myListener = myListener;
+        this.myListener=myListener;
         InputStream imageStream = new FileInputStream(produit.getImageP());
         Image image = new Image(imageStream);
         ImageView imageView = new ImageView(image);
         prod_imageView.setImage(imageView.snapshot(null, null));
         prod_name.setText(produit.getNomP());
-        prod_price.setText(String.valueOf(produit.getPrixP()) + "DT");
+        prod_price.setText( String.valueOf(produit.getPrixP()) + "DT");
     }
-
     public void setQuantity() {
         spin = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100, 0);
         prod_spinner.setValueFactory(spin);
     }
-
     @FXML
     void addBtnP(ActionEvent event) {
-       /* FeedProduitsCoteClientsController feedProduitsCoteClientsController = new FeedProduitsCoteClientsController();
-        int Ident_User;
-        Ident_User = feedProduitsCoteClientsController.userID(user);*/
-        int Ident_User = currentUser.getId_user();
-
-        qty = prod_spinner.getValue();
-        System.out.println("valeur choisie est :" + qty);
-        System.out.println("Le identifiant du user actuel est : "+ Ident_User);
-
-        connect = MyDataBase.getInstance().getCnx();
-        try {
-            int currentStock = 0;
-            int stockThreshold =0;
-            // Récupération de la quantité en stock (QteP) et de la quantité seuil (QteSeuilP) pour le produit spécifié (prodID)
-            String stockQuery = "SELECT QteP, QteSeuilP FROM produit WHERE Id_Produit = ?";
-            prepare = connect.prepareStatement(stockQuery);
-            prepare.setInt(1,prodID);
-            result = prepare.executeQuery();
-            if (result.next()) {
-                currentStock = result.getInt("QteP");
-                stockThreshold = result.getInt("QteSeuilP");
-            }
-            if ((currentStock <= stockThreshold)) {
-                System.out.println(currentStock);
-                alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Une Erreur est Survenue ! ");
-                alert.setHeaderText(null);
-                alert.setContentText("Veuillez Réessayez Plus Tard ! ");
-                alert.showAndWait();
-            } else if (currentStock < qty)
-                {
-                    alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error Message");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Desolée ! Ce Produit est pour le moment en rupture de Stock");
-                    alert.showAndWait();
-                }
-            else {
-                String InsertData = " INSERT INTO panier "
-                        +"(id_user,Id_Produit,QuantiteParProduit)"
-                        +"VALUES(?,?,?)";
-
-                prepare = connect.prepareStatement(InsertData);
-                prepare.setInt(1,Ident_User);
-                prepare.setInt(2,prodID);
-                prepare.setInt(3,qty);
-
-                totalP = (qty * produit.getPrixP());
-                System.out.println("Le le total du panier avec le produit "+ prodID + "est : "+totalP + " du client "+ Ident_User);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-
-
-        }
 
     }
-/********************Yasmine******************/
-        @FXML
-        void commenter (ActionEvent event){
-
-        }
-
-        @FXML
-        void noteA (ActionEvent event){
-
-        }
-
-        @FXML
-        void noteB (ActionEvent event){
-
-        }
-
-        @FXML
-        void noteC (ActionEvent event){
-
-        }
-
-        @FXML
-        void noteD (ActionEvent event){
-
-        }
-
-        @FXML
-        void noteE (ActionEvent event){
-
-        }
-        @Override
-        public void initialize (URL url, ResourceBundle resourceBundle){
-            setQuantity();
-        }
+    /********************Yasmine******************/
+    @FXML
+    void commenter(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("AfficherCommentaire.fxml"));
+        Parent root = loader.load();
+        Stage stage = new Stage();
+        stage.setTitle("Ajout Réponse");
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+    int i;
+    @FXML
+    void noteA(ActionEvent event) {
+        etoileC1.setVisible(true);
+        etoileC2.setVisible(false);
+        etoileC3.setVisible(false);
+        etoileC4.setVisible(false);
+        etoileC5.setVisible(false);
+        i=1;
     }
 
+    @FXML
+    void noteB(ActionEvent event) {
+        etoileC1.setVisible(true);
+        etoileC2.setVisible(true);
+        etoileC3.setVisible(false);
+        etoileC4.setVisible(false);
+        etoileC5.setVisible(false);
+        i=2;
+    }
+    @FXML
+    void noteC(ActionEvent event) {
+        etoileC1.setVisible(true);
+        etoileC2.setVisible(true);
+        etoileC3.setVisible(true);
+        etoileC4.setVisible(false);
+        etoileC5.setVisible(false);
+        i=3;
+
+    }
+
+    @FXML
+    void noteD(ActionEvent event) {
+        etoileC1.setVisible(true);
+        etoileC2.setVisible(true);
+        etoileC3.setVisible(true);
+        etoileC4.setVisible(true);
+        etoileC5.setVisible(false);
+        i=4;
+
+    }
+
+    @FXML
+    void noteE(ActionEvent event) {
+        etoileC1.setVisible(true);
+        etoileC2.setVisible(true);
+        etoileC3.setVisible(true);
+        etoileC4.setVisible(true);
+        etoileC5.setVisible(true);
+        i=5;
+
+    }
+    /*public int getIDUser(User user)
+    {
+        currentUser =user;
+
+        System.out.println("IDcurrentUser"+currentUser.getId_user());
+        return currentUser.getId_user();
+
+    }*/
+
+    @FXML
+    void ajouterAvis(ActionEvent event) {
+        System.out.println("note"+i);
+        int idp=sa.repurerID_produit(prod_name.getText());
+        int idc= currentUser.getId_user();
+        String com=commentaireTF.getText();
+        sa.add(new Avis(idc,idp,com,i));
+
+    }
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        setQuantity();
+
+    }
+
+
+}

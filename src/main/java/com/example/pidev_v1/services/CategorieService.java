@@ -21,7 +21,7 @@ public class CategorieService implements ICategorie{
     public CategorieService() {
         cnx = connect.getCnx();
     }
-/**************************************************************/
+    /**************************************************************/
     @Override
     public void addCategory(Catégorie categorie) {
         String sql = "INSERT INTO catégorie (Id_Catégorie, NomCatégorie) VALUES ('" + categorie.getId_CatégorieC() + "', '" + categorie.getNomCatégorie() + "')";
@@ -63,7 +63,7 @@ public class CategorieService implements ICategorie{
     public void SearchCategoryByName(String namec) {
 
     }
-/********************************************************************************/
+    /********************************************************************************/
     @Override
     public Catégorie GetCategoryById(int idC) {
         String query = "SELECT NomCategorie FROM Catégorie WHERE Id_Categorie = ?";
@@ -81,7 +81,7 @@ public class CategorieService implements ICategorie{
         }
         return null; // Si la catégorie n'est pas trouvée, retourner null
     }
-/******************************************************************************/
+    /******************************************************************************/
     @Override
     public void DeleteCategory(int idC) {
         String sql = "DELETE FROM catégorie WHERE Id_Catégorie = ?";
@@ -96,7 +96,7 @@ public class CategorieService implements ICategorie{
 
         }
     }
-/******************************************************/
+    /******************************************************/
     @Override
     public ObservableList<Catégorie> DisplayCategories() {
 
@@ -220,7 +220,7 @@ public class CategorieService implements ICategorie{
         }
         return catName;
     }
-//////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////
     @Override
     public Catégorie getCategoryById(int categoryId) {
         Connection conn = null;
@@ -318,7 +318,7 @@ public class CategorieService implements ICategorie{
             while (rs.next()) {
                 int idCategorie = rs.getInt("Id_Catégorie");
                 String nomProduit = rs.getString("NomCatégorie");
-Catégorie cat = new Catégorie(idCategorie,nomProduit);
+                Catégorie cat = new Catégorie(idCategorie,nomProduit);
 
                 ListCat.add(cat);
             }
@@ -339,9 +339,3 @@ Catégorie cat = new Catégorie(idCategorie,nomProduit);
 
 
 }
-
-
-
-
-
-

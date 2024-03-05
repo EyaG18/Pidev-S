@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -40,6 +41,11 @@ public class ItemProduct {
         ImgProduct.setImage(imageView.snapshot(null, null));
         NameProductItemLabel.setText(produit.getNomP());
         PriceProductItem.setText(String.valueOf(produit.getPrixP()));
+    }
+
+    @FXML
+    void btnAjouterauPanier(MouseEvent event) {
+
     }
 
 

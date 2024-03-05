@@ -17,14 +17,14 @@
          <children>
             <BorderPane prefHeight="200.0" prefWidth="200.0">
                <left>
-                  <VBox prefHeight="647.0" prefWidth="191.0" styleClass="transparent" stylesheets="@../../../../java/com/example/pidev_v1/CSS/Style.css" BorderPane.alignment="CENTER">
+                  <VBox prefHeight="647.0" prefWidth="191.0" styleClass="transparent" stylesheets="@test.css" BorderPane.alignment="CENTER">
                      <children>
                         <HBox prefHeight="34.0" prefWidth="191.0" />
                      </children>
                   </VBox>
                </left>
                <top>
-                  <HBox prefHeight="176.0" prefWidth="746.0" style="-fx-background-color: #F7F09B;" styleClass="white-background" stylesheets="@../../../../java/com/example/pidev_v1/CSS/Style.css" BorderPane.alignment="CENTER">
+                  <HBox prefHeight="176.0" prefWidth="746.0" style="-fx-background-color: #F7F09B;" styleClass="white-background" stylesheets="@test.css" BorderPane.alignment="CENTER">
                      <children>
                         <ImageView fitHeight="183.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -39,9 +39,9 @@
                   <ScrollPane fx:id="scrollPaneProduct" prefHeight="371.0" prefWidth="651.0" BorderPane.alignment="CENTER">
                      <content>
                         <GridPane fx:id="GridDisplayProducts" prefHeight="0.0" prefWidth="14.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
                         </GridPane>
                      </content>
                   </ScrollPane>

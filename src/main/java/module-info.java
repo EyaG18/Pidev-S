@@ -7,6 +7,12 @@ module com.example.pidev_v {
     requires javafx.web;
     requires org.json;
     requires java.mail;
+    requires com.google.zxing;
+    requires com.google.zxing.javase;
+    requires infobip.api.java.client;
+   // requires jakarta.mail;
+    requires okhttp3;
+    requires com.jfoenix;
     opens com.example.pidev_v1.entities to javafx.base;
 
     opens com.example.pidev_v1 to javafx.fxml;

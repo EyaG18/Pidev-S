@@ -50,7 +50,7 @@ public class DetailsCategorie implements Initializable {
 
     User user = new User();
 
-   @FXML
+    @FXML
     public TableColumn<Catégorie, Integer> ColumnIdCategory;
 
     @FXML
@@ -69,11 +69,11 @@ public class DetailsCategorie implements Initializable {
 
     @FXML
     void GetSelectedCategory(MouseEvent event) {
-          indexCat = TableViewCategory.getSelectionModel().getSelectedItem().getId_CatégorieC();
+        indexCat = TableViewCategory.getSelectionModel().getSelectedItem().getId_CatégorieC();
 
-          if (indexCat <= -1)
-          { return; }
-          CategoryFieldText.setText(ColumnNameCategory.getCellData(indexCat).toString());
+        if (indexCat <= -1)
+        { return; }
+        CategoryFieldText.setText(ColumnNameCategory.getCellData(indexCat).toString());
     }
 
 
@@ -106,7 +106,7 @@ public class DetailsCategorie implements Initializable {
             alert.setTitle("Succès !");
             alert.setContentText("Catégorie ajoutée avec succès !");
             alert.showAndWait();
-           //DisplayCategoriesScene();
+            //DisplayCategoriesScene();
             showCategories();
             // Effacer le champ de texte après l'ajout
             CategoryFieldText.clear();
@@ -118,7 +118,7 @@ public class DetailsCategorie implements Initializable {
         }
     }
 
-/******************Btn supprimer Category***********************************/
+    /******************Btn supprimer Category***********************************/
     @FXML
     void BtnDeleteCat(ActionEvent event) {
         try {
@@ -258,8 +258,8 @@ public class DetailsCategorie implements Initializable {
                 ListCategoryObservable.add(new Catégorie(queryCategoryId, queryCategoryName));
             }
             // Configuration de la colonne pour afficher l'ID de la catégorie
-           TableColumn<Catégorie, Integer> ColumnIdCategory = new TableColumn<>("ID");
-          //  ColumnIdCategory.setCellValueFactory(new PropertyValueFactory<>("id_Catégorie"));
+            TableColumn<Catégorie, Integer> ColumnIdCategory = new TableColumn<>("ID");
+            //  ColumnIdCategory.setCellValueFactory(new PropertyValueFactory<>("id_Catégorie"));
             // Configuration de la colonne pour afficher le nom de la catégorie
             ColumnNameCategory.setCellValueFactory(new PropertyValueFactory<Catégorie, String>("NomCatégorie"));
             // Définir les éléments dans le TableView
@@ -268,7 +268,7 @@ public class DetailsCategorie implements Initializable {
             e.printStackTrace();
         }
     }
-/*********************************************************************/
+    /*********************************************************************/
     public void showCategories() {
         ObservableList<Catégorie> listCategories = getCategoryList();
 
@@ -300,41 +300,41 @@ public class DetailsCategorie implements Initializable {
         }
         return ListCategory;
     }
-/*********************************************************************/
-void DisplayCategoriesSorted()
-{
+    /*********************************************************************/
+    void DisplayCategoriesSorted()
+    {
 
-    ObservableList<Catégorie> listCategories = getCategoryList();
-    ColumnNameCategory.setCellValueFactory(new PropertyValueFactory<>("NomCatégorie"));
-    TableViewCategory.setItems(listCategories);
+        ObservableList<Catégorie> listCategories = getCategoryList();
+        ColumnNameCategory.setCellValueFactory(new PropertyValueFactory<>("NomCatégorie"));
+        TableViewCategory.setItems(listCategories);
 
-    FilteredList<Catégorie> catégorieFilteredList = new FilteredList<>(listCategories,b->true);
-    KeywordsTextLabel.textProperty().addListener((observableValue, oldValue, newValue) ->
-            {
-                catégorieFilteredList.setPredicate(Catégorie -> {
-                    // if no search value then display all data with no changes
-                    if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
-                        return true;
-                    }
-                    String searchKeyWordsCategory = newValue.toLowerCase();
-                    if (Catégorie.getNomCatégorie().toLowerCase().indexOf(searchKeyWordsCategory) > -1) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                });
+        FilteredList<Catégorie> catégorieFilteredList = new FilteredList<>(listCategories,b->true);
+        KeywordsTextLabel.textProperty().addListener((observableValue, oldValue, newValue) ->
+        {
+            catégorieFilteredList.setPredicate(Catégorie -> {
+                // if no search value then display all data with no changes
+                if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
+                    return true;
+                }
+                String searchKeyWordsCategory = newValue.toLowerCase();
+                if (Catégorie.getNomCatégorie().toLowerCase().indexOf(searchKeyWordsCategory) > -1) {
+                    return true;
+                } else {
+                    return false;
+                }
             });
-    SortedList<Catégorie> SortedCategoryList = new SortedList<>(catégorieFilteredList);
-    // Bind sorted result with table view
-    SortedCategoryList.comparatorProperty().bind(TableViewCategory.comparatorProperty());
-    TableViewCategory.setItems(SortedCategoryList);
-}
+        });
+        SortedList<Catégorie> SortedCategoryList = new SortedList<>(catégorieFilteredList);
+        // Bind sorted result with table view
+        SortedCategoryList.comparatorProperty().bind(TableViewCategory.comparatorProperty());
+        TableViewCategory.setItems(SortedCategoryList);
+    }
 
-/*************************************************/
-@FXML
-void GoToProducts(MouseEvent event) {
-NavigationControler.OpenAffichageProduitsBack(event,"AfficherProduitBack.fxml");
-}
+    /*************************************************/
+    @FXML
+    void GoToProducts(MouseEvent event) {
+        NavigationControler.OpenAffichageProduitsBack(event,"AfficherProduitBack.fxml");
+    }
 
 
 

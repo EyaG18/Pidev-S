@@ -1,87 +1,115 @@
 package com.example.pidev_v1.services;
 
+
+
 import com.example.pidev_v1.entities.Reclamation;
 import com.example.pidev_v1.tools.MyDataBase;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ReclamationService implements Services <Reclamation>  {
+public class ReclamationService implements Services <Reclamation> {
 
-    Connection cnx= null;
-    Statement statement= null;
-    PreparedStatement ste;
-    MyDataBase connect = new MyDataBase();
-    public ReclamationService() {
-        Connection cnx= null;
-        Statement statement= null;
-        PreparedStatement ste;
-        MyDataBase connect = new MyDataBase();
+    private Connection conn;
+    private Statement ste;
+    private PreparedStatement pst;
+    public ReclamationService(){conn= MyDataBase.getInstance().getCnx();}
 
 
-    }
 
-    @Override
-    public void add(Reclamation reclamation) {
-        String requete="INSERT into reclamation (id_client,description,statu_reclamation,type_reclamation) VALUES(?,?,?,?)";
+    public void add(Reclamation R)
+    {
+        String requete="INSERT into reclamation (id_client,description,type_reclamation) VALUES(?,?,?)";
 
         try {
-            ste= cnx.prepareStatement(requete);
-            ste.setInt(1,reclamation.getID_client());
-            ste.setString(2,reclamation.getDescription());
-            ste.setString(3, reclamation.getStatu_reclamation());
-            ste.setString(4,reclamation.getType_reclamation());
-            ste.executeUpdate();
+            pst=conn.prepareStatement(requete);
+            pst.setInt(1,R.getID_client());
+            pst.setString(2,R.getDescription());
+            pst.setString(3,R.getType_reclamation());
+            pst.executeUpdate();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    @Override
-    public void update(Reclamation reclamation) {
-        String requete="UPDATE reclamation SET description=?,statu_reclamation=?,type_reclamation=? where id_reclamation=?";
-        try {
-            ste=cnx.prepareStatement(requete);
-            ste.setString(1,reclamation.getDescription());
-            ste.setString(2,reclamation.getStatu_reclamation());
-            ste.setString(3,reclamation.getType_reclamation());
-            ste.setInt(4,reclamation.getID_reclamation());
-            ste.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public void delete(Reclamation reclamation) {
+    public void delete(Reclamation R)
+    {
         String requete="DELETE FROM reclamation where id_reclamation=?";
         try {
-            ste=cnx.prepareStatement(requete);
-            ste.setInt(1,reclamation.getID_reclamation());
-            ste.executeUpdate();
+            pst=conn.prepareStatement(requete);
+            pst.setInt(1,R.getID_reclamation());
+            pst.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-    public void updatepersonalise(Reclamation R){
+
+    public void update(Reclamation R)
+    {
         String requete="UPDATE reclamation SET statu_reclamation='traité' where id_reclamation=?";
         try {
-            ste=cnx.prepareStatement(requete);
-            ste.setInt(1,R.getID_reclamation());
-            ste.executeUpdate();
+            pst=conn.prepareStatement(requete);
+            pst.setInt(1,R.getID_reclamation());
+            pst.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
-    @Override
-    public Reclamation readById(int id) {
+
+    // @Override
+
+    public ObservableList<Reclamation> readAll() {
+
+        ObservableList<Reclamation> list = FXCollections.observableArrayList();
+
+
+
+        String requete1="SELECT user.nomuser, description, date_reclamation, statu_reclamation, type_reclamation FROM reclamation JOIN user ON reclamation.id_client = user.id_user";
+        //List<Reclamation> list =new ArrayList<>();
+        try {
+            ste=conn.createStatement();
+            ResultSet rs= ste.executeQuery(requete1);
+            while(rs.next()){
+                list.add(new Reclamation(rs.getString("nomuser"),
+                        rs.getString("description"),rs.getDate("date_reclamation"),
+                        rs.getString("statu_reclamation"),rs.getString("type_reclamation")));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return list;
+    }
+    public ObservableList<Reclamation> readAll(int id) {
+
+        ObservableList<Reclamation> list = FXCollections.observableArrayList();
+
+
+
+        String requete1="SELECT user.nomuser, description, date_reclamation, statu_reclamation, type_reclamation FROM reclamation JOIN user ON reclamation.id_client = user.id_user where id_client='"+id+"'";
+        //List<Reclamation> list =new ArrayList<>();
+        try {
+            ste=conn.createStatement();
+            ResultSet rs= ste.executeQuery(requete1);
+            while(rs.next()){
+                list.add(new Reclamation(rs.getString("nomuser"),
+                        rs.getString("description"),rs.getDate("date_reclamation"),
+                        rs.getString("statu_reclamation"),rs.getString("type_reclamation")));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return list;
+    }
+    public Reclamation readById(int id)
+    {
         String requete="SELECT user.nomuser, description, date_reclamation, statu_reclamation, type_reclamation FROM reclamation JOIN user ON reclamation.id_client = user.id_user WHERE id_reclamation='"+id+"'";
         Reclamation rec=null;
         try {
-            ste= cnx.prepareStatement(requete);
+            ste= conn.createStatement();
             ResultSet rs= ste.executeQuery(requete);
 
             if(rs.next())
@@ -96,19 +124,16 @@ public class ReclamationService implements Services <Reclamation>  {
         return rec;
     }
 
-
-    @Override
-
-    public ObservableList<Reclamation> readAll() {
+    public ObservableList<Reclamation> readAlltraite(int id) {
 
         ObservableList<Reclamation> list = FXCollections.observableArrayList();
 
 
 
-        String requete1="SELECT user.nomuser, description, date_reclamation, statu_reclamation, type_reclamation FROM reclamation JOIN user ON reclamation.id_client = user.id_user";
+        String requete1="SELECT user.nomuser, description, date_reclamation, statu_reclamation, type_reclamation FROM reclamation JOIN user ON reclamation.id_client = user.id_user where id_client='"+id+"' AND statu_reclamation='traité'" ;
         //List<Reclamation> list =new ArrayList<>();
         try {
-            ste= (PreparedStatement) cnx.createStatement();
+            ste=conn.createStatement();
             ResultSet rs= ste.executeQuery(requete1);
             while(rs.next()){
                 list.add(new Reclamation(rs.getString("nomuser"),
@@ -121,11 +146,58 @@ public class ReclamationService implements Services <Reclamation>  {
         return list;
     }
 
+    public ObservableList<Reclamation> readAllNontraite(int id) {
+
+        ObservableList<Reclamation> list = FXCollections.observableArrayList();
 
 
 
+        String requete1="SELECT user.nomuser, description, date_reclamation, statu_reclamation, type_reclamation FROM reclamation JOIN user ON reclamation.id_client = user.id_user where id_client='"+id+"' AND statu_reclamation='en attente'" ;
+        //List<Reclamation> list =new ArrayList<>();
+        try {
+            ste=conn.createStatement();
+            ResultSet rs= ste.executeQuery(requete1);
+            while(rs.next()){
+                list.add(new Reclamation(rs.getString("nomuser"),
+                        rs.getString("description"),rs.getDate("date_reclamation"),
+                        rs.getString("statu_reclamation"),rs.getString("type_reclamation")));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return list;
+    }
+    public int CountType(String type) {
+        String requete = "SELECT COUNT(type_reclamation) FROM reclamation WHERE type_reclamation = ?";
+        int nbtype = 0;
+        try {
+            PreparedStatement ps = conn.prepareStatement(requete);
+            ps.setString(1, type);
+            ResultSet rs = ps.executeQuery();
 
+            if (rs.next()) {
+                nbtype = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return nbtype;
+    }
+    public int Count() {
+        String requete = "SELECT COUNT(id_reclamation) FROM reclamation WHERE statu_reclamation=?";
+        int nb= 0;
+        try {
+            PreparedStatement ps = conn.prepareStatement(requete);
+            ps.setString(1, "traité");
+            ResultSet rs = ps.executeQuery();
 
-
+            if (rs.next()) {
+                nb = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return nb;
+    }
 
 }

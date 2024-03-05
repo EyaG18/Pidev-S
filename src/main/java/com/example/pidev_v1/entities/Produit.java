@@ -2,15 +2,15 @@ package com.example.pidev_v1.entities;
 
 public class Produit {
 
-private  int Id_Produit;
-private int Id_Catégorie;
-private String NomP;
-private float PrixP ;
-private int QteP ;
-private int QteSeuilP ;
-private String ImageP;
+    private  int Id_Produit;
+    private int Id_Catégorie;
+    private String NomP;
+    private float PrixP ;
+    private int QteP ;
+    private int QteSeuilP ;
+    private String ImageP;
 
-private String NomCatégorie;
+    private String NomCatégorie;
 
     public Produit( String nomP, float prixP, int qteP, int qteSeuilP, String imageP,String nomCategorie) {
 
@@ -61,7 +61,7 @@ private String NomCatégorie;
     public Produit(int id_Produit, int id_Catégorie, String nomP, float prixP, int qteP, int qteSeuilP, String imageP) {
         Id_Produit = id_Produit;
         Id_Catégorie = id_Catégorie;
-       // this.Id_Catégorie= catégorieP.getId_CatégorieC();
+        // this.Id_Catégorie= catégorieP.getId_CatégorieC();
         NomP = nomP;
         PrixP = prixP;
         QteP = qteP;
@@ -95,7 +95,7 @@ private String NomCatégorie;
     public void setId_Catégorie(int id_Catégorie) {
         //catégorieP.getId_CatégorieC()=id_Catégorie;
 
-         Id_Catégorie = id_Catégorie;
+        Id_Catégorie = id_Catégorie;
     }
 
     public Produit(String nomP) {

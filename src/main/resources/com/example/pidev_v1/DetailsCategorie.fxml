@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -31,7 +29,7 @@
       </Text>
       <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="845.0" layoutY="293.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../MediaEya/icons8-add-64%20(2).png" />
+            <Image url="@../../../assets/icons8-add-64%20(2).png" />
          </image>
       </ImageView>
       <ImageView fitHeight="25.0" fitWidth="31.0" layoutX="845.0" layoutY="338.0" pickOnBounds="true" preserveRatio="true">
@@ -49,56 +47,20 @@
             <Image url="@../../../MediaEya/icons8-refresh-64.png" />
          </image>
       </ImageView>
-      <AnchorPane prefHeight="700.0" prefWidth="265.0" style="-fx-background-color: #C6E6FB;">
-         <children>
-            <ImageView fitHeight="33.0" fitWidth="131.0" layoutX="75.0" layoutY="616.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../../../../../../../xampp/htdocs/logout.png" />
-               </image>
-            </ImageView>
-            <Button layoutX="30.0" layoutY="200.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="199.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Utilisateurs" />
-            <Button layoutX="31.0" layoutY="257.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="199.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Commandes et Livraisons" />
-            <Button fx:id="BtnProduits" layoutX="31.0" layoutY="317.0" mnemonicParsing="false" onMouseClicked="#GoToProducts" prefHeight="33.0" prefWidth="199.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Produits" />
-            <Button layoutX="31.0" layoutY="381.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="199.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Relations Clients" />
-            <Button layoutX="30.0" layoutY="442.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="199.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Fournisseurs &amp; Appels d'offres" />
-            <ImageView fitHeight="142.0" fitWidth="170.0" layoutX="45.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../../../../../../../xampp/htdocs/Logo.png" />
-               </image>
-            </ImageView>
-            <Button layoutX="29.0" layoutY="500.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="199.0" style="-fx-border-radius: 5px; -fx-border-color: #5BAADE;" text="Catégories de Produits" />
-         </children>
-      </AnchorPane>
       <AnchorPane fx:id="filter" layoutX="266.0" prefHeight="175.0" prefWidth="760.0">
          <children>
-            <Separator layoutX="37.0" layoutY="116.0" prefHeight="4.0" prefWidth="718.0" style="-fx-background-color: #C6E6FB;" />
-            <AnchorPane fx:id="profil" layoutX="591.0" layoutY="3.0" prefHeight="114.0" prefWidth="168.0">
-               <children>
-                  <ImageView fitHeight="50.0" fitWidth="54.0" layoutX="71.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../../../../../../../../xampp/htdocs/user.png" />
-                     </image>
-                  </ImageView>
-                  <Label fx:id="NomUserSession" layoutX="49.0" layoutY="81.0" prefHeight="18.0" prefWidth="94.0" text="Eya Gadhoumi">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Label>
-                  <Separator layoutX="28.0" orientation="VERTICAL" prefHeight="115.0" prefWidth="6.0" style="-fx-background-color: #C6E6FB;" />
-               </children>
-            </AnchorPane>
             <TextField fx:id="KeywordsTextLabel" layoutX="176.0" layoutY="64.0" prefHeight="26.0" prefWidth="402.0" />
             <ImageView fitHeight="33.0" fitWidth="25.0" layoutX="119.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../../../../../../../xampp/htdocs/icons8-search-60.png" />
+                  <Image url="@../../../assets/icons8-search-24.png" />
                </image>
             </ImageView>
          </children>
       </AnchorPane>
       <TableView fx:id="TableViewCategory" layoutX="339.0" layoutY="458.0" onMouseClicked="#GetSelectedCategory" prefHeight="194.0" prefWidth="626.0">
-        <columns>
+         <columns>
             <TableColumn fx:id="ColumnNameCategory" prefWidth="635.2000854611397" text="Nom de la Catégorie" />
-        </columns>
+         </columns>
       </TableView>
    </children>
 </AnchorPane>

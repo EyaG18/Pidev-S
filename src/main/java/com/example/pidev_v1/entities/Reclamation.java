@@ -14,10 +14,19 @@ public class Reclamation {
     private String type_reclamation ;
     private String nom_client;
 
-    public Reclamation( int ID_reclamation ,String description, String statu_reclamation, String type_reclamation) {
+    public Reclamation(int ID_reclamation) {
+        this.ID_reclamation = ID_reclamation;
+    }
+
+    public Reclamation(int ID_reclamation , String description, String statu_reclamation, String type_reclamation) {
         this.ID_reclamation=ID_reclamation;
         this.description = description;
         this.statu_reclamation = statu_reclamation;
+        this.type_reclamation = type_reclamation;
+    }
+    public Reclamation( int ID_client,String description,  String type_reclamation) {
+        this.ID_client=ID_client;
+        this.description = description;
         this.type_reclamation = type_reclamation;
     }
 

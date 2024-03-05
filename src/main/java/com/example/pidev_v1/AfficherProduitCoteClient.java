@@ -1,7 +1,6 @@
 package com.example.pidev_v1;
 
 
-import com.example.pidev_v1.entities.Catégorie;
 import com.example.pidev_v1.entities.Produit;
 import com.example.pidev_v1.services.MyListener;
 import com.example.pidev_v1.tools.MyDataBase;
@@ -10,11 +9,9 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Region;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -22,10 +19,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
-
-import static java.lang.System.out;
 
 public class AfficherProduitCoteClient implements Initializable {
     @FXML
@@ -54,30 +48,30 @@ public class AfficherProduitCoteClient implements Initializable {
 
     /********************************************/
 
-public void  DisplayProducts() throws FileNotFoundException {
+    public void  DisplayProducts() throws FileNotFoundException {
 
-    ListProduit = getProductsList();
-    int column = 0;
-    int row = 1;
+        ListProduit = getProductsList();
+        int column = 0;
+        int row = 1;
 
-    for (Produit produit : ListProduit) {
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("ItemProduct.fxml"));
-        AnchorPane anchorPane;
-        try {
-            anchorPane = fxmlLoader.load();
-            ItemProduct itemProduit = fxmlLoader.getController();
-            itemProduit.setDataProducts(produit, myListener);
-            GridDisplayProducts.add(anchorPane, column++, row);
-            if (column == 3) {
-                column = 0;
-                row++;
+        for (Produit produit : ListProduit) {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("ItemProduct.fxml"));
+            AnchorPane anchorPane;
+            try {
+                anchorPane = fxmlLoader.load();
+                ItemProduct itemProduit = fxmlLoader.getController();
+                itemProduit.setDataProducts(produit, myListener);
+                GridDisplayProducts.add(anchorPane, column++, row);
+                if (column == 3) {
+                    column = 0;
+                    row++;
+                }
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
             }
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
         }
     }
-}
 
 
 
@@ -110,30 +104,6 @@ public void  DisplayProducts() throws FileNotFoundException {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    public static class welcomeFrontController {
+    }
 }

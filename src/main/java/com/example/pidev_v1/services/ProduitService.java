@@ -3,9 +3,17 @@ package com.example.pidev_v1.services;
 import com.example.pidev_v1.entities.Catégorie;
 import com.example.pidev_v1.entities.Produit;
 import com.example.pidev_v1.tools.MyDataBase;
+//import com.twilio.http.Request;
+//import com.twilio.http.Response;
+//import com.twilio.twiml.fax.Receive;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.net.URLEncoder;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -119,7 +127,7 @@ public class ProduitService implements IProduit {
                 );
 
                 produits.add(p);
-               // System.out.println("Catégorie: " + nomCategorie + ", Produit: " + p);
+                // System.out.println("Catégorie: " + nomCategorie + ", Produit: " + p);
             }
             resultSet.close();
             preparedStatement.close();
@@ -127,7 +135,7 @@ public class ProduitService implements IProduit {
             e.printStackTrace();
         }
         return produits;
-        }
+    }
 
     private String GetCategoryNameById(int idCategorie) {
         String nomCategorie = "";
@@ -150,7 +158,7 @@ public class ProduitService implements IProduit {
 
 
 
- /*********************************************************************/
+    /*********************************************************************/
     @Override
     public String DeleteProductByName(String nameProduct) {
         // Connexion à la base de données
@@ -193,7 +201,7 @@ public class ProduitService implements IProduit {
             e.printStackTrace();
         }
     }
-/*************************************************/
+    /*************************************************/
     @Override
     public List<Produit> getByCategory(String category) {
         List<Produit> filteredProducts = new ArrayList<>();
@@ -204,7 +212,7 @@ public class ProduitService implements IProduit {
             // Filtrer les produits par catégorie
             for (Produit produit : allProducts) {
                 Catégorie categorie = cs.getCategoryById(produit.getId_Catégorie());
-               String chosenCat= cs.getCategoryNameById(categorie.getId_CatégorieC());
+                String chosenCat= cs.getCategoryNameById(categorie.getId_CatégorieC());
                 if (categorie != null && chosenCat.equals(category)) {
                     filteredProducts.add(produit);
                 }
@@ -214,7 +222,7 @@ public class ProduitService implements IProduit {
         }
         return filteredProducts;
     }
-/*********************************************************/
+    /*********************************************************/
     @Override
     public Produit GetProductByName(String NameChosen) {
         Produit product = null;
@@ -300,7 +308,7 @@ public class ProduitService implements IProduit {
             if (produit.getNomP().equals(productName)) {
                 System.out.println("Produit nom existe");
                 return true;
-               // Le produit avec le même nom existe déjà
+                // Le produit avec le même nom existe déjà
             }
         }
         System.out.println("Produit nom existe pas");
@@ -317,22 +325,9 @@ public class ProduitService implements IProduit {
         return false; // Au
     }
 
-/********************************/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
+
+
+
+/********************************/

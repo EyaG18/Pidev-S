@@ -225,13 +225,13 @@ public class Login implements Initializable {
         if(Objects.equals(user.getRole(), "administrateur"))
         {
             try {
-                fxmlLoader = new FXMLLoader(getClass().getResource("dashboardAdmin.fxml"));
-                AnchorPane root = fxmlLoader.load();
+                fxmlLoader = new FXMLLoader(getClass().getResource("WelcomeBack.fxml"));
+                BorderPane root = fxmlLoader.load();
                 Scene scene = new Scene(root);
                 Stage stage = (Stage) TFEmail.getScene().getWindow();
                 stage.setTitle("Dashboard");
                 stage.setScene(scene);
-                dashboardAdmin controller = fxmlLoader.getController();
+                welcomeControllers controller = fxmlLoader.getController();
                 controller.setUser(user);
                 stage.show();
             } catch (IOException e) {
@@ -241,13 +241,13 @@ public class Login implements Initializable {
         else if (Objects.equals(user.getRole(), "Client" ))
         {
             try {
-            fxmlLoader = new FXMLLoader(getClass().getResource("FeedProduitsCoteClients.fxml"));
+            fxmlLoader = new FXMLLoader(getClass().getResource("welcomeFront.fxml"));
             BorderPane root = fxmlLoader.load();
             Scene scene = new Scene(root);
             Stage stage = (Stage) TFEmail.getScene().getWindow();
             stage.setTitle("Arya : Votre Style en Clic : Home Page");
             stage.setScene(scene);
-            FeedProduitsCoteClientsController controller = fxmlLoader.getController();
+            welcomeFront controller = fxmlLoader.getController();
             controller.setUser(user);
             stage.show();
             } catch (IOException e) {
@@ -266,6 +266,7 @@ public class Login implements Initializable {
                 FeedProduitsCoteClientsController controller = fxmlLoader.getController();
                 controller.setUser(user);
                 stage.show();
+
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
